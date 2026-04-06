@@ -1,0 +1,115 @@
+---
+// src/components/Navbar.astro
+---
+
+<header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent border-b border-transparent">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    
+    <a href="/" class="relative z-50 flex items-center">
+      <span class="text-2xl font-poppins font-bold text-white tracking-tighter flex items-center gap-1">
+        DOMA<span class="w-2 h-2  mt-2"></span>
+      </span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="#producto" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+        Producto
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#a100ff] transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#industrias" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+        Industrias
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#437ceb] transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#modelo" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+        Modelo
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#906ef7] transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#faq" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+        FAQ
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+      </a>
+    </nav>
+
+    <div class="flex items-center gap-4 z-50">
+      <a href="#contacto" class="hidden md:flex items-center justify-center px-5 py-2 rounded-full bg-white/10 border border-white/10 text-white text-[15px] font-gilroy font-medium hover:bg-[#a100ff] transition-all duration-300 backdrop-blur-md">
+        Agendar Demo
+      </a>
+
+      <button id="mobile-menu-btn" class="md:hidden text-white p-2 focus:outline-none">
+        <svg id="icon-menu" class="w-6 h-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg id="icon-close" class="w-6 h-6 hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0f]/95 backdrop-blur-2xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-28 px-6">
+    <nav class="flex flex-col gap-8">
+      <a href="#producto" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#a100ff] transition-colors">Producto</a>
+      <a href="#industrias" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#437ceb] transition-colors">Industrias</a>
+      <a href="#modelo" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#906ef7] transition-colors">Modelo</a>
+      <a href="#faq" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-white transition-colors">FAQ</a>
+      
+      <div class="h-px w-full bg-white/10 my-4"></div>
+      
+      <a href="#contacto" class="mobile-link w-full text-center py-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-lg">
+        Agendar Demo
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // 1. Lógica del Scroll (Efecto Cristal)
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar.classList.remove('bg-transparent', 'border-transparent');
+      navbar.classList.add('bg-[#0a0a0f]/80', 'backdrop-blur-md', 'border-white/5');
+    } else {
+      navbar.classList.add('bg-transparent', 'border-transparent');
+      navbar.classList.remove('bg-[#0a0a0f]/80', 'backdrop-blur-md', 'border-white/5');
+    }
+  });
+
+  // 2. Lógica del Menú Móvil
+  const btn = document.getElementById('mobile-menu-btn');
+  const overlay = document.getElementById('mobile-menu-overlay');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  let isMenuOpen = false;
+
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    
+    if (isMenuOpen) {
+      // Abrir menú
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100', 'pointer-events-auto');
+      iconMenu.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Evitar que el usuario haga scroll de fondo
+    } else {
+      // Cerrar menú
+      overlay.classList.remove('opacity-100', 'pointer-events-auto');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      iconMenu.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+      document.body.style.overflow = ''; // Restaurar scroll
+    }
+  }
+
+  btn.addEventListener('click', toggleMenu);
+
+  // Cerrar el menú si hacen clic en un enlace
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if(isMenuOpen) toggleMenu();
+    });
+  });
+</script>
