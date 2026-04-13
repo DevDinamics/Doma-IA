@@ -123,7 +123,7 @@ export default function Product() {
     {
       number: "01 — El Cerebro",
       title: "QOPA conecta el 100% de tu empresa en tiempo real",
-      description: "No memoriza scripts. Accede a toda tu data viva: catálogos, políticas, inventarios, CRM. Actualización instantánea en todos los puntos.",
+      description: "Respuestas con tu información real. DOMA se conecta directo a tu nube: inventarios actualizados, políticas vigentes, disponibilidad por sucursal.",
       colorClasses: { bg: "from-[#a100ff]/30", text: "text-[#a100ff]", border: "hover:border-[#a100ff]/30" }
     },
     {
@@ -173,7 +173,9 @@ export default function Product() {
             <div className="flex-1 relative animate-fade-in delay-300 w-full max-w-sm mx-auto lg:mx-0">
                 <div className="relative w-full aspect-[4/5] flex items-center justify-center group">
                   
-                  {/* ANILLOS DE ENERGÍA Y ORBITAS (El Entorno Pro) */}
+                  {/* --- EFECTOS DE FONDO (TODOS ANTES DE LA IMAGEN) --- */}
+                  
+                  {/* ANILLOS DE ENERGÍA Y ORBITAS */}
                   <div className="absolute w-[80%] h-[80%] border border-white/5 rounded-full animate-[spin_20s_linear_infinite] pointer-events-none"></div>
                   <div className="absolute w-[60%] h-[60%] border border-[#a100ff]/10 rounded-full animate-[spin_15s_linear_infinite_reverse] pointer-events-none"></div>
                   
@@ -181,19 +183,29 @@ export default function Product() {
                   <div className="absolute bottom-10 w-[60%] h-32 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-full blur-2xl opacity-70 pointer-events-none"></div>
                   <div className="absolute bottom-20 w-[40%] h-4 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full pointer-events-none"></div>
 
-                  {/* The Realistic Totem Image (Static, Clean and Large) */}
-                  <img 
-                    src="/doma-product.png" 
-                    alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
-                    className="relative z-10 w-full h-full object-contain object-bottom p-6 group-hover:scale-[1.01] transition-transform duration-700 brightness-110 contrast-110 drop-shadow-[0_0_15px_rgba(161,0,255,0.3)]"
+                  {/* CORRECCIÓN DE ORDEN: Brillo de fondo estático (Vitrine Effect) - AHORA DETRÁS */}
+                  <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-[40px] blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"></div>
+
+                  {/* --- LA IMAGEN (CON CORRECCIONES DE INTEGRACIÓN) --- */}
+                  
+                  {/* 1. MASK WRAPPER: applying mask to div is safer than img tag directly */}
+                  <div 
+                    className="relative z-10 w-full h-full flex items-center justify-center"
                     style={{ 
-                      mixBlendMode: 'screen', // <-- ¡Corregido! Sin el guion
-                      maskImage: 'linear-gradient(to top, transparent 0%, black 15%)', 
-                      WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%)' 
+                      maskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)', 
+                      WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)' // Safari support
                     }}
-                  />
-                  {/* Efecto de brillo de fondo detrás del tótem (Vitrine Effect) */}
-                  <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-[40px] blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  >
+                    {/* 2. THE IMAGE (Cleaned of problematic styles, keep visual enhancements) */}
+                    <img 
+                      src="/doma-product.png" 
+                      alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
+                      className="w-full h-full object-contain object-bottom p-6 group-hover:scale-[1.01] transition-transform duration-700 brightness-110 contrast-110 drop-shadow-[0_0_15px_rgba(161,0,255,0.3)]"
+                      style={{ 
+                        mixBlendMode: 'screen', // Solución al fondo negro
+                      }}
+                    />
+                  </div>
 
                 </div>
             </div>

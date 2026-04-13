@@ -7,19 +7,21 @@ const industriesData = [
     name: 'Retail',
     color: 'from-[#FF5E00] to-[#a100ff]',
     glow: 'bg-[#FF5E00]',
-    eyebrow: 'Home Depot · Farmacias del Ahorro · Walmart',
+    eyebrow: '',
     headline: 'El cliente está en tu tienda.<br/>¿Alguien lo está atendiendo?',
     problems: [
-      'Rotación 80–120% anual — el conocimiento se va con cada empleado',
-      'Horas pico: 15–25% de ventas perdidas por falta de atención',
-      '40,000+ SKUs — ningún empleado puede saberlos todos'
+      'Rotación anual de 80–120%, el conocimiento se va con cada empleado',
+      'Horas pico: ventas perdidas por falta de atención',
+      'Miles de SKUs y ningún empleado domina todos'
     ],
     solutions: [
-      'QOPA conectado a catálogo completo en tiempo real',
-      'Misma experiencia en todas las sucursales, siempre',
-      'Datos de comportamiento del cliente antes invisibles'
+      'Domina todo tu catálogo, promociones y disponibilidad por sucursal.',
+      'Recomienda productos complementarios y cierra ventas en el punto de decisión.',
+      'Registra cada interacción: qué buscan, qué no encuentran, a qué hora llegan.',
+      'Opera 24/7 sin rotación, sin ausentismo, sin curva de aprendizaje.'
+      
     ],
-    roi: 'Con 9,500 sucursales, si DOMA reduce el costo de orientación en 30%, el ahorro es de decenas de millones al año.',
+    roi: 'Sabes exactamente qué preguntan tus clientes, en qué horarios, y qué no están encontrando. Eso no lo tienes hoy.',
     icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
   },
   {
@@ -27,19 +29,20 @@ const industriesData = [
     name: 'Transporte',
     color: 'from-[#437ceb] to-[#a100ff]',
     glow: 'bg-[#437ceb]',
-    eyebrow: 'ADO · 469 terminales',
-    headline: 'El pasajero tiene 10 minutos.<br/>No puede perder tiempo buscando información.',
+    eyebrow: '',
+    headline: '153 millones de pasajeros al año. ¿Quién les está vendiendo?',
     problems: [
-      'Semana Santa: el flujo se triplica, el personal no',
-      'Cambios de andén llegan tarde — pasajero recibe información incorrecta',
-      '60–70% de la fila de taquilla son solo preguntas, no compras'
+      'Rotación de 50% anual en personal de información.',
+      'Pasajeros desorientados que no conocen servicios adicionales.',
+      'Cero visibilidad de qué información piden y cuándo.'
     ],
     solutions: [
-      'QOPA sabe los cambios antes que cualquier empleado en el piso',
-      'DOMA en Semana Santa opera igual que un martes normal',
-      'Reduce la fila de taquilla a transacciones reales'
+      'Domina rutas, horarios, conexiones, políticas y servicios.',
+      'Vende upgrades, acceso a salas VIP, seguros, transporte terrestre, en el momento exacto.',
+      'Registra patrones: qué preguntan, qué destinos generan más dudas, en qué horarios colapsa la demanda.',
+      'Cero rotación, cero capacitación repetida, cero inconsistencias entre turnos.'
     ],
-    roi: 'En terminales de alta afluencia, reducir el tiempo de orientación es reducir el tiempo de operación. Con DOMA, el personal se enfoca en servicios de valor.',
+    roi: 'Cada pasajero que espera es data y oportunidad. Hoy no capturas ninguna de las dos.',
     icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
   },
   {
@@ -47,59 +50,62 @@ const industriesData = [
     name: 'Hospitality',
     color: 'from-[#D900FF] to-[#437ceb]',
     glow: 'bg-[#D900FF]',
-    eyebrow: 'Grupo Posadas · Live Aqua · Fiesta Americana',
-    headline: 'La experiencia premium no puede depender<br/>del turno que toque ese día.',
+    eyebrow: '',
+    headline: 'Tu huésped espera 5 minutos. Tu satisfacción cae 47%.',
     problems: [
-      'El turno de madrugada no es igual al del sábado al mediodía',
-      'Solo 30% de huéspedes usa completamente sus beneficios de lealtad',
-      'Visitantes internacionales reciben atención de segunda clase'
+      'Rotación de 60–80% que destruye la consistencia del servicio.',
+      'Check-in manual que genera filas en horas pico.',
+      'Oportunidades de upsell que el front desk no tiene tiempo de ofrecer.'
     ],
     solutions: [
-      'Mismo estándar de marca a las 3am que a las 12pm',
-      'Identifica al huésped y activa sus beneficios proactivamente',
-      'Soporte nativo multiidioma — sin brecha de servicio'
+      'Conoce todas las habitaciones, amenidades, políticas y servicios sin entrenamiento.',
+      'Ofrece upgrades, late checkout, reservaciones en restaurante, tours.',
+      'Registra preferencias y patrones: qué piden, qué rechazan, qué servicios desconocen.',
+      'Atiende el lobby a las 3 AM igual que a las 3 PM.'
     ],
-    roi: 'Un huésped que conoce y usa sus beneficios de lealtad tiene 3x más probabilidad de regresar. DOMA activa esa conversación en cada visita.',
+    roi: 'Un upgrade de $50 USD por cada 10 check-ins paga DOMA. El resto es margen puro.',
     icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
   },
   {
-    id: 'gobierno',
-    name: 'Gobierno',
+    id: 'banca',
+    name: 'Banca',
     color: 'from-[#00E5FF] to-[#437ceb]',
     glow: 'bg-[#00E5FF]',
-    eyebrow: 'Estado de NL · CDMX · Jalisco · Aeropuertos',
-    headline: 'El ciudadano llega sin saber qué necesita.<br/>La ventanilla procesa cero trámites.',
+    eyebrow: '',
+    headline: '150,000 quejas al año. El 80% eran preguntas simples.',
     problems: [
-      '40–60% del tiempo en ventanilla es orientación, no trámite',
-      'El sitio web, el letrero y el empleado dan tres versiones distintas',
-      'El titular necesita resultados visibles antes del próximo informe'
+      'Cada transacción en ventanilla cuesta 25x más que en canal digital.',
+      'Ejecutivos saturados que no tienen tiempo de detectar oportunidades.',
+      'Rotación constante en posiciones de atención.'
     ],
     solutions: [
-      'Pre-diagnóstico antes de la fila — el ciudadano llega listo',
-      'QOPA actualiza requisitos en todos los puntos en segundos',
-      'El dato exacto: "DOMA atendió 14,000 ciudadanos este mes"'
+      'Resuelve el 80% de consultas sin ejecutivo: saldos, movimientos, requisitos, ubicaciones.',
+      'Detecta oportunidades en la conversación: créditos pre-aprobados, cuentas de ahorro, tarjetas.',
+      'Registra qué productos generan más dudas, qué horarios saturan la sucursal, qué consultas se repiten."',
+      'Extiende el horario de atención en vestíbulo sin costo adicional.'
     ],
-    roi: 'Si DOMA pre-filtra 50% de las visitas a ventanilla, cada punto de atención ciudadana duplica su capacidad efectiva sin nuevo personal.',
+    roi: 'Cada producto colocado desde DOMA tiene costo de adquisición cercano a cero. Y sabes exactamente qué está pidiendo tu cliente.',
     icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
   },
   {
-    id: 'banca',
-    name: 'Banca y Seguros',
+    id: 'Seguros',
+    name: 'Seguros',
     color: 'from-[#a100ff] to-[#FF5E00]',
     glow: 'bg-[#a100ff]',
-    eyebrow: 'GNP · Banco Azteca (1,900 suc.) · Seguros Afirme',
-    headline: 'Ejecutivos certificados respondiendo<br/>\'¿cuál es mi saldo?\'',
+    eyebrow: '',
+    headline: 'Solo 22% de los adultos tiene un seguro. Nadie les ha explicado bien.',
     problems: [
-      '60–70% de visitas son consultas que no necesitan ejecutivo',
-      'La póliza tiene 40 páginas — el cliente no entiende hasta que lo necesita',
-      'Cada empleado que improvisa una respuesta es un riesgo regulatorio'
+      'Agentes que no duran más de 3 años en el oficio.',
+      'Estigma del "vendedor agresivo" que ahuyenta prospectos.',
+      'Productos complejos que nadie tiene paciencia de explicar.'
     ],
     solutions: [
-      'DOMA absorbe consultas simples, el ejecutivo se enfoca en valor real',
-      'Explica productos sin presión — el cliente decide con información completa',
-      'Solo comunica lo aprobado en QOPA — auditable, sin riesgo regulatorio'
+      'Explica coberturas, simula cotizaciones y responde dudas, sin presión, sin prisa.',
+      'Detecta momento de interés y escala a un agente humano solo cuando el cliente está listo.',
+      'Registra qué productos generan más preguntas, qué objeciones se repiten, qué perfil convierte mejor.',
+      'Disponible en sucursal, en punto de venta, en evento, donde el cliente esté.'
     ],
-    roi: 'En una cadena de 1,900 sucursales, si DOMA libera 2 horas diarias de ejecutivo en cada una, el sistema gana 1.4 millones de horas-ejecutivo al año.',
+    roi: 'El 78% de los adultos no tiene seguro. DOMA los educa sin costo de adquisición y te dice exactamente qué están buscando.',
     icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   }
 ];
@@ -212,7 +218,7 @@ export default function Industries() {
               <div className="bg-[#a100ff]/[0.05] border border-[#a100ff]/20 rounded-[24px] p-6 md:p-8 backdrop-blur-sm shadow-[0_0_30px_rgba(161,0,255,0.05)]">
                 <div className="flex items-center gap-2 mb-6">
                   <div className="w-6 h-6 rounded-full bg-[#a100ff]/20 flex items-center justify-center text-[#a100ff] font-bold text-xs">✓</div>
-                  <p className="font-poppins font-semibold text-white text-lg">DOMA resuelve</p>
+                  <p className="font-poppins font-semibold text-white text-lg">Cómo resolvemos</p>
                 </div>
                 <ul className="flex flex-col gap-4">
                   {activeData.solutions.map((sol, i) => (

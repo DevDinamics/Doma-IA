@@ -19,7 +19,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => {
       </button>
       
       <div 
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="px-4 pb-8 font-gilroy text-gray-400 text-lg leading-relaxed max-w-3xl">
           {answer}
@@ -30,51 +30,61 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => {
 };
 
 export default function Faq() {
-  const [openIndex, setOpenIndex] = useState(0); // La primera abierta por defecto para invitar a la interacción
+  const [openIndex, setOpenIndex] = useState(0);
 
   const faqs = [
     {
       q: "¿Qué pasa cuando el cliente necesita hablar con una persona?",
-      a: "DOMA complementa, no reemplaza. El 60–70% de consultas se resuelven solas. Para el resto, DOMA alerta al asesor o agenda la cita. El equipo humano se enfoca en lo que realmente requiere intervención humana."
+      a: "DOMA detecta cuándo escalar y transfiere la conversación a un humano con todo el contexto. No reemplaza a tu equipo, lo libera de lo repetitivo."
     },
     {
       q: "¿Funciona en espacios ruidosos?",
-      a: "Sí. Micrófonos direccionales propios, optimizados para ese entorno. La competencia depende del hardware del cliente. Nosotros controlamos el hardware completo: posicionamiento, dirección, altura y aislamiento."
+      a: "Sí. El tótem está diseñado para operar en tiendas, lobbies, terminales y sucursales con ruido ambiental constante. Usamos hardware optimizado para captura de audio direccional."
     },
     {
-      q: "¿Cómo se actualiza cuando cambian precios o políticas?",
-      a: "QOPA actualiza todos los puntos en segundos. Sin intervención manual, sin desactualización. Cuando tú cambias algo en la fuente, todos los Digital Sales Executives lo saben de inmediato."
+      q: "¿Cómo se actualiza cuando cambian precios, políticas o inventarios?",
+      a: "DOMA se conecta directo a tu información en la nube. Cuando algo cambia en tu sistema, DOMA lo sabe en tiempo real. No hay actualizaciones manuales."
     },
     {
       q: "¿Cuánto tiempo tarda la instalación?",
-      a: "2 a 4 semanas de contrato a Digital Sales Executive operativo. Esto incluye configuración, carga de conocimiento y pruebas. La instalación física del tótem toma menos de un día."
+      a: "Dependiendo de la complejidad de integración, un piloto puede estar operando en 4-8 semanas. El hardware se instala en un día."
     },
     {
-      q: "¿Qué datos recibo?",
-      a: "Dashboard completo: interacciones, preguntas frecuentes, patrones por horario, satisfacción. Inteligencia del punto de venta que antes simplemente no existía."
+      q: "¿Qué datos recibo sobre las interacciones?",
+      a: "Todo: qué preguntan tus clientes, qué productos buscan, qué no encuentran, a qué hora interactúan más, qué objeciones repiten. Información que hoy no tienes."
     },
     {
-      q: "¿Se integra con mi CRM o ERP?",
-      a: "Sí. QOPA tiene API abierta para HubSpot, Salesforce, Oracle, SAP y sistemas propios. Cada interacción puede generar un registro automático y disparar flujos de seguimiento."
+      q: "¿Se integra con mi CRM, ERP o sistemas internos?",
+      a: "Sí. DOMA se conecta a la infraestructura que ya tienes en la nube: inventarios, catálogos, CRM, bases de conocimiento. La integración es parte del despliegue."
     },
     {
       q: "¿Cómo funciona el modelo comercial?",
-      a: "Digital Sales Executive por mes. Tarifa fija sin capex. Incluye todo: tótem, IA, QOPA, soporte. Piloto primero, escalamiento después. Sin proyecto largo, sin riesgo inicial."
+      a: "DOMA es un empleado digital por suscripción mensual. Incluye hardware, software, IA, mantenimiento y soporte. No compras licencias, contratas capacidad operativa."
+    },
+    {
+      q: "¿Puede vender o solo informa?",
+      a: "Ambas. DOMA recomienda productos, ofrece upgrades, detecta oportunidades de cross-sell y puede cerrar transacciones simples. No es un FAQ con cara, es un punto de venta activo."
+    },
+    {
+      q: "¿Qué pasa si mi operación tiene cientos de sucursales?",
+      a: "Escala. Tu información ya está centralizada en la nube, así que DOMA en la sucursal 1 sabe lo mismo que DOMA en la sucursal 500. Misma experiencia, mismo conocimiento, cero variabilidad."
+    },
+    {
+      q: "¿Qué tan rápido veo resultados?",
+      a: "Desde el primer mes tienes datos de comportamiento que antes no existían. El ROI en ahorro o ventas adicionales típicamente se demuestra en el primer trimestre de operación."
     }
   ];
 
   return (
     <section id="faq" className="py-24 bg-[#0a0a0f] relative overflow-hidden">
-      {/* Glow de fondo decorativo */}
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#437ceb]/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-16">
           
-          {/* LADO IZQUIERDO: Header */}
           <div className="lg:w-1/3">
             <div className="sticky top-32">
-              <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[#a100ff] text-xs font-gilroy font-bold uppercase tracking-widest mb-6 inline-block">
+              <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[#a100ff] text-xs font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_15px_rgba(161,0,255,0.1)]">
                 FAQ
               </span>
               <h2 className="font-poppins text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
@@ -86,7 +96,6 @@ export default function Faq() {
             </div>
           </div>
 
-          {/* LADO DERECHO: Lista Acordeón */}
           <div className="lg:w-2/3 border-t border-white/10">
             {faqs.map((faq, index) => (
               <FaqItem
