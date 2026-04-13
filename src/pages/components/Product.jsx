@@ -1,13 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// --- COMPONENTE DE TARJETA INDIVIDUAL (Ultra PRO) ---
-const ProductCard = ({ number, title, description, colorClasses, index }) => {
+// --- COMPONENTE DE TARJETA INDIVIDUAL (Ultra PRO - 3D Stacking Reactivado) ---
+const ProductCard = ({ number, title, description, colorClasses, index, totalCards }) => {
   const cardRef = useRef(null);
-  const trackerRef = useRef(null); // Nos sirve para medir el scroll real sin afectar el sticky
+  const trackerRef = useRef(null); 
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [stickyConfig, setStickyConfig] = useState({ top: 120, offset: 40 });
 
-  // 1. Animación de entrada inicial (Fade + Slide)
+  // 1. Configuración Responsiva para el Stacking
+  useEffect(() => {
+    const handleResize = () => {
+      // Ajustamos los valores para que el stacking se vea bien en diferentes pantallas
+      if (window.innerWidth < 1024) {
+        setStickyConfig({ top: 80, offset: 25 }); 
+      } else {
+        setStickyConfig({ top: 160, offset: 40 }); 
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 2. Animación de entrada inicial (Fade + Slide)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -22,19 +38,19 @@ const ProductCard = ({ number, title, description, colorClasses, index }) => {
     return () => observer.disconnect();
   }, []);
 
-  // 2. Cálculo del Stacking 3D al hacer Scroll
+  // 3. CÁLCULO DEL STACKING 3D AL HACER SCROLL (La Magia)
   useEffect(() => {
     const handleScroll = () => {
       if (!trackerRef.current) return;
       const rect = trackerRef.current.getBoundingClientRect();
       
-      // El punto donde la tarjeta se "pega" en la pantalla
-      const stickyTop = 120 + (index * 30);
+      // Calculamos en qué punto de la pantalla la tarjeta debe empezar a encogerse
+      const stickyTop = stickyConfig.top + (index * stickyConfig.offset);
       
-      // Si el usuario scrolleó más abajo del punto de pegado, calculamos cuánto para achicarla
       if (rect.top < stickyTop) {
+        // Si el usuario scrolleó más abajo, calculamos el progreso (0 a 1)
         const overScroll = stickyTop - rect.top;
-        const progress = Math.min(overScroll / 400, 1); // Normalizamos de 0 a 1
+        const progress = Math.min(overScroll / 350, 1); // 350 ajusta la "velocidad" del encogimiento
         setScrollProgress(progress);
       } else {
         setScrollProgress(0);
@@ -42,71 +58,55 @@ const ProductCard = ({ number, title, description, colorClasses, index }) => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    handleScroll(); // Calcular estado inicial
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [index]);
+  }, [index, stickyConfig]);
 
-  // 3. Efecto Linterna (Spotlight) siguiendo el ratón
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    cardRef.current.style.setProperty('--mouse-x', `${x}px`);
-    cardRef.current.style.setProperty('--mouse-y', `${y}px`);
-  };
-
-  // Matemáticas para el efecto 3D
-  const scale = 1 - scrollProgress * 0.05; // Se encoje hasta un 5%
-  const opacity = 1 - scrollProgress * 0.5; // Se oscurece al quedar atrás
+  // --- MATEMÁTICAS DEL EFECTO 3D ---
+  // La última tarjeta no se encoge para que el diseño no se rompa al final
+  const isLast = index === totalCards - 1;
+  const scale = 1 - (scrollProgress * 0.06); // Se encoge hasta un 6%
+  const translateY = scrollProgress * -25; // Sube 25px para meterse debajo
+  const brightness = 1 - (scrollProgress * 0.3); // Se oscurece un 30% para dar sombra
 
   return (
     <div className="relative w-full">
-      {/* Tracker invisible que fluye con el documento para medir el scroll */}
-      <div ref={trackerRef} className="absolute w-full h-px -top-8" />
+      {/* Tracker invisible: Fluye con el documento para medir el scroll real */}
+      <div ref={trackerRef} className="absolute w-full h-px -top-8 pointer-events-none" />
       
-      {/* Contenedor Sticky */}
+      {/* Contenedor Sticky: Mantiene la tarjeta en la pantalla */}
       <div 
         className="sticky z-10 w-full" 
-        style={{ top: `${120 + index * 30}px` }}
+        style={{ top: `${stickyConfig.top + index * stickyConfig.offset}px` }}
       >
-        {/* Capa que aplica el Scale 3D hacia atrás */}
+        {/* Capa de Transformación 3D: Aplica Scale y Brightness */}
         <div 
-          className="w-full origin-top"
+          className="w-full origin-top will-change-transform"
           style={{
-            transform: `scale(${scale})`,
-            opacity: opacity,
-            transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
+            transform: isLast ? 'none' : `scale(${scale}) translateY(${translateY}px)`,
+            filter: isLast ? 'none' : `brightness(${brightness})`,
+            transition: 'transform 0.1s ease-out, filter 0.1s ease-out',
           }}
         >
-          {/* La Tarjeta Visual */}
+          {/* La Tarjeta Visual (Glassmorphism) */}
           <div
             ref={cardRef}
-            onMouseMove={handleMouseMove}
-            className={`relative p-8 md:p-12 rounded-[32px] bg-[#0f0f15] border border-white/5 group overflow-hidden transform transition-all duration-1000 ease-out
+            className={`relative p-8 sm:p-10 md:p-12 rounded-[32px] bg-[#0f0f15]/90 backdrop-blur-2xl border border-white/10 shadow-2xl overflow-hidden transform transition-all duration-1000 ease-out
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0'}
-              ${colorClasses.border} hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]
+              ${colorClasses.border} hover:border-white/20
             `}
           >
-            {/* Efecto Spotlight (Linterna Mágica) */}
-            <div 
-              className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
-              style={{
-                background: `radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255,255,255,0.06), transparent 40%)`
-              }}
-            />
+            {/* Brillo de fondo estático en la esquina superior derecha */}
+            <div className={`absolute -top-12 -right-12 w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-bl ${colorClasses.bg} to-transparent rounded-full blur-3xl opacity-30 pointer-events-none z-0`}></div>
 
-            {/* Brillo de fondo estático en la esquina */}
-            <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl ${colorClasses.bg} to-transparent rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}></div>
-
-            {/* Contenido */}
-            <span className={`relative z-10 font-gilroy text-sm font-bold tracking-[3px] uppercase mb-4 block ${colorClasses.text}`}>
+            {/* Contenido de la Tarjeta */}
+            <span className={`relative z-10 font-gilroy text-xs sm:text-sm font-bold tracking-[3px] uppercase mb-5 block ${colorClasses.text}`}>
               {number}
             </span>
-            <h3 className="relative z-10 font-poppins text-2xl md:text-3xl font-semibold text-white mb-4 leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">
+            <h3 className="relative z-10 font-poppins text-2xl sm:text-3xl font-semibold text-white mb-4 leading-tight">
               {title}
             </h3>
-            <p className="relative z-10 font-gilroy text-gray-400 leading-relaxed text-lg">
+            <p className="relative z-10 font-gilroy text-gray-400 leading-relaxed text-base sm:text-lg">
               {description}
             </p>
           </div>
@@ -124,39 +124,41 @@ export default function Product() {
       number: "01 — El Cerebro",
       title: "QOPA conecta el 100% de tu empresa en tiempo real",
       description: "Respuestas con tu información real. DOMA se conecta directo a tu nube: inventarios actualizados, políticas vigentes, disponibilidad por sucursal.",
-      colorClasses: { bg: "from-[#a100ff]/30", text: "text-[#a100ff]", border: "hover:border-[#a100ff]/30" }
+      colorClasses: { bg: "from-[#a100ff]/50", text: "text-[#a100ff]", border: "hover:border-[#a100ff]/40" }
     },
     {
       number: "02 — La Cara",
       title: "Conversación natural, no respuestas pregrabadas",
       description: "Un Digital Sales Executive con nombre, voz y personalidad de tu marca. Responde como un experto de tu equipo — en tiempo real, por voz y pantalla.",
-      colorClasses: { bg: "from-[#437ceb]/30", text: "text-[#437ceb]", border: "hover:border-[#437ceb]/30" }
+      colorClasses: { bg: "from-[#437ceb]/50", text: "text-[#437ceb]", border: "hover:border-[#437ceb]/40" }
     },
     {
       number: "03 — La Presencia",
       title: "Hardware propio para el mundo real",
       description: "Micrófonos optimizados para entornos ruidosos. Llave en mano. La competencia depende del hardware del cliente. DOMA no.",
-      colorClasses: { bg: "from-[#906ef7]/30", text: "text-[#906ef7]", border: "hover:border-[#906ef7]/30" }
+      colorClasses: { bg: "from-[#906ef7]/50", text: "text-[#906ef7]", border: "hover:border-[#906ef7]/40" }
     }
   ];
 
   return (
-    <section id="producto" className="relative py-32 px-6 bg-[#0a0a0f] overflow-hidden">
+    // IMPORTANTE: pb-64 lg:pb-96 asegura que haya suficiente espacio para hacer scroll
+    // y que las tarjetas terminen de apilarse antes de llegar al footer/siguiente sección.
+    <section id="producto" className="relative py-20 lg:py-32 px-4 sm:px-6 bg-[#0a0a0f] overflow-hidden pb-64 lg:pb-96">
       
       {/* Efectos de luz de fondo globales */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#a100ff]/20 to-transparent"></div>
-      <div className="absolute -left-[20%] top-1/4 w-[800px] h-[800px] bg-[#a100ff]/5 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-1/4 -left-[10%] lg:-left-[20%] w-[300px] lg:w-[800px] h-[300px] lg:h-[800px] bg-[#a100ff]/5 rounded-full blur-[100px] lg:blur-[150px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto relative">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 relative items-start">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 relative items-start">
           
-          {/* COLUMNA IZQUIERDA: Textos y Tótem (Sticky Scroll) */}
-          <div className="lg:w-5/12 flex flex-col items-start lg:sticky lg:top-32 z-10">
-            <span className="px-4 py-1.5 rounded-full border border-[#a100ff]/30 bg-[#a100ff]/10 text-[#a100ff] text-sm font-gilroy font-bold uppercase tracking-widest mb-8 inline-block shadow-[0_0_15px_rgba(161,0,255,0.2)]">
+          {/* COLUMNA IZQUIERDA: Textos y Tótem (STICKY PARA MANTENERSE FIJO) */}
+          <div className="w-full lg:w-5/12 flex flex-col items-center text-center lg:items-start lg:text-left lg:sticky lg:top-32 z-10 mb-10 lg:mb-0">
+            <span className="px-4 py-1.5 rounded-full border border-[#a100ff]/30 bg-[#a100ff]/10 text-[#a100ff] text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 lg:mb-8 inline-block shadow-[0_0_15px_rgba(161,0,255,0.2)]">
               El producto
             </span>
             
-            <h2 className="font-poppins text-4xl md:text-5xl lg:text-[52px] font-bold text-white leading-[1.1] mb-6 tracking-tighter">
+            <h2 className="font-poppins text-4xl sm:text-5xl lg:text-[52px] font-bold text-white leading-[1.1] mb-4 lg:mb-6 tracking-tighter">
               No es un chatbot.<br/>
               <span className="text-gray-600">No es un kiosco.</span><br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">
@@ -164,46 +166,36 @@ export default function Product() {
               </span>
             </h2>
             
-            {/* Reducimos mb-12 a mb-6 para subir la imagen */}
-            <p className="font-gilroy text-xl text-gray-400 mb-6">
+            <p className="font-gilroy text-lg sm:text-xl text-gray-400 mb-8 lg:mb-6 max-w-md lg:max-w-none">
               Tres capacidades que ningún competidor global tiene juntas.
             </p>
 
-            {/* Tótem DOMA (Producto) - Realistic Vitrine */}
-            <div className="flex-1 relative animate-fade-in delay-300 w-full max-w-sm mx-auto lg:mx-0">
+            {/* Tótem DOMA (Producto) - Responsive Size */}
+            <div className="relative animate-fade-in delay-300 w-full max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto lg:mx-0">
                 <div className="relative w-full aspect-[4/5] flex items-center justify-center group">
                   
-                  {/* --- EFECTOS DE FONDO (TODOS ANTES DE LA IMAGEN) --- */}
-                  
-                  {/* ANILLOS DE ENERGÍA Y ORBITAS */}
+                  {/* --- EFECTOS DE FONDO --- */}
                   <div className="absolute w-[80%] h-[80%] border border-white/5 rounded-full animate-[spin_20s_linear_infinite] pointer-events-none"></div>
                   <div className="absolute w-[60%] h-[60%] border border-[#a100ff]/10 rounded-full animate-[spin_15s_linear_infinite_reverse] pointer-events-none"></div>
                   
-                  {/* Plataforma de luz esmerilada en la base del tótem */}
-                  <div className="absolute bottom-10 w-[60%] h-32 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-full blur-2xl opacity-70 pointer-events-none"></div>
+                  <div className="absolute bottom-10 w-[60%] h-24 lg:h-32 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-full blur-2xl opacity-70 pointer-events-none"></div>
                   <div className="absolute bottom-20 w-[40%] h-4 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full pointer-events-none"></div>
 
-                  {/* CORRECCIÓN DE ORDEN: Brillo de fondo estático (Vitrine Effect) - AHORA DETRÁS */}
-                  <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-[40px] blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"></div>
+                  <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-[40px] blur-2xl lg:blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"></div>
 
-                  {/* --- LA IMAGEN (CON CORRECCIONES DE INTEGRACIÓN) --- */}
-                  
-                  {/* 1. MASK WRAPPER: applying mask to div is safer than img tag directly */}
+                  {/* --- LA IMAGEN --- */}
                   <div 
                     className="relative z-10 w-full h-full flex items-center justify-center"
                     style={{ 
                       maskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)', 
-                      WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)' // Safari support
+                      WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)'
                     }}
                   >
-                    {/* 2. THE IMAGE (Cleaned of problematic styles, keep visual enhancements) */}
                     <img 
-                      src="/doma-product.png" 
+                      src="/Product_p.png" 
                       alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
-                      className="w-full h-full object-contain object-bottom p-6 group-hover:scale-[1.01] transition-transform duration-700 brightness-110 contrast-110 drop-shadow-[0_0_15px_rgba(161,0,255,0.3)]"
-                      style={{ 
-                        mixBlendMode: 'screen', // Solución al fondo negro
-                      }}
+                      className="w-full h-full object-contain object-bottom p-4 lg:p-6 group-hover:scale-[1.01] transition-transform duration-700 brightness-110 contrast-110 drop-shadow-[0_0_15px_rgba(161,0,255,0.3)]"
+                      style={{ mixBlendMode: 'screen' }}
                     />
                   </div>
 
@@ -212,12 +204,13 @@ export default function Product() {
           </div>
 
           {/* COLUMNA DERECHA: Las Tarjetas Stacking */}
-          {/* Se le da un pb (padding-bottom) extra para tener espacio para hacer scroll y que se apilen */}
-          <div className="lg:w-7/12 flex flex-col gap-24 pb-32 z-10 w-full">
+          {/* El gap controla el espacio inicial entre tarjetas antes de hacer scroll */}
+          <div className="w-full lg:w-7/12 flex flex-col gap-8 lg:gap-16 z-10 relative">
             {cards.map((card, idx) => (
               <ProductCard 
                 key={idx}
                 index={idx}
+                totalCards={cards.length}
                 number={card.number}
                 title={card.title}
                 description={card.description}

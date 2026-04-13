@@ -2,40 +2,47 @@
 // src/components/Navbar.astro
 ---
 
-<header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent border-b border-transparent">
-  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+{/* El header actúa como un contenedor transparente que no bloquea clics fuera de la isla */}
+<header class="fixed top-0 inset-x-0 z-50 pt-4 sm:pt-6 px-4 flex justify-center pointer-events-none">
+  
+  {/* LA ISLA FLOTANTE */}
+  <div id="navbar" class="pointer-events-auto w-full max-w-5xl h-16 px-6 sm:px-8 rounded-full flex items-center justify-between transition-all duration-500 bg-white/[0.03] border border-white/5 backdrop-blur-xl">
     
+    {/* LOGO */}
     <a href="/" class="relative z-50 flex items-center">
-      <span class="text-2xl font-poppins font-bold text-white tracking-tighter flex items-center gap-1">
-        DOMA<span class="w-2 h-2  mt-2"></span>
+      <span class="text-xl sm:text-2xl font-poppins font-bold text-white tracking-tighter flex items-center gap-1">
+        DOMA<span></span>
       </span>
     </a>
 
+    {/* LINKS ESCRITORIO */}
     <nav class="hidden md:flex items-center gap-8">
-      <a href="#producto" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+      <a href="#producto" class="text-sm font-gilroy font-medium text-gray-300 hover:text-white transition-colors relative group">
         Producto
         <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#a100ff] transition-all duration-300 group-hover:w-full"></span>
       </a>
-      <a href="#industrias" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+      <a href="#industrias" class="text-sm font-gilroy font-medium text-gray-300 hover:text-white transition-colors relative group">
         Industrias
         <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#437ceb] transition-all duration-300 group-hover:w-full"></span>
       </a>
-      <a href="#modelo" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+      <a href="#modelo" class="text-sm font-gilroy font-medium text-gray-300 hover:text-white transition-colors relative group">
         Modelo
         <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#906ef7] transition-all duration-300 group-hover:w-full"></span>
       </a>
-      <a href="#faq" class="text-[15px] font-gilroy text-gray-300 hover:text-white transition-colors relative group">
+      <a href="#faq" class="text-sm font-gilroy font-medium text-gray-300 hover:text-white transition-colors relative group">
         FAQ
         <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
       </a>
     </nav>
 
+    {/* CTA Y MENÚ MÓVIL */}
     <div class="flex items-center gap-4 z-50">
-      <a href="#contacto" class="hidden md:flex items-center justify-center px-5 py-2 rounded-full bg-white/10 border border-white/10 text-white text-[15px] font-gilroy font-medium hover:bg-[#a100ff] transition-all duration-300 backdrop-blur-md">
+      <a href="#contacto" class="hidden md:flex items-center justify-center px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white text-sm font-gilroy font-bold hover:bg-[#a100ff]  hover:text-[#ffffff] transition-all duration-300 backdrop-blur-md">
         Agendar Demo
       </a>
 
-      <button id="mobile-menu-btn" class="md:hidden text-white p-2 focus:outline-none">
+      {/* Botón Hamburguesa */}
+      <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none ml-2">
         <svg id="icon-menu" class="w-6 h-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
@@ -46,8 +53,9 @@
     </div>
   </div>
 
-  <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0f]/95 backdrop-blur-2xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-28 px-6">
-    <nav class="flex flex-col gap-8">
+  {/* OVERLAY DEL MENÚ MÓVIL */}
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0f]/95 backdrop-blur-3xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-32 px-6">
+    <nav class="flex flex-col gap-8 pointer-events-auto">
       <a href="#producto" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#a100ff] transition-colors">Producto</a>
       <a href="#industrias" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#437ceb] transition-colors">Industrias</a>
       <a href="#modelo" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#906ef7] transition-colors">Modelo</a>
@@ -55,7 +63,7 @@
       
       <div class="h-px w-full bg-white/10 my-4"></div>
       
-      <a href="#contacto" class="mobile-link w-full text-center py-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-lg">
+      <a href="#contacto" class="mobile-link w-full text-center py-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-lg shadow-[0_0_20px_rgba(161,0,255,0.3)]">
         Agendar Demo
       </a>
     </nav>
@@ -63,15 +71,17 @@
 </header>
 
 <script>
-  // 1. Lógica del Scroll (Efecto Cristal)
+  // 1. Lógica del Scroll (Efecto de Isla "Flotante" Dinámica)
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
-      navbar.classList.remove('bg-transparent', 'border-transparent');
-      navbar.classList.add('bg-[#0a0a0f]/80', 'backdrop-blur-md', 'border-white/5');
+      // Estado con Scroll: Más oscura, borde más definido y sombra para flotar
+      navbar.classList.remove('bg-white/[0.03]', 'border-white/5');
+      navbar.classList.add('bg-[#0f0f15]/90', 'border-white/10', 'shadow-[0_10px_40px_rgba(0,0,0,0.5)]');
     } else {
-      navbar.classList.add('bg-transparent', 'border-transparent');
-      navbar.classList.remove('bg-[#0a0a0f]/80', 'backdrop-blur-md', 'border-white/5');
+      // Estado hasta arriba: Cristal sutil integrado al fondo
+      navbar.classList.add('bg-white/[0.03]', 'border-white/5');
+      navbar.classList.remove('bg-[#0f0f15]/90', 'border-white/10', 'shadow-[0_10px_40px_rgba(0,0,0,0.5)]');
     }
   });
 
@@ -90,14 +100,17 @@
     if (isMenuOpen) {
       // Abrir menú
       overlay.classList.remove('opacity-0', 'pointer-events-none');
-      overlay.classList.add('opacity-100', 'pointer-events-auto');
+      overlay.classList.add('opacity-100');
+      // Importante: Hacer que el overlay capture eventos (clics)
+      overlay.classList.add('pointer-events-auto');
       iconMenu.classList.add('hidden');
       iconClose.classList.remove('hidden');
-      document.body.style.overflow = 'hidden'; // Evitar que el usuario haga scroll de fondo
+      document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
     } else {
       // Cerrar menú
-      overlay.classList.remove('opacity-100', 'pointer-events-auto');
+      overlay.classList.remove('opacity-100');
       overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.classList.remove('pointer-events-auto');
       iconMenu.classList.remove('hidden');
       iconClose.classList.add('hidden');
       document.body.style.overflow = ''; // Restaurar scroll
