@@ -6,7 +6,7 @@
 <header class="fixed top-0 inset-x-0 z-50 pt-4 sm:pt-6 px-4 flex justify-center pointer-events-none">
   
   {/* LA ISLA FLOTANTE */}
-  <div id="navbar" class="pointer-events-auto w-full max-w-5xl h-16 px-6 sm:px-8 rounded-full flex items-center justify-between transition-all duration-500 bg-white/[0.03] border border-white/5 backdrop-blur-xl">
+  <div id="navbar" class="pointer-events-auto w-full max-w-5xl h-16 px-6 sm:px-8 rounded-full flex items-center justify-between transition-all duration-500 bg-white/[0.03] border border-white/5 backdrop-blur-xl z-50">
     
     {/* LOGO */}
     <a href="/" class="relative z-50 flex items-center">
@@ -42,7 +42,7 @@
       </a>
 
       {/* Botón Hamburguesa */}
-      <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none ml-2 pointer-events-auto">
+      <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none ml-2 pointer-events-auto relative z-50">
         <svg id="icon-menu" class="w-6 h-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
@@ -54,7 +54,7 @@
   </div>
 
   {/* OVERLAY DEL MENÚ MÓVIL */}
-  <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0f]/95 backdrop-blur-3xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-32 px-6">
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0f]/95 backdrop-blur-3xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-32 px-6 pointer-events-auto">
     
     {/* AQUÍ ESTÁ LA CORRECCIÓN: SE ELIMINÓ pointer-events-auto DE ESTA LÍNEA */}
     <nav class="flex flex-col gap-8">
