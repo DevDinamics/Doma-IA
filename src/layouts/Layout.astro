@@ -1,23 +1,70 @@
 ---
 import '../styles/global.css';
 
+// 1. Definimos las Props con valores opcionales para que cada página pueda tener su propio SEO
 interface Props {
   title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string | URL;
+  type?: 'website' | 'article';
 }
 
-const { title } = Astro.props;
+// 2. Extraemos las Props y asignamos VALORES POR DEFECTO poderosos (Cámbialos por los reales)
+const { 
+  title, 
+  description = "DOMA: El primer Digital Sales Executive para espacios físicos. IA que conecta el conocimiento completo de tu empresa en tiempo real.", 
+  image = "/og-image.jpg", // <-- IMPORTANTE: Crea una imagen de 1200x630px y ponla en tu carpeta 'public'
+  canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin),
+  type = 'website',
+} = Astro.props;
+
+// Construimos la URL absoluta para la imagen (necesario para redes sociales)
+const socialImageURL = new URL(image, Astro.url.origin).href;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Doma IA - Trabajadores digitales multimodales" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#0a0a0f" />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DOMA",
+      "url": Astro.site || Astro.url.origin,
+      "logo": new URL("/favicon.svg", Astro.url.origin).href,
+      "description": "Digital Sales Executive impulsado por IA para espacios físicos.",
+      "sameAs": [
+        // Aquí pones los links de las redes de la empresa en un futuro
+        "https://www.linkedin.com/company/doma",
+      ]
+    })} />
   </head>
-  <body class="bg-doma-bg text-doma-white font-gilroy antialiased">
+  <body class="bg-[#0a0a0f] text-white font-gilroy antialiased overflow-x-hidden">
     <slot />
   </body>
 </html>

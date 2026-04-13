@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+// IMPORTANTE: Importamos la librería que acabamos de instalar
+import Tilt from 'react-parallax-tilt';
 
 // --- SUB-COMPONENTE: Fila de Especificación ---
 const SpecRow = ({ label, value, delay, icon }) => {
@@ -24,7 +26,7 @@ const SpecRow = ({ label, value, delay, icon }) => {
       ref={rowRef}
       className={`group relative flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 border-b border-white/10 transition-all duration-700 ease-out will-change-transform
         ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}
-        hover:bg-white/[0.02] cursor-default overflow-hidden
+        hover:bg-white/[0.02] overflow-hidden
       `}
       style={{ transitionDelay: `${delay}ms` }}
     >
@@ -116,7 +118,7 @@ export default function Model() {
       {/* Ambient Lights */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#437ceb]/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-5xl mx-auto relative z-10 cursor-crosshair">
         
         {/* HEADER */}
         <div 
@@ -138,33 +140,46 @@ export default function Model() {
           </p>
         </div>
 
-        {/* COMPARISON TABLE / TECH SPECS */}
-        <div className="relative bg-[#0f0f15]/80 backdrop-blur-xl border border-white/10 rounded-[40px] shadow-2xl overflow-hidden">
-          
-          {/* Fila de Encabezado (Sticky-like feel) */}
-          <div className="hidden md:flex justify-between px-8 py-6 border-b border-white/10 bg-white/[0.02]">
-            <div className="w-1/3">
-              <span className="font-gilroy font-bold text-xs uppercase tracking-widest text-gray-500">Característica</span>
+        {/* --- EFECTO TILT 3D APLICADO AQUÍ --- */}
+        <Tilt 
+          tiltMaxAngleX={2} // Inclinación sutil (no marea)
+          tiltMaxAngleY={2}
+          perspective={1000} // Profundidad
+          scale={1.01} // Crece apenas un 1% al pasar el mouse
+          transitionSpeed={2000} // Transición hiper suave
+          glareEnable={true} // Activa un brillo que sigue al ratón
+          glareMaxOpacity={0.05} // Brillo muy tenue
+          glareColor="#a100ff" // Brillo color marca
+          glarePosition="all"
+          className="w-full"
+        >
+          <div className="relative bg-[#0f0f15]/80 backdrop-blur-xl border border-white/10 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+            
+            {/* Fila de Encabezado (Sticky-like feel) */}
+            <div className="hidden md:flex justify-between px-8 py-6 border-b border-white/10 bg-white/[0.02]">
+              <div className="w-1/3">
+                <span className="font-gilroy font-bold text-xs uppercase tracking-widest text-gray-500">Característica</span>
+              </div>
+              <div className="w-2/3 text-right">
+                <span className="font-gilroy font-bold text-xs uppercase tracking-widest text-[#a100ff]">DOMA Digital Sales Executive</span>
+              </div>
             </div>
-            <div className="w-2/3 text-right">
-              <span className="font-gilroy font-bold text-xs uppercase tracking-widest text-[#a100ff]">DOMA Digital Sales Executive</span>
+
+            {/* Filas de Datos */}
+            <div className="flex flex-col">
+              {specs.map((spec, idx) => (
+                <SpecRow 
+                  key={idx}
+                  label={spec.label}
+                  value={spec.value}
+                  icon={spec.icon}
+                  delay={idx * 100} // Cascada de animación
+                />
+              ))}
             </div>
-          </div>
 
-          {/* Filas de Datos */}
-          <div className="flex flex-col">
-            {specs.map((spec, idx) => (
-              <SpecRow 
-                key={idx}
-                label={spec.label}
-                value={spec.value}
-                icon={spec.icon}
-                delay={idx * 100} // Cascada de animación
-              />
-            ))}
           </div>
-
-        </div>
+        </Tilt>
 
       </div>
     </section>
