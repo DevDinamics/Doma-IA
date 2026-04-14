@@ -37,7 +37,8 @@
 
     {/* CTA Y MENÚ MÓVIL */}
     <div class="flex items-center gap-4 z-50">
-      <a href="#contacto" class="hidden md:flex items-center justify-center px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white text-sm font-gilroy font-bold hover:bg-[#a100ff]  hover:text-[#ffffff] transition-all duration-300 backdrop-blur-md">
+      {/* CAMBIO: href actualizado a #cta-final */}
+      <a href="#cta-final" class="hidden md:flex items-center justify-center px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white text-sm font-gilroy font-bold hover:bg-[#a100ff]  hover:text-[#ffffff] transition-all duration-300 backdrop-blur-md">
         Agendar Demo
       </a>
 
@@ -54,9 +55,9 @@
   </div>
 
   {/* OVERLAY DEL MENÚ MÓVIL */}
-  <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0f]/95 backdrop-blur-3xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-32 px-6 pointer-events-auto">
+  {/* CAMBIO: Se eliminó el "pointer-events-auto" fantasma del final de esta línea */}
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0f]/95 backdrop-blur-3xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-32 px-6">
     
-    {/* AQUÍ ESTÁ LA CORRECCIÓN: SE ELIMINÓ pointer-events-auto DE ESTA LÍNEA */}
     <nav class="flex flex-col gap-8">
       <a href="#producto" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#a100ff] transition-colors">Producto</a>
       <a href="#industrias" class="mobile-link text-3xl font-poppins font-semibold text-white hover:text-[#437ceb] transition-colors">Industrias</a>
@@ -65,7 +66,8 @@
       
       <div class="h-px w-full bg-white/10 my-4"></div>
       
-      <a href="#contacto" class="mobile-link w-full text-center py-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-lg shadow-[0_0_20px_rgba(161,0,255,0.3)]">
+      {/* CAMBIO: href actualizado a #cta-final */}
+      <a href="#cta-final" class="mobile-link w-full text-center py-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-lg shadow-[0_0_20px_rgba(161,0,255,0.3)]">
         Agendar Demo
       </a>
     </nav>
