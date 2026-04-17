@@ -97,7 +97,7 @@ export default function MetricsGrid() {
           <MetricCard 
             target={70} 
             suffix="%" 
-            text="De consultas en tienda nunca reciben respuesta" 
+            text="De consultas en espacios físicos nunca reciben respuesta" 
             textColor="text-white group-hover:text-white"
             glowColor="via-[#437ceb]"
             delay={200} // Sale segundo
