@@ -15,7 +15,7 @@ interface Props {
 const { 
   title, 
   description = "DOMA: El primer Digital Sales Executive para espacios físicos. IA que conecta el conocimiento completo de tu empresa en tiempo real.", 
-  image = "/Logo_doma_Blanco.png", // <-- IMPORTANTE: Crea una imagen de 1200x630px y ponla en tu carpeta 'public'
+  image = "./Logo_doma_Blanco.png", // <-- IMPORTANTE: Crea una imagen de 1200x630px y ponla en tu carpeta 'public'
   canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin),
   type = 'website',
 } = Astro.props;
