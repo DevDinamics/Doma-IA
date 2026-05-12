@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import WhatsAppWidget from '../pages/components/WhatsAppWidget.jsx';
 
-// 1. Definimos las Props con valores opcionales para que cada página pueda tener su propio SEO
+// 1. Definimos las Props
 interface Props {
   title: string;
   description?: string;
@@ -11,17 +11,21 @@ interface Props {
   type?: 'website' | 'article';
 }
 
-// 2. Extraemos las Props y asignamos VALORES POR DEFECTO poderosos (Cámbialos por los reales)
+// 2. Definimos TU DOMINIO REAL (Esto evita el bug de localhost en Vercel)
+const siteDomain = "https://doma-ia.vercel.app";
+
+// 3. Extraemos las Props
 const { 
   title, 
   description = "DOMA: El primer Digital Sales Executive para espacios físicos. IA que conecta el conocimiento completo de tu empresa en tiempo real.", 
-  image = "/Logo_doma.png", // <-- IMPORTANTE: Crea una imagen de 1200x630px y ponla en tu carpeta 'public'
-  canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin),
+  // Usa la nueva imagen JPG con fondo sólido
+  image = "/og-image.jpg", 
+  canonicalURL = new URL(Astro.url.pathname, siteDomain),
   type = 'website',
 } = Astro.props;
 
-// Construimos la URL absoluta para la imagen (necesario para redes sociales)
-const socialImageURL = new URL(image, Astro.url.origin).href;
+// Construimos la URL absoluta 100% segura
+const socialImageURL = new URL(image, siteDomain).href;
 ---
 
 <!doctype html>
