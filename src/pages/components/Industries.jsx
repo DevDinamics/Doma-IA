@@ -210,7 +210,7 @@ export default function Industries() {
         </div>
 
         {/* --- TABS BAR (Scrollable en móvil) --- */}
-        <div className="relative mb-12 lg:mb-16">
+        <div className="relative mb-12 lg:mb-16 z-40">
           
           {/* Contenedor de botones: Conectado a la ref y al onScroll */}
           <div 
