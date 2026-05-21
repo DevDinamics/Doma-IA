@@ -212,17 +212,21 @@ export default function Industries() {
         {/* --- TABS BAR (Scrollable en móvil) --- */}
         <div className="relative mb-12 lg:mb-16 z-40">
           
-          {/* Contenedor de botones: Conectado a la ref y al onScroll */}
           <div 
             ref={scrollContainerRef}
             onScroll={handleTabScroll}
-            className={`flex overflow-x-auto hide-scrollbar gap-2 sm:gap-4 pb-4 border-b border-white/10 snap-x snap-mandatory transform transition-all duration-1000 delay-200 pr-16 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} relative z-10`}
+            // 1. Quitamos snap-x y snap-mandatory
+            // 2. Agregamos touch-pan-x para forzar el scroll táctil horizontal
+            className={`flex overflow-x-auto hide-scrollbar gap-2 sm:gap-4 pb-4 border-b border-white/10 pr-16 touch-pan-x ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} relative z-10`}
+            // 3. Este estilo en línea es magia pura para Safari en iOS
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {industriesData.map((ind) => (
               <button
                 key={ind.id}
                 onClick={() => setActiveTab(ind.id)}
-                className={`snap-start whitespace-nowrap px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-gilroy font-semibold text-sm sm:text-[15px] transition-all duration-300 flex-shrink-0 ${
+                // 4. Quitamos snap-start y aseguramos z-30 para que el toque siempre registre en el botón
+                className={`whitespace-nowrap px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-gilroy font-semibold text-sm sm:text-[15px] transition-all duration-300 flex-shrink-0 relative z-30 ${
                   activeTab === ind.id 
                   ? 'bg-white text-[#0a0a0f] shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
                   : 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5'
@@ -234,7 +238,6 @@ export default function Industries() {
           </div>
           
           {/* Indicador de Swipe (Solo Móvil) */}
-          {/* Agregamos una transición de opacidad basada en el estado 'isAtEnd' */}
           <div className={`absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent pointer-events-none sm:hidden flex justify-end items-center z-20 transition-opacity duration-300 ${isAtEnd ? 'opacity-0' : 'opacity-100'}`}>
             
             <div className="relative flex h-8 w-8 items-center justify-center pointer-events-none">
