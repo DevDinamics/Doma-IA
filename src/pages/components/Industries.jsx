@@ -108,6 +108,8 @@ export default function Industries() {
   const [activeTab, setActiveTab] = useState(industriesData[0].id);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const [isAtEnd, setIsAtEnd] = useState(false);
   
   // Estado para rastrear el progreso del scroll dentro de la sección
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -157,6 +159,21 @@ export default function Industries() {
   const card1Offset = offsetMultiplier * -40; // Se mueve hacia arriba/abajo 40px
   const card2Offset = offsetMultiplier * -80; // Se mueve el doble de rápido (80px)
 
+
+
+  // Detecta si el usuario ya scrolleó hasta el final de las pestañas
+  const handleTabScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      // Si lo que avanzó + lo que se ve en pantalla es igual al ancho total (con un margen de 5px)
+      if (scrollLeft + clientWidth >= scrollWidth - 5) {
+        setIsAtEnd(true); // Llegó al final, escondemos flecha
+      } else {
+        setIsAtEnd(false); // Sigue habiendo contenido, mostramos flecha
+      }
+    }
+  };
+
   return (
     <section id="industrias" className="relative py-20 lg:py-32 px-4 sm:px-6 bg-[#0a0a0f] overflow-hidden" ref={sectionRef}>
       
@@ -193,14 +210,14 @@ export default function Industries() {
         </div>
 
         {/* --- TABS BAR (Scrollable en móvil) --- */}
-        {/* Envolvemos en un div relativo para posicionar el indicador flotante */}
         <div className="relative mb-12 lg:mb-16">
           
-          {/* Agregamos una sombra interna sutil en el borde izquierdo (Solo Móvil) */}
-          {/* Esto da sensación de que los botones "entran" y "salen" de la pantalla */}
-          <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0a0a0f] to-transparent pointer-events-none sm:hidden z-20"></div>
-
-          <div className={`flex overflow-x-auto hide-scrollbar gap-2 sm:gap-4 pb-4 border-b border-white/10 snap-x snap-mandatory transform transition-all duration-1000 delay-200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} relative z-10`}>
+          {/* Contenedor de botones: Conectado a la ref y al onScroll */}
+          <div 
+            ref={scrollContainerRef}
+            onScroll={handleTabScroll}
+            className={`flex overflow-x-auto hide-scrollbar gap-2 sm:gap-4 pb-4 border-b border-white/10 snap-x snap-mandatory transform transition-all duration-1000 delay-200 pr-16 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} relative z-10`}
+          >
             {industriesData.map((ind) => (
               <button
                 key={ind.id}
@@ -214,30 +231,22 @@ export default function Industries() {
                 {ind.name}
               </button>
             ))}
-            {/* Un espaciador al final para que el último botón no se pegue al borde derecho si scrollean al final */}
-            <div className="w-20 flex-shrink-0 sm:hidden"></div>
           </div>
           
-          {/* Indicador de Swipe (Solo Móvil) — VERSIÓN ALTO IMPACTO */}
-          {/* Se oculta a partir del breakpoint 'sm' (tablets y pantallas grandes) */}
-          {/* Aumentamos el ancho (`w-20`) y la intensidad del gradiente oscuro */}
-          <div className="absolute right-0 top-0 bottom-4 w-20 bg-gradient-to-l from-[#0a0a0f] via-[#0a0a0f]/90 to-transparent pointer-events-none sm:hidden flex justify-end items-center pr-1.5 z-20">
+          {/* Indicador de Swipe (Solo Móvil) */}
+          {/* Agregamos una transición de opacidad basada en el estado 'isAtEnd' */}
+          <div className={`absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent pointer-events-none sm:hidden flex justify-end items-center z-20 transition-opacity duration-300 ${isAtEnd ? 'opacity-0' : 'opacity-100'}`}>
             
-            {/* Contenedor del ícono con un "Glow" o brillo de fondo parpadeante */}
-            <div className="relative flex h-8 w-8 items-center justify-center">
+            <div className="relative flex h-8 w-8 items-center justify-center pointer-events-none">
+              <div className="absolute inset-0 rounded-full bg-white/20 blur-sm animate-[pulse_1.2s_cubic-bezier(0.4,0,0.6,1)_infinite] pointer-events-none"></div>
               
-              {/* Brillo parpadeante de fondo (blanco/gris suave) */}
-              {/* Esto hace que la flecha resalte muchísimo sobre el fondo negro */}
-              <div className="absolute inset-0 rounded-full bg-white/20 blur-sm animate-[pulse_1.2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
-              
-              {/* Flecha SVG más gruesa y visible */}
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="relative h-5 w-5 text-white" 
+                className="relative h-5 w-5 text-white pointer-events-none" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
-                strokeWidth={3} // Aumentamos el grosor de la línea
+                strokeWidth={3}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
