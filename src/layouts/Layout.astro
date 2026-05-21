@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import WhatsAppWidget from '../pages/components/WhatsAppWidget.jsx';
+import ScrollToTop from '../pages/components/ScrollToTop.astro';
 
 // 1. Definimos las Props
 interface Props {
@@ -11,8 +12,8 @@ interface Props {
   type?: 'website' | 'article';
 }
 
-// 2. Definimos TU DOMINIO REAL (Esto evita el bug de localhost en Vercel)
-const siteDomain = "https://doma-ia.vercel.app";
+// 2. DOMINIO REAL (Actualizado a producción)
+const siteDomain = "https://domahumans.com";
 
 // 3. Extraemos las Props
 const { 
@@ -41,13 +42,13 @@ const socialImageURL = new URL(image, siteDomain).href;
     <link rel="icon" type="image/svg+xml" href="/DOMA_Isotipo.svg" />
     
     {/* 2. El clásico para pestañas de escritorio (32x32) */}
-    <link rel="icon" type="image/png" sizes="32x32" href="/DOMA_isotipo_32x32.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/DOMA_Isotipo_32x32.png" />
     
     {/* 3. El de Apple (180x180 con fondo negro) */}
-    <link rel="apple-touch-icon" sizes="180x180" href="/DOMA_isotipo_180x180.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/DOMA_Isotipo_180x180.png" />
     
     {/* 4. El Master para Android y PWA (512x512) */}
-    <link rel="icon" type="image/png" sizes="512x512" href="/DOMA_isotipo_512x512.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/DOMA_Isotipo_512x512.png" />
 
     {/* --- SEO & META TAGS --- */}
     <title>{title}</title>
@@ -85,6 +86,7 @@ const socialImageURL = new URL(image, siteDomain).href;
   </head>
   <body class="bg-[#0a0a0f] text-white font-gilroy antialiased overflow-x-hidden">
     <slot />
+    <ScrollToTop />
     <WhatsAppWidget client:load />
   </body>
 </html>

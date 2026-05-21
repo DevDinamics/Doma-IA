@@ -193,20 +193,56 @@ export default function Industries() {
         </div>
 
         {/* --- TABS BAR (Scrollable en móvil) --- */}
-        <div className={`flex overflow-x-auto hide-scrollbar gap-2 sm:gap-4 mb-12 lg:mb-16 pb-4 border-b border-white/10 snap-x snap-mandatory transform transition-all duration-1000 delay-200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
-          {industriesData.map((ind) => (
-            <button
-              key={ind.id}
-              onClick={() => setActiveTab(ind.id)}
-              className={`snap-start whitespace-nowrap px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-gilroy font-semibold text-sm sm:text-[15px] transition-all duration-300 flex-shrink-0 ${
-                activeTab === ind.id 
-                ? 'bg-white text-[#0a0a0f] shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
-                : 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              {ind.name}
-            </button>
-          ))}
+        {/* Envolvemos en un div relativo para posicionar el indicador flotante */}
+        <div className="relative mb-12 lg:mb-16">
+          
+          {/* Agregamos una sombra interna sutil en el borde izquierdo (Solo Móvil) */}
+          {/* Esto da sensación de que los botones "entran" y "salen" de la pantalla */}
+          <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0a0a0f] to-transparent pointer-events-none sm:hidden z-20"></div>
+
+          <div className={`flex overflow-x-auto hide-scrollbar gap-2 sm:gap-4 pb-4 border-b border-white/10 snap-x snap-mandatory transform transition-all duration-1000 delay-200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} relative z-10`}>
+            {industriesData.map((ind) => (
+              <button
+                key={ind.id}
+                onClick={() => setActiveTab(ind.id)}
+                className={`snap-start whitespace-nowrap px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-gilroy font-semibold text-sm sm:text-[15px] transition-all duration-300 flex-shrink-0 ${
+                  activeTab === ind.id 
+                  ? 'bg-white text-[#0a0a0f] shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
+                  : 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                {ind.name}
+              </button>
+            ))}
+            {/* Un espaciador al final para que el último botón no se pegue al borde derecho si scrollean al final */}
+            <div className="w-20 flex-shrink-0 sm:hidden"></div>
+          </div>
+          
+          {/* Indicador de Swipe (Solo Móvil) — VERSIÓN ALTO IMPACTO */}
+          {/* Se oculta a partir del breakpoint 'sm' (tablets y pantallas grandes) */}
+          {/* Aumentamos el ancho (`w-20`) y la intensidad del gradiente oscuro */}
+          <div className="absolute right-0 top-0 bottom-4 w-20 bg-gradient-to-l from-[#0a0a0f] via-[#0a0a0f]/90 to-transparent pointer-events-none sm:hidden flex justify-end items-center pr-1.5 z-20">
+            
+            {/* Contenedor del ícono con un "Glow" o brillo de fondo parpadeante */}
+            <div className="relative flex h-8 w-8 items-center justify-center">
+              
+              {/* Brillo parpadeante de fondo (blanco/gris suave) */}
+              {/* Esto hace que la flecha resalte muchísimo sobre el fondo negro */}
+              <div className="absolute inset-0 rounded-full bg-white/20 blur-sm animate-[pulse_1.2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
+              
+              {/* Flecha SVG más gruesa y visible */}
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="relative h-5 w-5 text-white" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                strokeWidth={3} // Aumentamos el grosor de la línea
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* --- CONTENIDO ACTIVO --- */}

@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1. Forzar conexión segura HTTPS (el candadito)
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # 2. Rutas limpias (Quitar la extensión .html para que se vea profesional)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L,QSA]
+  
+  # 3. Redirigir errores 404 al inicio (por si alguien escribe mal la ruta)
+  ErrorDocument 404 /index.html
+</IfModule>

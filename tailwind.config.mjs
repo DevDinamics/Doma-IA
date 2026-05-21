@@ -12,7 +12,7 @@ export default {
       },
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
-        'gilroy': ['Gilroy', 'sans-serif'],
+        'gilroy': ['"Plus Jakarta Sans"', 'sans-serif'],
       }
     },
   },
