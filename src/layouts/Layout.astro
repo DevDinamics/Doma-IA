@@ -86,7 +86,7 @@ const socialImageURL = new URL(image, siteDomain).href;
   </head>
   <body class="bg-[#0a0a0f] text-white font-gilroy antialiased overflow-x-hidden">
     <slot />
-    <ScrollToTop />
+    <ScrollToTop client:load />
     <WhatsAppWidget client:load />
   </body>
 </html>
