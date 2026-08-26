@@ -199,9 +199,9 @@ export default function Industries() {
             Industrias
           </span>
           <h2 className="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 sm:mb-6">
-            Tu Digital Sales Executive,<br className="hidden sm:block"/>
+            Un empleado con el expertise<br className="hidden sm:block"/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb] block sm:inline">
-              listo para tu sector.
+            ideal para cada industria.
             </span>
           </h2>
           <p className="font-gilroy text-base sm:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
