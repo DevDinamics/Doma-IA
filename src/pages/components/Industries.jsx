@@ -333,25 +333,25 @@ export default function Industries() {
               {/* 3. Plataforma de luz esmerilada en la base */}
               <div className="absolute bottom-5 w-[80%] h-24 lg:h-32 bg-gradient-to-t from-white/10 to-transparent rounded-full blur-2xl opacity-50 pointer-events-none"></div>
 
-              {/* 4. IMAGEN PRINCIPAL (Sustituye la ruta por tu imagen real) */}
-              <div 
-                className="relative z-10 w-full h-full flex items-end justify-center"
-                style={{ 
-                  // Máscara para que se desvanezca en la base y no se vea cortada
-                  maskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)', 
-                  WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)'
-                }}
-              >
-                {/* ---> AQUÍ PONES LA RUTA DE TU IMAGEN <--- */}
-                <img 
-                      src="/fondo.png" 
-                      alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
-                      className="w-full h-full object-cover object-bottom p-6 group-hover:scale-[1.01] transition-transform duration-700 brightness-110 contrast-110 drop-shadow-[0_0_15px_rgba(161,0,255,0.3)]"
-                      style={{ 
-                        mixBlendMode: 'screen', // Solución al fondo negro
-                      }}
-                    />
-              </div>
+              {/* 4. IMAGEN PRINCIPAL (Tótem Completo) */}
+<div 
+  className="relative z-10 w-full h-[520px] sm:h-[600px] lg:h-[700px] flex items-center justify-center"
+  style={{ 
+    // Gradiente suave solo en el pie para integrarlo con el fondo
+    maskImage: 'linear-gradient(to top, transparent 0%, black 8%, black 100%)', 
+    WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 8%, black 100%)'
+  }}
+>
+  {/* ---> IMAGEN AJUSTADA CON OBJECT-CONTAIN <--- */}
+  <img 
+    src="/TOTEM DOMA SITIO.webp" 
+    alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
+    className="w-full h-full max-h-full object-contain object-center group-hover:scale-[1.01] transition-transform duration-700 brightness-105 contrast-110 drop-shadow-[0_0_25px_rgba(161,0,255,0.35)]"
+    style={{ 
+      mixBlendMode: 'screen',
+    }}
+  />
+</div>
 
             </div>
           </div>

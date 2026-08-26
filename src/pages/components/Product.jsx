@@ -108,20 +108,23 @@ const ProductCard = ({ number, title, description, colorClasses, index, totalCar
 // --- 2. SECCIÓN PRINCIPAL (La que se te había borrado jeje) ---
 export default function Product() {
   // Asegúrate de que todas tengan el campo 'number'
-  const cards = [
+ const cards = [
     {
-      title: "QOPA conecta el 100% de tu empresa en tiempo real",
-      description: "Respuestas con tu información real. DOMA se conecta directo a tu nube: inventarios actualizados, políticas vigentes, disponibilidad por sucursal.",
+      tag: "PILAR 01",
+      title: "Tótem físico diseñado para entornos reales",
+      description: "Hardware universal equipado con un arreglo de micrófonos direccionales que capturan la voz humana con precisión en lugares concurridos y ruidosos.",
       colorClasses: { bg: "from-[#a100ff]/50", text: "text-[#a100ff]", border: "hover:border-[#a100ff]/40" }
     },
     {
-      title: "Conversación natural, no respuestas pregrabadas",
-      description: "Un Digital Sales Executive con nombre, voz y personalidad de tu marca. Responde como un experto de tu equipo — en tiempo real, por voz y pantalla.",
+      tag: "PILAR 02",
+      title: "Conversación natural por voz y pantalla",
+      description: "Un avatar con la voz y personalidad de tu marca que responde al instante, proyecta imágenes de productos y guía al cliente en su decisión.",
       colorClasses: { bg: "from-[#437ceb]/50", text: "text-[#437ceb]", border: "hover:border-[#437ceb]/40" }
     },
     {
-      title: "Hardware propio para el mundo real",
-      description: "Micrófonos optimizados para entornos ruidosos. Llave en mano. La competencia depende del hardware del cliente. DOMA no.",
+      tag: "PILAR 03",
+      title: "Integración directa a tu información en la nube",
+      description: "DOMA se conecta a tus inventarios, bases de datos y sistemas CRM. Cualquier cambio de precio o política se refleja de inmediato en todos tus tótems.",
       colorClasses: { bg: "from-[#906ef7]/50", text: "text-[#906ef7]", border: "hover:border-[#906ef7]/40" }
     }
   ];
@@ -152,35 +155,46 @@ export default function Product() {
               Tres capacidades que ningún competidor global tiene juntas.
             </p>
 
-            {/* Tótem DOMA */}
-            <div className="relative animate-fade-in delay-300 w-full max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto lg:mx-0">
-                <div className="relative w-full aspect-[4/5] flex items-center justify-center group">
-                  
-                  <div className="absolute w-[80%] h-[80%] border border-white/5 rounded-full animate-[spin_20s_linear_infinite] pointer-events-none"></div>
-                  <div className="absolute w-[60%] h-[60%] border border-[#a100ff]/10 rounded-full animate-[spin_15s_linear_infinite_reverse] pointer-events-none"></div>
-                  
-                  <div className="absolute bottom-10 w-[60%] h-24 lg:h-32 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-full blur-2xl opacity-70 pointer-events-none"></div>
-                  <div className="absolute bottom-20 w-[40%] h-4 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full pointer-events-none"></div>
+            {/* Tótem DOMA  */}
+<div className="relative animate-fade-in delay-300 w-full max-w-[320px] sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto lg:mx-0 select-none">
+  <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] flex items-center justify-center group">
+    
+    {/* 1. ONDAS DE RADAR / DETECCIÓN SENSOR (Fondo) */}
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="w-[110%] h-[110%] rounded-full border border-white/[0.04] animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
+      <div className="w-[85%] h-[85%] rounded-full border border-[#a100ff]/15 animate-[spin_25s_linear_infinite]"></div>
+      <div className="w-[60%] h-[60%] rounded-full border border-dashed border-[#437ceb]/20 animate-[spin_35s_linear_infinite_reverse]"></div>
+    </div>
 
-                  <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-[40px] blur-2xl lg:blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"></div>
+    {/* 2. GLOW DE PANTALLA Y VOLUMEN */}
+    <div className="absolute top-12 sm:top-16 w-48 sm:w-64 h-64 bg-gradient-to-tr from-[#a100ff]/30 via-[#b656ff]/20 to-[#437ceb]/25 rounded-full blur-[80px] lg:blur-[100px] pointer-events-none"></div>
 
-                  <div 
-                    className="relative z-10 w-full h-full flex items-center justify-center"
-                    style={{ 
-                      maskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)', 
-                      WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)'
-                    }}
-                  >
-                    <img 
-                      src="/Product_p.png" 
-                      alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
-                      className="w-full h-full object-contain object-bottom p-4 lg:p-6 group-hover:scale-[1.01] transition-transform duration-700 brightness-110 contrast-110 drop-shadow-[0_0_15px_rgba(161,0,255,0.3)]"
-                      style={{ mixBlendMode: 'screen' }}
-                    />
-                  </div>
+    {/* 3. PLATAFORMA DE PISO (Anclaje al suelo) */}
+    <div className="absolute bottom-4 sm:bottom-6 w-[80%] h-12 bg-gradient-to-t from-[#a100ff]/30 via-[#437ceb]/10 to-transparent rounded-[100%] blur-xl opacity-80 pointer-events-none"></div>
+    <div className="absolute bottom-6 sm:bottom-8 w-[65%] h-5 border border-white/10 bg-white/[0.02] backdrop-blur-sm rounded-[100%] pointer-events-none shadow-[0_0_20px_rgba(161,0,255,0.2)]"></div>
 
-                </div>
-            </div>
+    
+
+    
+
+    {/* 6. IMAGEN PRINCIPAL */}
+    <div 
+      className="relative z-10 w-full h-full flex items-center justify-center"
+      style={{ 
+        maskImage: 'linear-gradient(to top, transparent 0%, black 8%, black 100%)', 
+        WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 8%, black 100%)'
+      }}
+    >
+      <img 
+        src="/TOTEM DOMA SITIO 2.webp" 
+        alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
+        className="w-full h-full object-contain object-bottom group-hover:scale-[1.02] transition-transform duration-700 brightness-105 contrast-110 drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]"
+        style={{ mixBlendMode: 'screen' }}
+      />
+    </div>
+
+  </div>
+</div>
           </div>
 
           {/* COLUMNA DERECHA: Las Tarjetas Stacking */}
