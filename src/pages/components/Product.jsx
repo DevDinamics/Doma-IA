@@ -145,9 +145,9 @@ export default function Product() {
             </span>
             
             <h2 className="font-poppins text-4xl sm:text-5xl lg:text-[52px] font-bold text-white leading-[1.1] mb-4 lg:mb-6 tracking-tighter">
-              No es un chatbot.<br/>
+              Un empleado digital<br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">
-                Es un Digital Sales Executive.
+              operando en tus puntos de venta físicos.
               </span>
             </h2>
             

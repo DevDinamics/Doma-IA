@@ -42,7 +42,7 @@ export default function Model() {
             </span>
           </h2>
           <p className="font-gilroy text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-            Un Digital Sales Executive que no descansa, no olvida y no improvisa.
+            Doma trabaja 24/7, siempre está actualizado y responde de forma consistente.
           </p>
         </div>
 
