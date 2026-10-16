@@ -1,38 +1,74 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Navbar from './components/Navbar.astro';
-import Hero from './components/Hero.astro';
-import Metrics from './components/Metrics.jsx';
-import Product from './components/Product.jsx';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Metrics from '../components/Metrics.jsx';
+import Product from '../components/Product.jsx';
+import Industries from '../components/Industries.jsx';
+import Model from '../components/Model.jsx';
+import Faqs from '../components/Faq.jsx';
+import Cta from '../components/CtaFinal.astro';
+import Footer from '../components/Footer.astro';
 
-import Industries from './components/Industries.jsx';
-import Model from './components/Model.jsx';
-import Faqs from './components/Faq.jsx';
-import Cta from './components/CtaFinal.astro';
-import Footer from './components/Footer.astro';
-import WhatsAppWidget from './components/WhatsAppWidget.jsx';
-
+// Schemas estructurados para posicionamiento avanzado
+const homeSchemas = [
+  // 1. Entidad de Software / IA
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DOMA IA",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "description": "El primer Digital Sales Executive para espacios físicos. Inteligencia Artificial que conecta el conocimiento completo de tu empresa en tiempo real.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  },
+  // 2. Rich Snippets de Preguntas Frecuentes (Alineadas con tu componente Faqs)
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Qué es DOMA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "DOMA es un Digital Sales Executive impulsado por Inteligencia Artificial diseñado para interactuar con clientes en espacios físicos y comerciales en tiempo real."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo se integra DOMA en mi negocio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Se conecta directamente con la base de conocimiento de tu empresa, CRM y catálogos de productos para ofrecer respuestas precisas e inmediatas a los visitantes."
+        }
+      }
+    ]
+  }
+];
 ---
 
-<Layout title="doma | Interacción Humano-IA">
+<Layout 
+  title="DOMA | Digital Sales Executive para Espacios Físicos con IA"
+  description="Revoluciona tus puntos de venta con DOMA: el primer Digital Sales Executive con Inteligencia Artificial que atiende, asesora y vende en tiempo real."
+  customSchema={homeSchemas}
+>
   <Navbar />
   
   <main>
     <Hero />
-  
     <Metrics client:visible />
-
     <Product client:visible />
-
     <Industries client:visible />
-
     <Model client:visible />
-
     <Faqs client:visible />
-
     <Cta />
-
     <Footer />
   </main>
-  <WhatsAppWidget />
+  
+  {/* WhatsAppWidget eliminado de aquí porque ya vive en Layout.astro */}
 </Layout>

@@ -1,92 +1,162 @@
 ---
 import '../styles/global.css';
-import WhatsAppWidget from '../pages/components/WhatsAppWidget.jsx';
-import ScrollToTop from '../pages/components/ScrollToTop.astro';
+import WhatsAppWidget from '../components/WhatsAppWidget.jsx';
+import ScrollToTop from '../components/ScrollToTop.astro';
 
-// 1. Definimos las Props
+// 1. Props estrictas y ampliadas
 interface Props {
   title: string;
   description?: string;
   image?: string;
   canonicalURL?: string | URL;
   type?: 'website' | 'article';
+  noindex?: boolean;
+  // Campos opcionales para artículos de blog
+  publishedTime?: string; // Formato ISO: YYYY-MM-DDTHH:mm:ssZ
+  modifiedTime?: string;
+  author?: string;
+  // Schema JSON-LD adicional específico de la página
+  customSchema?: Record<string, any> | Array<Record<string, any>>;
 }
 
-// 2. DOMINIO REAL (Actualizado a producción)
 const siteDomain = "https://domahumans.com";
 
-// 3. Extraemos las Props
 const { 
   title, 
   description = "DOMA: El primer Digital Sales Executive para espacios físicos. IA que conecta el conocimiento completo de tu empresa en tiempo real.", 
-  // Usa la nueva imagen JPG con fondo sólido
   image = "/portada-doma.jpg", 
-  canonicalURL = new URL(Astro.url.pathname, siteDomain),
+  canonicalURL = new URL(Astro.url.pathname, siteDomain).href,
   type = 'website',
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+  author = "DOMA",
+  customSchema
 } = Astro.props;
 
-// Construimos la URL absoluta 100% segura
+// Normalización de Título de Marca
+const formattedTitle = title.toLowerCase().includes("doma") ? title : `${title} | DOMA IA`;
+
+// Construcción segura de URLs absolutas
+const canonical = typeof canonicalURL === 'string' ? canonicalURL : canonicalURL.href;
 const socialImageURL = new URL(image, siteDomain).href;
+
+// Esquema Global Organization (Entidad principal)
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${siteDomain}/#organization`,
+  "name": "DOMA",
+  "url": siteDomain,
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${siteDomain}/DOMA_Isotipo.svg`
+  },
+  "description": "Digital Sales Executive impulsado por IA para espacios físicos.",
+  "sameAs": [
+    "https://www.linkedin.com/company/domahumans/"
+  ]
+};
 ---
 
 <!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
+    <!-- Preconnect / DNS-Prefetch para Core Web Vitals -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+    <!-- Google Tag Manager -->
+    <script is:inline>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PV376BQT');
+    </script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#0a0a0f" />
 
-    {/* --- FAVICONS DOMA --- */}
-    {/* 1. El vector (La opción más moderna y ligera) */}
+    {/* --- SITEMAP --- */}
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* --- FAVICONS & ICONS --- */}
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/DOMA_Isotipo.svg" />
-    
-    {/* 2. El clásico para pestañas de escritorio (32x32) */}
     <link rel="icon" type="image/png" sizes="32x32" href="/DOMA_Isotipo_32x32.png" />
-    
-    {/* 3. El de Apple (180x180 con fondo negro) */}
     <link rel="apple-touch-icon" sizes="180x180" href="/DOMA_Isotipo_180x180.png" />
-    
-    {/* 4. El Master para Android y PWA (512x512) */}
     <link rel="icon" type="image/png" sizes="512x512" href="/DOMA_Isotipo_512x512.png" />
 
-    {/* --- SEO & META TAGS --- */}
-    <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
 
-    {/* Open Graph / Facebook */}
+    {/* --- SEO BÁSICO & INDEXACIÓN --- */}
+    <title>{formattedTitle}</title>
+    <meta name="description" content={description} />
+    <meta 
+      name="robots" 
+      content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} 
+    />
+    <meta name="google-site-verification" content="6uzRu5H_OgKKRfGjoaVd4AhM6_DeXd0Lc6thFvs-E9k" />
+    <link rel="canonical" href={canonical} />
+
+    {/* --- OPEN GRAPH (Facebook, WhatsApp, LinkedIn) --- */}
+    <meta property="og:site_name" content="DOMA" />
     <meta property="og:type" content={type} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={formattedTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:secure_url" content={socialImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={formattedTitle} />
 
-    {/* Twitter */}
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={socialImageURL} />
+    {/* Metadatos extra si es un artículo */}
+    {type === 'article' && (
+      <>
+        {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+        {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+        {author && <meta property="article:author" content={author} />}
+      </>
+    )}
 
-    {/* --- SCHEMA MARKUP (Para Google) --- */}
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "DOMA",
-      "url": Astro.site || Astro.url.origin,
-      "logo": new URL("/DOMA_Isotipo.svg", Astro.url.origin).href,
-      "description": "Digital Sales Executive impulsado por IA para espacios físicos.",
-      "sameAs": [
-        // Aquí pones los links de las redes de la empresa en un futuro
-        "https://www.linkedin.com/company/domahumans/",
-      ]
-    })} />
+    {/* --- TWITTER CARDS --- */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={formattedTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
+    <meta name="twitter:image:alt" content={formattedTitle} />
+
+    {/* --- SCHEMA MARKUP (Datos Estructurados) --- */}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    
+    {/* Schema opcional dinámico por página */}
+    {customSchema && (
+      <script 
+        is:inline
+        type="application/ld+json" 
+        set:html={JSON.stringify(customSchema)} 
+      />
+    )}
+
+    {/* Slot para scripts o links específicos en el head de una página */}
+    <slot name="head" />
   </head>
   <body class="bg-[#0a0a0f] text-white font-gilroy antialiased overflow-x-hidden">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PV376BQT"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <slot />
-    <ScrollToTop client:load />
+    <ScrollToTop />
     <WhatsAppWidget client:load />
   </body>
 </html>

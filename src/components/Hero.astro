@@ -1,0 +1,367 @@
+---
+// src/components/Hero.astro
+---
+
+<section id="hero" class="relative min-h-[100vh] lg:min-h-[90vh] flex items-center pt-28 pb-12 sm:pt-32 sm:pb-16 lg:pt-24 lg:pb-16 overflow-hidden bg-[#0a0a0f]">
+  
+  <!-- Luces y efectos ambientales de fondo -->
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-[-10%] right-[-10%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-[#a100ff]/20 rounded-full blur-[80px] lg:blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] bg-[#437ceb]/15 rounded-full blur-[80px] lg:blur-[100px]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem] lg:bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse:80%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10 lg:gap-8">      
+      
+      <!-- Columna izquierda: Textos y Botón CTA -->
+      <div class="flex-1 w-full flex flex-col items-center text-center lg:items-start lg:text-left lg:max-w-xl xl:max-w-2xl animate-fade-in"> 
+        <h1 class="font-poppins text-3xl sm:text-5xl lg:text-[60px] xl:text-[64px] font-bold leading-[1.12] sm:leading-[1.1] tracking-tight text-white mb-5 sm:mb-6">
+          <span class="block opacity-90">El primer empleado digital para </span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] via-[#b656ff] to-[#437ceb]">
+            espacios físicos.
+          </span>
+        </h1>
+        
+        <p class="font-gilroy text-sm sm:text-base lg:text-lg text-gray-400 max-w-md lg:max-w-lg leading-relaxed mb-8 md:mb-10">
+          DOMA conecta el conocimiento completo de tu empresa con un <span class="text-white font-semibold">empleado digital</span>, disponible 24/7. Consistente. Escalable.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 w-full sm:w-auto">
+          <!-- Botón CTA disparador -->
+          <button 
+            id="open-modal-btn" 
+            type="button" 
+            class="w-full sm:w-auto text-center px-8 py-4 rounded-full bg-white text-[#0a0a0f] font-gilroy font-black text-base hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] cursor-pointer"
+          >
+            Agenda una demo
+          </button>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Tótem / Avatar responsivo -->
+      <div class="flex-1 w-full relative animate-fade-in delay-300 mt-6 lg:mt-0 max-w-xs sm:max-w-md lg:max-w-none mx-auto self-end flex justify-center">
+        <div class="relative w-full flex items-end justify-center h-[420px] sm:h-[520px] lg:h-[650px] xl:h-[750px]">
+          <div class="absolute bottom-6 w-[70%] h-28 bg-gradient-to-t from-[#a100ff]/20 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none z-0"></div>
+
+          <img 
+            src="./TOTEM DOMA SITIO 3.webp" 
+            alt="DOMA — Digital Sales Executive"
+            class="absolute bottom-0 w-auto h-full object-contain object-bottom brightness-110 contrast-110 drop-shadow-[0_0_20px_rgba(161,0,255,0.25)] group-hover:scale-[1.01] transition-transform duration-700"
+            style="
+              mix-blend-mode: screen;
+              -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+              mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+            "
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- MODAL OVERLAY: CUBRE Y DIFUMINA TODO DETRÁS   -->
+<!-- z-[9999] garantiza estar por encima del navbar -->
+<!-- ============================================== -->
+<div 
+  id="lead-modal-backdrop" 
+  class="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+>
+  <div 
+    id="lead-modal-container"
+    class="relative w-full max-w-md md:max-w-lg bg-[#111019] border border-white/10 rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-[0_0_50px_rgba(161,0,255,0.25)] transform scale-95 transition-all duration-300 max-h-[92dvh] flex flex-col"
+  >
+    <!-- Botón Cerrar (X) grande y accesible -->
+    <!-- Botón Cerrar (X) perfectamente centrado -->
+<button 
+  id="close-modal-btn" 
+  type="button" 
+  class="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 text-gray-400 hover:text-white transition-all flex items-center justify-center z-20 cursor-pointer"
+  aria-label="Cerrar modal"
+>
+  <svg 
+    class="w-4 h-4" 
+    fill="none" 
+    stroke="currentColor" 
+    viewBox="0 0 24 24" 
+    stroke-width="2.2" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+  >
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+</button>
+
+    <!-- Scroll interno si la pantalla del teléfono es pequeña -->
+    <div class="overflow-y-auto pr-1 select-none custom-scrollbar">
+
+      <!-- PASO 1: FORMULARIO -->
+      <div id="step-form">
+        <div class="mb-5 sm:mb-6 pr-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Agenda una demo</h3>
+          <p class="text-xs sm:text-sm text-gray-400 mt-1 leading-snug">Completa los siguientes datos para coordinar una sesión personalizada.</p>
+        </div>
+
+        <form id="lead-form" class="space-y-3.5 sm:space-y-4">
+          <!-- Nombre Completo -->
+          <div>
+            <label for="fullName" class="block text-[11px] sm:text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              Nombre completo *
+            </label>
+            <input 
+              type="text" 
+              id="fullName" 
+              name="fullName" 
+              required 
+              placeholder="Ej. Ana Morales"
+              class="w-full bg-[#181624] border border-white/10 rounded-xl px-3.5 py-2.5 sm:py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+            />
+          </div>
+
+          <!-- Correo Corporativo -->
+          <div>
+            <label for="corporateEmail" class="block text-[11px] sm:text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              Correo corporativo *
+            </label>
+            <input 
+              type="email" 
+              id="corporateEmail" 
+              name="corporateEmail" 
+              required 
+              placeholder="ejemplo@tuempresa.com"
+              class="w-full bg-[#181624] border border-white/10 rounded-xl px-3.5 py-2.5 sm:py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+            />
+            <p id="email-error" class="hidden text-xs text-red-400 mt-1.5 font-medium leading-tight">
+              Ingresa un correo con dominio de empresa (no se admiten cuentas personales como Gmail, Yahoo o Hotmail).
+            </p>
+          </div>
+
+          <!-- Nombre de Empresa -->
+          <div>
+            <label for="companyName" class="block text-[11px] sm:text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              Nombre de empresa *
+            </label>
+            <input 
+              type="text" 
+              id="companyName" 
+              name="companyName" 
+              required 
+              placeholder="Ej. Retail Solutions"
+              class="w-full bg-[#181624] border border-white/10 rounded-xl px-3.5 py-2.5 sm:py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+            />
+          </div>
+
+          <!-- Puesto -->
+          <div>
+            <label for="jobTitle" class="block text-[11px] sm:text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              Puesto *
+            </label>
+            <input 
+              type="text" 
+              id="jobTitle" 
+              name="jobTitle" 
+              required 
+              placeholder="Ej. Director de Operaciones"
+              class="w-full bg-[#181624] border border-white/10 rounded-xl px-3.5 py-2.5 sm:py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+            />
+          </div>
+
+          <!-- Tamaño de Empresa con flecha personalizada -->
+<div>
+  <label for="companySize" class="block text-[11px] sm:text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+    Tamaño de empresa *
+  </label>
+  
+  <div class="relative flex items-center">
+    <select 
+      id="companySize" 
+      name="companySize" 
+      required
+      class="w-full appearance-none bg-[#181624] border border-white/10 rounded-xl px-4 py-3 pr-11 text-white text-sm focus:outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all cursor-pointer"
+    >
+      <option value="" disabled selected class="text-gray-400 bg-[#181624]">Selecciona el número de colaboradores</option>
+      <option value="200-500" class="text-white bg-[#181624]">200-500</option>
+      <option value="501-1,000" class="text-white bg-[#181624]">501-1,000</option>
+      <option value="1,001-5,000" class="text-white bg-[#181624]">1,001-5,000</option>
+      <option value="5,001-10,000" class="text-white bg-[#181624]">5,001-10,000</option>
+      <option value="10,001+" class="text-white bg-[#181624]">10,001+</option>
+    </select>
+
+    <!-- Flecha SVG moderna y centrada -->
+    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 flex items-center justify-center">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+          <!-- Botón de Envío -->
+          <button 
+            id="submit-btn" 
+            type="submit" 
+            class="w-full mt-3 py-3.5 px-6 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-bold text-sm tracking-wide hover:brightness-110 active:scale-98 transition-all shadow-[0_0_25px_rgba(161,0,255,0.4)] flex items-center justify-center cursor-pointer"
+          >
+            <span>Confirmar y agendar</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- PASO 2: CONFIRMACIÓN VISUAL (POP-UP) -->
+      <div id="step-success" class="hidden text-center py-8 sm:py-10">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#a100ff]/20 text-[#b656ff] flex items-center justify-center ring-8 ring-[#a100ff]/10">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+
+        <h3 class="text-2xl font-bold text-white mb-2">¡Solicitud recibida!</h3>
+        <p class="text-gray-300 text-sm max-w-xs sm:max-w-sm mx-auto mb-6 leading-relaxed">
+          Hemos registrado tus datos. Te enviamos un correo de confirmación con los próximos pasos para coordinar la demo.
+        </p>
+
+        <button 
+          id="finish-btn" 
+          type="button" 
+          class="px-8 py-3 rounded-full bg-white text-[#0a0a0f] font-bold text-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
+        >
+          Entendido
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const openBtn = document.getElementById('open-modal-btn');
+  const closeBtn = document.getElementById('close-modal-btn');
+  const finishBtn = document.getElementById('finish-btn');
+  const backdrop = document.getElementById('lead-modal-backdrop');
+  const modalContainer = document.getElementById('lead-modal-container');
+  const form = document.getElementById('lead-form') as HTMLFormElement;
+  const stepForm = document.getElementById('step-form');
+  const stepSuccess = document.getElementById('step-success');
+  const emailInput = document.getElementById('corporateEmail') as HTMLInputElement;
+  const emailError = document.getElementById('email-error');
+  const submitBtn = document.getElementById('submit-btn');
+
+  // Dominios de correo personal no admitidos
+  const blockedDomains = [
+    'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 
+    'live.com', 'icloud.com', 'aol.com', 'protonmail.com', 'mail.com'
+  ];
+
+  const openModal = () => {
+    backdrop?.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop?.setAttribute('aria-hidden', 'false');
+    modalContainer?.classList.remove('scale-95');
+    modalContainer?.classList.add('scale-100');
+    
+    // Bloquea el scroll del sitio y difumina el fondo por completo
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    backdrop?.classList.add('opacity-0', 'pointer-events-none');
+    backdrop?.setAttribute('aria-hidden', 'true');
+    modalContainer?.classList.remove('scale-100');
+    modalContainer?.classList.add('scale-95');
+    
+    // Restaura scroll del body
+    document.body.style.overflow = '';
+    
+    setTimeout(() => {
+      stepForm?.classList.remove('hidden');
+      stepSuccess?.classList.add('hidden');
+      form?.reset();
+      emailError?.classList.add('hidden');
+    }, 300);
+  };
+
+  openBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  finishBtn?.addEventListener('click', closeModal);
+
+  // Cerrar al pulsar el fondo oscuro
+  backdrop?.addEventListener('click', (e) => {
+    if (e.target === backdrop) closeModal();
+  });
+
+  // Cerrar con la tecla Escape
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !backdrop?.classList.contains('pointer-events-none')) {
+      closeModal();
+    }
+  });
+
+  // Validación y envío
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const emailValue = emailInput?.value.trim().toLowerCase() || '';
+    const domain = emailValue.split('@')[1];
+
+    if (!domain || blockedDomains.includes(domain)) {
+      emailError?.classList.remove('hidden');
+      emailInput?.focus();
+      return;
+    } else {
+      emailError?.classList.add('hidden');
+    }
+
+    if (submitBtn) {
+      submitBtn.setAttribute('disabled', 'true');
+      submitBtn.innerText = 'Enviando...';
+    }
+
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.warn('Registro de solicitud procesado:', err);
+    } finally {
+      if (submitBtn) {
+        submitBtn.removeAttribute('disabled');
+        submitBtn.innerText = 'Confirmar y agendar';
+      }
+      stepForm?.classList.add('hidden');
+      stepSuccess?.classList.remove('hidden');
+    }
+  });
+</script>
+
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  /* Scrollbar fina y oscura para el modal en móvil */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+  }
+</style>

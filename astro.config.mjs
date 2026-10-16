@@ -1,14 +1,20 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // 👇 AQUÍ ESTÁ LA MAGIA DEL SEO
-  // Reemplaza esto con el dominio real de la empresa cuando lo tengan (ej: 'https://www.doma.com')
-  // Mientras estés trabajando en tu computadora (localhost), Astro es lo suficientemente
-  // inteligente para manejarlo, pero esta línea es vital para cuando lo publiques.
-  site: 'https://tu-dominio-real.com', 
+  // Dominio real oficial para generación de canonicals y sitemaps
+  site: 'https://domahumans.com', 
   
-  integrations: [tailwind(), react()]
+  integrations: [
+    tailwind(), 
+    react(),
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.9,
+      lastmod: new Date(),
+    })
+  ]
 });
