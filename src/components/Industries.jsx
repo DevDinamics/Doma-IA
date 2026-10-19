@@ -1,364 +1,238 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-// --- BASE DE DATOS DE TEXTOS (Intacta, respetando tu información) ---
-const industriesData = [
+// --- BASE DE DATOS DE LOS 5 ROLES ---
+const rolesData = [
   {
     id: 'retail',
-    name: 'Retail',
-    color: 'from-[#FF5E00] to-[#a100ff]',
-    glow: 'bg-[#FF5E00]',
-    eyebrow: '',
-    headline: 'El cliente está en tu tienda.<br/>¿Alguien lo está atendiendo?',
-    problems: [
-      'Rotación anual de 80–120%, el conocimiento se va con cada empleado',
-      'Horas pico: ventas perdidas por falta de atención',
-      'Miles de SKUs y ningún empleado domina todos'
-    ],
-    solutions: [
-      'Domina todo tu catálogo, promociones y disponibilidad por sucursal.',
-      'Recomienda productos complementarios y cierra ventas en el punto de decisión.',
-      'Registra cada interacción: qué buscan, qué no encuentran, a qué hora llegan.',
-      'Opera 24/7 sin rotación, sin ausentismo, sin curva de aprendizaje.'
-    ],
-    roi: 'Sabes exactamente qué preguntan tus clientes, en qué horarios, y qué no están encontrando. Eso no lo tienes hoy.'
-  },
-  {
-    id: 'transporte',
-    name: 'Transporte',
-    color: 'from-[#437ceb] to-[#a100ff]',
-    glow: 'bg-[#437ceb]',
-    eyebrow: '',
-    headline: '153 millones de pasajeros al año. ¿Quién les está vendiendo?',
-    problems: [
-      'Rotación de 50% anual en personal de información.',
-      'Pasajeros desorientados que no conocen servicios adicionales.',
-      'Cero visibilidad de qué información piden y cuándo.'
-    ],
-    solutions: [
-      'Domina rutas, horarios, conexiones, políticas y servicios.',
-      'Vende upgrades, acceso a salas VIP, seguros, transporte terrestre, en el momento exacto.',
-      'Registra patrones: qué preguntan, qué destinos generan más dudas, en qué horarios colapsa la demanda.',
-      'Cero rotación, cero capacitación repetida, cero inconsistencias entre turnos.'
-    ],
-    roi: 'Cada pasajero que espera es data y oportunidad. Hoy no capturas ninguna de las dos.'
+    role: 'Product finder',
+    sector: 'Retail',
+    avatarName: 'TINA',
+    image: '/roles/retail.webp',
+    description: 'Ayuda a encontrar productos, entender sus características y saber exactamente dónde localizarlos en tienda.',
+    color: 'from-[#a100ff] to-[#437ceb]'
   },
   {
     id: 'hospitality',
-    name: 'Hospitality',
-    color: 'from-[#D900FF] to-[#437ceb]',
-    glow: 'bg-[#D900FF]',
-    eyebrow: '',
-    headline: 'Tu huésped espera 5 minutos. Tu satisfacción cae 47%.',
-    problems: [
-      'Rotación de 60–80% que destruye la consistencia del servicio.',
-      'Check-in manual que genera filas en horas pico.',
-      'Oportunidades de upsell que el front desk no tiene tiempo de ofrecer.'
-    ],
-    solutions: [
-      'Conoce todas las habitaciones, amenidades, políticas y servicios sin entrenamiento.',
-      'Ofrece upgrades, late checkout, reservaciones en restaurante, tours.',
-      'Registra preferencias y patrones: qué piden, qué rechazan, qué servicios desconocen.',
-      'Atiende el lobby a las 3 AM igual que a las 3 PM.'
-    ],
-    roi: 'Un upgrade de $50 USD por cada 10 check-ins paga DOMA. El resto es margen puro.'
+    role: 'Concierge 24/7',
+    sector: 'Hoteles y hospitalidad',
+    avatarName: 'LINDA',
+    image: '/roles/hospitality.webp',
+    description: 'Atiende consultas frecuentes de huéspedes, agiliza solicitudes y da a conocer servicios, amenidades y promociones.',
+    color: 'from-[#437ceb] to-[#a100ff]'
   },
   {
-    id: 'banca',
-    name: 'Banca',
-    color: 'from-[#00E5FF] to-[#437ceb]',
-    glow: 'bg-[#00E5FF]',
-    eyebrow: '',
-    headline: '150,000 quejas al año. El 80% eran preguntas simples.',
-    problems: [
-      'Cada transacción en ventanilla cuesta 25x más que en canal digital.',
-      'Ejecutivos saturados que no tienen tiempo de detectar oportunidades.',
-      'Rotación constante en posiciones de atención.'
-    ],
-    solutions: [
-      'Resuelve el 80% de consultas sin ejecutivo: saldos, movimientos, requisitos, ubicaciones.',
-      'Detecta oportunidades en la conversación: créditos pre-aprobados, cuentas de ahorro, tarjetas.',
-      'Registra qué productos generan más dudas, qué horarios saturan la sucursal, qué consultas se repiten.',
-      'Extiende el horario de atención en vestíbulo sin costo adicional.'
-    ],
-    roi: 'Cada producto colocado desde DOMA tiene costo de adquisición cercano a cero. Y sabes exactamente qué está pidiendo tu cliente.'
+    id: 'health',
+    role: 'Hospital navigator',
+    sector: 'Centros de salud',
+    avatarName: 'FRIDA',
+    image: '/roles/health.webp',
+    description: 'Orienta a pacientes y visitantes dentro de la institución, localiza consultorios y resuelve dudas de atención pública.',
+    color: 'from-[#b656ff] to-[#437ceb]'
   },
   {
-    id: 'Seguros',
-    name: 'Seguros',
-    color: 'from-[#a100ff] to-[#FF5E00]',
-    glow: 'bg-[#a100ff]',
-    eyebrow: '',
-    headline: 'Solo 22% de los adultos tiene un seguro. Nadie les ha explicado bien.',
-    problems: [
-      'Agentes que no duran más de 3 años en el oficio.',
-      'Estigma del "vendedor agresivo" que ahuyenta prospectos.',
-      'Productos complejos que nadie tiene paciencia de explicar.'
-    ],
-    solutions: [
-      'Explica coberturas, simula cotizaciones y responde dudas, sin presión, sin prisa.',
-      'Detecta momento de interés y escala a un agente humano solo cuando el cliente está listo.',
-      'Registra qué productos generan más preguntas, qué objeciones se repiten, qué perfil convierte mejor.',
-      'Disponible en sucursal, en punto de venta, en evento, donde el cliente esté.'
-    ],
-    roi: 'El 78% de los adultos no tiene seguro. DOMA los educa sin costo de adquisición y te dice exactamente qué están buscando.'
+    id: 'banking',
+    role: 'Orientador de trámites',
+    sector: 'Banca y seguros',
+    avatarName: 'NINA',
+    image: '/roles/banking.webp',
+    description: 'Guía a clientes de sucursal hacia el trámite, la fila o el canal digital correcto, evitando saturación en ventanillas.',
+    color: 'from-[#437ceb] to-[#2563eb]'
+  },
+  {
+    id: 'corporate',
+    role: 'Host corporativo',
+    sector: 'Corporativos y empresas',
+    avatarName: 'ALEX',
+    image: '/roles/corporate.webp',
+    description: 'Recibe visitas en recepción, gestiona accesos, notifica a los anfitriones y brinda soporte de bienvenida 24/7.',
+    color: 'from-[#a100ff] to-[#7c3aed]'
   }
 ];
 
-export default function Industries() {
-  const [activeTab, setActiveTab] = useState(industriesData[0].id);
+// Subcomponente individual para móvil con animación de scroll
+const MobileScrollCard = ({ item }) => {
+  const cardRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-  const scrollContainerRef = useRef(null);
-  const [isAtEnd, setIsAtEnd] = useState(false);
-  
-  // Estado para rastrear el progreso del scroll dentro de la sección
-  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // 1. Observer para revelar la sección inicial
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    if (cardRef.current) observer.observe(cardRef.current);
     return () => observer.disconnect();
   }, []);
 
-  // 2. Parallax Scroll Effect (La Magia)
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculamos cuánto ha avanzado la sección en la pantalla (0 a 1)
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        // Normalizamos el progreso: 0 (entra por abajo) a 1 (sale por arriba)
-        const progress = 1 - (rect.bottom / (windowHeight + rect.height));
-        // Limitamos entre 0 y 1
-        setScrollProgress(Math.max(0, Math.min(1, progress)));
-      }
-    };
+  return (
+    <div
+      ref={cardRef}
+      className={`relative w-full rounded-2xl overflow-hidden border border-white/10 bg-[#12111a] p-6 flex flex-col justify-end min-h-[340px] transform transition-all duration-700 ease-out will-change-transform ${
+        isVisible ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-95'
+      }`}
+    >
+      {/* Imagen de fondo */}
+      <img
+        src={item.image}
+        alt={item.role}
+        className="absolute inset-0 w-full h-full object-cover object-top"
+        onError={(e) => {
+          e.currentTarget.src =
+            'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80';
+        }}
+      />
+      {/* Capa de contraste */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/75 to-transparent"></div>
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Calcular estado inicial
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeTab]); // Recalcular si cambia la pestaña para evitar saltos
+      {/* Pill de sector */}
+      <div className="absolute top-4 left-4 z-10">
+        <span className="px-3 py-1 rounded-full text-[11px] font-gilroy font-semibold tracking-wide bg-white/10 border border-white/15 text-white backdrop-blur-md">
+          {item.sector}
+        </span>
+      </div>
 
-  const activeData = industriesData.find(ind => ind.id === activeTab);
+      {/* Información del Rol en móvil con color DOMA */}
+      <div className="relative z-10">
+        <span className="text-[11px] font-gilroy font-extrabold tracking-[2px] text-[#a100ff] uppercase block mb-1">
+          {item.sector} • {item.avatarName}
+        </span>
+        <div className="flex items-center gap-2.5 mb-2">
+          <span className="w-1.5 h-5 bg-[#a100ff] shadow-[0_0_10px_rgba(161,0,255,0.7)] rounded-full"></span>
+          <h3 className="font-poppins text-xl font-bold text-white tracking-tight leading-none">
+            {item.role}
+          </h3>
+        </div>
+        <p className="font-gilroy text-xs text-gray-300 leading-relaxed">
+          {item.description}
+        </p>
+      </div>
 
-  // --- MATEMÁTICAS DEL PARALLAX ---
-  // Hacemos que las tarjetas se muevan a diferentes velocidades
-  const offsetMultiplier = (scrollProgress - 0.5) * 2; // Va de -1 a 1
-  const card1Offset = offsetMultiplier * -40; // Se mueve hacia arriba/abajo 40px
-  const card2Offset = offsetMultiplier * -80; // Se mueve el doble de rápido (80px)
+      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${item.color}`}></div>
+    </div>
+  );
+};
 
-
-
-  // Detecta si el usuario ya scrolleó hasta el final de las pestañas
-  const handleTabScroll = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      // Si lo que avanzó + lo que se ve en pantalla es igual al ancho total (con un margen de 5px)
-      if (scrollLeft + clientWidth >= scrollWidth - 5) {
-        setIsAtEnd(true); // Llegó al final, escondemos flecha
-      } else {
-        setIsAtEnd(false); // Sigue habiendo contenido, mostramos flecha
-      }
-    }
-  };
+export default function RolesGallery() {
+  const [activeIndex, setActiveIndex] = useState(1);
 
   return (
-    <section id="industrias" className="relative py-20 lg:py-32 px-4 sm:px-6 bg-[#0a0a0f] overflow-hidden" ref={sectionRef}>
+    <section id="roles" className="relative py-20 lg:py-32 px-4 sm:px-6 bg-[#0a0a0f] overflow-hidden select-none">
       
-      {/* Keyframes para la animación de cambio de pestaña (Fade Suave) */}
-      <style>{`
-        @keyframes fadeSlideUp {
-          0% { opacity: 0; transform: translateY(15px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        .animate-tab-content {
-          animation: fadeSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        /* Ocultar barra de scroll en tabs móviles */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
+      {/* Luces y ambientación de fondo */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-[#a100ff]/20 to-transparent"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[900px] h-[500px] bg-[#a100ff]/5 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* --- HEADER --- */}
-        <div className={`mb-12 lg:mb-16 transform transition-all duration-1000 text-center lg:text-left ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
-          <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-            Industrias
+        {/* ENCABEZADO */}
+        <div className="text-center max-w-3xl mx-auto mb-14 lg:mb-16">
+          <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-4 inline-block shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+            Especialización
           </span>
-          <h2 className="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 sm:mb-6">
-            Un empleado con el expertise<br className="hidden sm:block"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb] block sm:inline">
-            ideal para cada industria.
-            </span>
+          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+            Un catálogo de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">roles diferentes</span> por sector
           </h2>
-          <p className="font-gilroy text-base sm:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
-            Pre-entrenado para tu industria. Personalizado con el conocimiento de tu empresa.
+          <p className="font-gilroy text-base sm:text-lg text-gray-400 max-w-xl mx-auto">
+            Cada puesto tiene un rol, un alcance y una promesa claros desde el primer día.
           </p>
         </div>
 
-        {/* --- TABS BAR (Scrollable en móvil) --- */}
-        <div className="relative mb-12 lg:mb-16 z-40">
-          
-          <div 
-            ref={scrollContainerRef}
-            onScroll={handleTabScroll}
-            // 1. Quitamos snap-x y snap-mandatory
-            // 2. Agregamos touch-pan-x para forzar el scroll táctil horizontal
-            className={`flex overflow-x-auto hide-scrollbar gap-2 sm:gap-4 pb-4 border-b border-white/10 pr-16 touch-pan-x ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} relative z-10`}
-            // 3. Este estilo en línea es magia pura para Safari en iOS
-            style={{ WebkitOverflowScrolling: 'touch' }}
-          >
-            {industriesData.map((ind) => (
-              <button
-                key={ind.id}
-                onClick={() => setActiveTab(ind.id)}
-                // 4. Quitamos snap-start y aseguramos z-30 para que el toque siempre registre en el botón
-                className={`whitespace-nowrap px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-gilroy font-semibold text-sm sm:text-[15px] transition-all duration-300 flex-shrink-0 relative z-30 ${
-                  activeTab === ind.id 
-                  ? 'bg-white text-[#0a0a0f] shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
-                  : 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5'
+        {/* ========================================================= */}
+        {/* VERSIÓN DESKTOP: ACCORDION GALLERY CON COLORES DOMA       */}
+        {/* ========================================================= */}
+        <div className="hidden lg:flex gap-2.5 h-[480px] w-full">
+          {rolesData.map((item, idx) => {
+            const isActive = activeIndex === idx;
+
+            return (
+              <div
+                key={item.id}
+                onMouseEnter={() => setActiveIndex(idx)}
+                onClick={() => setActiveIndex(idx)}
+                className={`relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col justify-end p-7 ${
+                  isActive ? 'flex-[4.5]' : 'flex-[1]'
                 }`}
               >
-                {ind.name}
-              </button>
-            ))}
-          </div>
-          
-          {/* Indicador de Swipe (Solo Móvil) */}
-          <div className={`absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent pointer-events-none sm:hidden flex justify-end items-center z-20 transition-opacity duration-300 ${isAtEnd ? 'opacity-0' : 'opacity-100'}`}>
-            
-            <div className="relative flex h-8 w-8 items-center justify-center pointer-events-none">
-              <div className="absolute inset-0 rounded-full bg-white/20 blur-sm animate-[pulse_1.2s_cubic-bezier(0.4,0,0.6,1)_infinite] pointer-events-none"></div>
-              
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="relative h-5 w-5 text-white pointer-events-none" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-                strokeWidth={3}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </div>
+                {/* Imagen con centrado y filtro blanco y negro en paneles inactivos */}
+                <div className="absolute inset-0 z-0 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.role}
+                    className={`w-full h-full object-cover object-center transition-all duration-700 ease-out ${
+                      isActive ? 'grayscale-0 brightness-100 scale-100' : 'grayscale brightness-[0.38] contrast-125 scale-105'
+                    }`}
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80';
+                    }}
+                  />
+                  <div
+                    className={`absolute inset-0 bg-[#060010] transition-opacity duration-600 ${
+                      isActive ? 'opacity-20' : 'opacity-40'
+                    }`}
+                  ></div>
+                </div>
+
+                {/* Contenido inferior con el color de acento morado DOMA */}
+                <div className="relative z-10 flex flex-col justify-end">
+                  
+                  {/* Barra morada (#a100ff) + Título */}
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`w-1.5 h-6 rounded-full bg-[#a100ff] shadow-[0_0_12px_rgba(161,0,255,0.85)] transition-opacity duration-500 ${
+                        isActive ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    ></span>
+                    <h3
+                      className={`font-poppins font-bold text-white transition-all duration-500 whitespace-nowrap ${
+                        isActive ? 'text-2xl sm:text-3xl opacity-100 translate-x-0' : 'text-xl opacity-0 -translate-x-3'
+                      }`}
+                    >
+                      {item.role}
+                    </h3>
+                  </div>
+
+                  {/* Subtítulo de sector + avatar en morado DOMA y descripción */}
+                  {isActive && (
+                    <div className="animate-fadeIn mt-2 pl-4">
+                      <p className="font-gilroy text-xs font-bold tracking-[2px] text-[#a100ff] uppercase mb-1.5">
+                        {item.sector} <span className="text-gray-500">•</span> {item.avatarName}
+                      </p>
+                      <p className="font-gilroy text-sm text-gray-200 leading-relaxed max-w-md">
+                        {item.description}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* --- CONTENIDO ACTIVO --- */}
-        <div key={activeTab} className="flex flex-col lg:flex-row gap-12 lg:gap-20 animate-tab-content">
-          
-          {/* COLUMNA IZQUIERDA: Textos, Problema/Solución, ROI */}
-          <div className="w-full lg:w-7/12 flex flex-col">
-            <h3 
-              className="font-poppins text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 lg:mb-12 leading-snug text-center lg:text-left"
-              dangerouslySetInnerHTML={{ __html: activeData.headline }}
-            />
-
-            {/* Grid Comparativo Problema / Solución (PARALLAX APLICADO AQUÍ) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 relative">
-              
-              {/* Bloque: El Problema (Se mueve más lento) */}
-              <div 
-                className="bg-red-500/[0.03] border border-red-500/10 rounded-[24px] p-6 sm:p-8 backdrop-blur-sm will-change-transform"
-                style={{ transform: `translateY(${card1Offset}px)`, transition: 'transform 0.1s ease-out' }}
-              >
-                <div className="flex items-center gap-2 mb-5 sm:mb-6">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 font-bold text-[10px] sm:text-xs">✕</div>
-                  <p className="font-poppins font-semibold text-red-400 text-base sm:text-lg">El problema</p>
-                </div>
-                <ul className="flex flex-col gap-3 sm:gap-4">
-                  {activeData.problems.map((prob, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="text-red-500/50 mt-1 font-bold text-xs sm:text-sm flex-shrink-0">✕</span>
-                      <span className="font-gilroy text-gray-400 text-xs sm:text-sm leading-relaxed">{prob}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Bloque: DOMA Resuelve (Se mueve más rápido - Profundidad) */}
-              <div 
-                className="bg-[#a100ff]/[0.05] border border-[#a100ff]/20 rounded-[24px] p-6 sm:p-8 backdrop-blur-sm shadow-[0_0_30px_rgba(161,0,255,0.05)] will-change-transform"
-                style={{ transform: `translateY(${card2Offset}px)`, transition: 'transform 0.1s ease-out' }}
-              >
-                <div className="flex items-center gap-2 mb-5 sm:mb-6">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#a100ff]/20 flex items-center justify-center text-[#a100ff] font-bold text-[10px] sm:text-xs">✓</div>
-                  <p className="font-poppins font-semibold text-white text-base sm:text-lg">Cómo resolvemos</p>
-                </div>
-                <ul className="flex flex-col gap-3 sm:gap-4">
-                  {activeData.solutions.map((sol, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="text-[#a100ff] mt-1 font-bold text-xs sm:text-sm flex-shrink-0">✓</span>
-                      <span className="font-gilroy text-gray-200 text-xs sm:text-sm leading-relaxed">{sol}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-            </div>
-
-            {/* ROI Box */}
-            <div className="relative overflow-hidden bg-gradient-to-r from-white/[0.05] to-transparent border border-white/10 rounded-2xl p-6 sm:p-8 group hover:border-white/20 transition-colors mt-8 lg:mt-4">
-              <div className={`absolute top-0 left-0 w-1 h-full ${activeData.glow} shadow-[0_0_15px_currentColor]`}></div>
-              <p className="font-gilroy text-gray-300 italic text-sm sm:text-base leading-relaxed relative z-10">
-                "{activeData.roi}"
-              </p>
-            </div>
-          </div>
-
-          {/* COLUMNA DERECHA: Imagen Completa del Tótem (Estilo PRO) */}
-          <div className="w-full lg:w-5/12 flex justify-center items-end mt-10 lg:mt-0 relative min-h-[400px] lg:min-h-[500px]">
-            <div className="relative w-full max-w-[280px] sm:max-w-[350px] lg:max-w-[450px] aspect-[4/5] flex items-center justify-center group z-10">
-
-              {/* 1. Brillo dinámico de fondo (cambia de color según la pestaña) */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${activeData.color} rounded-full blur-[60px] lg:blur-[80px] opacity-30 group-hover:opacity-50 transition-all duration-700 animate-pulse pointer-events-none`}></div>
-
-              {/* 2. Anillos de energía orbitales */}
-              <div className="absolute w-[90%] h-[90%] border border-white/5 rounded-full animate-[spin_15s_linear_infinite] pointer-events-none"></div>
-              <div className="absolute w-[70%] h-[70%] border border-white/5 rounded-full animate-[spin_20s_linear_infinite_reverse] pointer-events-none"></div>
-
-              {/* 3. Plataforma de luz esmerilada en la base */}
-              <div className="absolute bottom-5 w-[80%] h-24 lg:h-32 bg-gradient-to-t from-white/10 to-transparent rounded-full blur-2xl opacity-50 pointer-events-none"></div>
-
-              {/* 4. IMAGEN PRINCIPAL (Tótem Completo) */}
-<div 
-  className="relative z-10 w-full h-[520px] sm:h-[600px] lg:h-[700px] flex items-center justify-center"
-  style={{ 
-    // Gradiente suave solo en el pie para integrarlo con el fondo
-    maskImage: 'linear-gradient(to top, transparent 0%, black 8%, black 100%)', 
-    WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 8%, black 100%)'
-  }}
->
-  {/* ---> IMAGEN AJUSTADA CON OBJECT-CONTAIN <--- */}
-  <img 
-    src="/TOTEM DOMA SITIO.webp" 
-    alt="DOMA — Digital Sales Executive Tótem Físico Pulido"
-    className="w-full h-full max-h-full object-contain object-center group-hover:scale-[1.01] transition-transform duration-700 brightness-105 contrast-110 drop-shadow-[0_0_25px_rgba(161,0,255,0.35)]"
-    style={{ 
-      mixBlendMode: 'screen',
-    }}
-  />
-</div>
-
-            </div>
-          </div>
-
+        {/* ========================================================= */}
+        {/* VERSIÓN MÓVIL: SCROLL ANIMADO AL BAJAR                    */}
+        {/* ========================================================= */}
+        <div className="flex lg:hidden flex-col gap-4 w-full">
+          {rolesData.map((item) => (
+            <MobileScrollCard key={item.id} item={item} />
+          ))}
         </div>
 
       </div>
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.4s ease-out forwards;
+        }
+      `}</style>
     </section>
   );
 }
