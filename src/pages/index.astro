@@ -9,6 +9,7 @@ import Model from '../components/Model.jsx';
 import Faqs from '../components/Faq.jsx';
 import Cta from '../components/CtaFinal.astro';
 import Footer from '../components/Footer.astro';
+import AdsSection from '../components/AdsSection';
 
 // Schemas estructurados para posicionamiento avanzado
 const homeSchemas = [
@@ -63,12 +64,13 @@ const homeSchemas = [
     <Hero />
     <Metrics client:visible />
     <Product client:visible />
+     <AdsSection client:load />
     <Industries client:visible />
     <Model client:visible />
     <Faqs client:visible />
+   
     <Cta />
     <Footer />
   </main>
   
-  {/* WhatsAppWidget eliminado de aquí porque ya vive en Layout.astro */}
 </Layout>
