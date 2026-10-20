@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-// Ícono minimalista de Check circular con trazado SVG nítido (Estilo Firebase/Stripe)
+// Ícono minimalista de Check circular con trazado SVG nítido y blindado
 const CheckIcon = ({ active, delay = 0 }) => (
   <svg 
     className={`w-5 h-5 text-[#8257e6] shrink-0 mt-0.5 transition-transform duration-500 ${
@@ -32,7 +32,7 @@ const CheckIcon = ({ active, delay = 0 }) => (
   </svg>
 );
 
-// Sub-componente para cada tarjeta con Scroll-Scrubbing 3D Nítido (Sin Blur)
+// Sub-componente para cada tarjeta con Scroll-Scrubbing 3D Nítido y optimizado para GPU
 const AdModeCard = ({ 
   badge, 
   title, 
@@ -44,7 +44,6 @@ const AdModeCard = ({
   const cardRef = useRef(null);
   const videoRef = useRef(null);
   
-  // Progreso continuo del scroll (0 a 1)
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isEntered, setIsEntered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
@@ -59,13 +58,11 @@ const AdModeCard = ({
       const rect = cardRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Calcula el avance exacto de la tarjeta dentro del viewport
       const start = windowHeight * 0.96;
       const end = windowHeight * 0.38;
       const rawProgress = (start - rect.top) / (start - end);
       const clamped = Math.max(0, Math.min(1, rawProgress));
 
-      // Curva Ease-Out Cubic para que el movimiento con el scroll se sienta de alta precisión
       const eased = 1 - Math.pow(1 - clamped, 3);
       setScrollProgress(eased);
 
@@ -98,15 +95,14 @@ const AdModeCard = ({
     };
   }, []);
 
-  // Efecto 3D Tilt + Spotlight estilo Google Firebase / Apple Hardware
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     
-    const rotateY = ((x - 50) / 50) * 3.5; // Inclinación horizontal sutil
-    const rotateX = ((50 - y) / 50) * 3.5; // Inclinación vertical sutil
+    const rotateY = ((x - 50) / 50) * 3; 
+    const rotateX = ((50 - y) / 50) * 3; 
 
     setMousePos({ x, y });
     setTilt({ rotateX, rotateY });
@@ -117,13 +113,12 @@ const AdModeCard = ({
     setTilt({ rotateX: 0, rotateY: 0 });
   };
 
-  // Transformaciones geométricas nítidas (CERO BLUR) vinculadas al scroll
-  const staggerOffset = index === 0 ? 70 : 110;
+  const staggerOffset = index === 0 ? 50 : 80;
   const translateY = (1 - scrollProgress) * staggerOffset;
-  const scale = 0.9 + scrollProgress * 0.1;
-  const scrollRotateX = (1 - scrollProgress) * 14; // Levanta la tarjeta en 3D conforme bajas
-  const opacity = Math.min(1, 0.15 + scrollProgress * 0.85);
-  const videoParallaxY = (1 - scrollProgress) * 24;
+  const scale = 0.94 + scrollProgress * 0.06;
+  const scrollRotateX = (1 - scrollProgress) * 8; 
+  const opacity = Math.min(1, 0.2 + scrollProgress * 0.8);
+  const videoParallaxY = (1 - scrollProgress) * 16;
 
   return (
     <div style={{ perspective: '1200px' }}>
@@ -135,40 +130,41 @@ const AdModeCard = ({
         style={{
           transform: `translate3d(0, ${translateY}px, 0) scale(${scale}) rotateX(${scrollRotateX + tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
           opacity: opacity,
+          willChange: 'transform, opacity',
           transition: isHovered 
-            ? 'transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s linear, border-color 0.3s ease' 
-            : 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s linear, border-color 0.3s ease',
+            ? 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease' 
+            : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease',
         }}
-        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-[#12121c] border border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden will-change-transform shadow-[0_24px_60px_rgba(0,0,0,0.75)]"
+        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-[#12121c] border border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
       >
-        {/* Spotlight interactivo estilo Firebase (Sigue al mouse sin desenfocar texto) */}
+        {/* Spotlight interactivo optimizado */}
         <div
           className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-0"
           style={{
             opacity: isHovered ? 1 : 0,
-            background: `radial-gradient(480px circle at ${mousePos.x}% ${mousePos.y}%, rgba(130, 87, 230, 0.14), rgba(67, 124, 235, 0.05) 40%, transparent 70%)`,
+            background: `radial-gradient(420px circle at ${mousePos.x}% ${mousePos.y}%, rgba(130, 87, 230, 0.12), rgba(67, 124, 235, 0.04) 40%, transparent 70%)`,
           }}
         />
 
-        {/* Línea de luz superior que se expande con el scroll (Apple Hardware Gleam) */}
+        {/* Línea de luz superior ligada al scroll */}
         <div 
           style={{
             transform: `scaleX(${scrollProgress})`,
             opacity: scrollProgress
           }}
-          className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-[#a100ff] to-transparent origin-center transition-transform duration-150"
+          className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-[#a100ff] to-transparent origin-center transition-transform duration-100"
         />
 
         <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-stretch gap-6 sm:gap-7">
           
-          {/* Contenedor del Video (Tótem) con Parallax opuesto */}
+          {/* Contenedor del Video con Parallax opuesto */}
           <div className="w-full sm:w-[200px] md:w-[220px] shrink-0 flex justify-center">
             <div 
               style={{
                 transform: `translate3d(0, ${videoParallaxY}px, 0)`,
-                transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
+                transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
               }}
-              className="relative w-full max-w-[230px] sm:max-w-none aspect-[9/16] rounded-2xl overflow-hidden bg-[#0a0a0f] border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.8)] group-hover:border-[#437ceb]/50 transition-colors duration-500"
+              className="relative w-full max-w-[230px] sm:max-w-none aspect-[9/16] rounded-2xl overflow-hidden bg-[#0a0a0f] border border-white/15 shadow-[0_12px_30px_rgba(0,0,0,0.7)] group-hover:border-[#437ceb]/50 transition-colors duration-500"
             >
               <video
                 ref={videoRef}
@@ -180,22 +176,20 @@ const AdModeCard = ({
                 preload="auto"
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
               />
-              
-
 
               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none"></div>
             </div>
           </div>
 
-          {/* Columna de Información con entrada geométrica limpia */}
+          {/* Columna de Información */}
           <div className="flex-1 flex flex-col justify-center w-full py-2 sm:py-4 text-left">
             
-            {/* Pastilla Azul (Estado A / Estado B) */}
+            {/* Pastilla Azul */}
             <div 
               style={{
-                transform: `translate3d(0, ${isEntered ? 0 : 18}px, 0)`,
+                transform: `translate3d(0, ${isEntered ? 0 : 14}px, 0)`,
                 opacity: isEntered ? 1 : 0,
-                transition: 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 80ms, opacity 0.45s ease 80ms'
+                transition: 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 60ms, opacity 0.35s ease 60ms'
               }}
               className="mb-4"
             >
@@ -204,29 +198,29 @@ const AdModeCard = ({
               </span>
             </div>
 
-            {/* Título de la modalidad */}
+            {/* Título */}
             <h3 
               style={{
-                transform: `translate3d(0, ${isEntered ? 0 : 20}px, 0)`,
+                transform: `translate3d(0, ${isEntered ? 0 : 16}px, 0)`,
                 opacity: isEntered ? 1 : 0,
-                transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 150ms, opacity 0.5s ease 150ms'
+                transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 120ms, opacity 0.4s ease 120ms'
               }}
               className="font-poppins text-xl sm:text-2xl font-bold text-white tracking-tight mb-5"
             >
               {title}
             </h3>
 
-            {/* Lista de características con entrada secuencial nítida */}
+            {/* Lista de características */}
             <ul className="space-y-4">
               {features.map((item, idx) => {
-                const itemDelay = 220 + idx * 110;
+                const itemDelay = 180 + idx * 90;
                 return (
                   <li 
                     key={idx}
                     style={{
-                      transform: `translate3d(${isEntered ? 0 : 22}px, 0, 0)`,
+                      transform: `translate3d(${isEntered ? 0 : 18}px, 0, 0)`,
                       opacity: isEntered ? 1 : 0,
-                      transition: `transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${itemDelay}ms, opacity 0.45s ease ${itemDelay}ms`,
+                      transition: `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${itemDelay}ms, opacity 0.4s ease ${itemDelay}ms`,
                     }}
                     className="group/item flex items-start gap-3"
                   >
@@ -260,7 +254,6 @@ export default function AdsSection() {
       const rect = sectionRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Calcula progreso del encabezado conforme haces scroll
       const start = windowHeight * 0.92;
       const end = windowHeight * 0.42;
       const rawProgress = (start - rect.top) / (start - end);
@@ -286,8 +279,8 @@ export default function AdsSection() {
     };
   }, []);
 
-  const headerTranslateY = (1 - headerProgress) * 45;
-  const headerScale = 0.96 + headerProgress * 0.04;
+  const headerTranslateY = (1 - headerProgress) * 35;
+  const headerScale = 0.97 + headerProgress * 0.03;
 
   return (
     <section 
@@ -301,25 +294,26 @@ export default function AdsSection() {
         className="absolute top-0 left-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent origin-center"
       />
 
-      {/* Resplandor ambiental de fondo */}
+      {/* Resplandor ambiental de fondo optimizado */}
       <div 
         style={{
-          transform: `translate(-50%, -50%) scale(${0.85 + headerProgress * 0.25})`,
-          opacity: headerProgress * 0.85,
+          transform: `translate(-50%, -50%) scale(${0.85 + headerProgress * 0.2})`,
+          opacity: headerProgress * 0.75,
         }}
-        className="absolute top-1/3 left-1/2 w-[500px] lg:w-[850px] h-[400px] bg-[#a100ff]/[0.07] rounded-full blur-[130px] pointer-events-none transition-transform duration-200 ease-out"
+        className="absolute top-1/3 left-1/2 w-[500px] lg:w-[850px] h-[400px] bg-[#a100ff]/[0.06] rounded-full blur-[130px] pointer-events-none transition-transform duration-150 ease-out"
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
         
-        {/* ENCABEZADO Y DESCRIPCIÓN VINCULADOS AL SCROLL (100% NÍTIDOS, SIN BLUR) */}
+        {/* ENCABEZADO Y DESCRIPCIÓN VINCULADOS AL SCROLL */}
         <div 
           style={{
             transform: `translate3d(0, ${headerTranslateY}px, 0) scale(${headerScale})`,
-            opacity: Math.min(1, 0.1 + headerProgress * 0.9),
-            transformOrigin: 'left bottom'
+            opacity: Math.min(1, 0.15 + headerProgress * 0.85),
+            transformOrigin: 'left bottom',
+            willChange: 'transform, opacity'
           }}
-          className="max-w-3xl mb-12 sm:mb-16 will-change-transform"
+          className="max-w-3xl mb-12 sm:mb-16"
         >
           <h2 className="font-poppins text-2xl sm:text-4xl lg:text-[42px] font-bold text-white tracking-tight leading-tight mb-5">
             Tu nuevo <span className="text-[#a100ff]">canal de comunicación</span>
@@ -333,10 +327,10 @@ export default function AdsSection() {
           </p>
         </div>
 
-        {/* ETIQUETA SUPERIOR DEL DIAGRAMA CON BARRA DE PROGRESO DINÁMICA */}
+        {/* ETIQUETA SUPERIOR DEL DIAGRAMA CON BARRA DE PROGRESO */}
         <div 
           style={{
-            transform: `translate3d(0, ${(1 - headerProgress) * 24}px, 0)`,
+            transform: `translate3d(0, ${(1 - headerProgress) * 18}px, 0)`,
             opacity: headerProgress,
           }}
           className="mb-6 flex items-center gap-4"
@@ -347,7 +341,7 @@ export default function AdsSection() {
           <div className="h-[2px] flex-1 max-w-[140px] bg-white/10 overflow-hidden rounded-full">
             <div 
               style={{ width: `${headerProgress * 100}%` }}
-              className="h-full bg-gradient-to-r from-[#a100ff] to-[#437ceb]"
+              className="h-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] transition-all duration-75"
             />
           </div>
         </div>

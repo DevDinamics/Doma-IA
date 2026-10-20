@@ -1,7 +1,32 @@
-/* Importamos Poppins y Plus Jakarta Sans (el reemplazo de Gilroy) desde Google Fonts */
+/* Importamos Poppins y Plus Jakarta Sans desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Poppins:wght@600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================================== */
+/* OPTIMIZACIONES DE GPU PARA SAFARI / iOS (Adiós al LAG)      */
+/* ========================================================== */
+.stroke-text-line {
+  display: inline-block;
+  height: 1.22em;
+  aspect-ratio: var(--stroke-text-aspect, auto);
+  line-height: 1;
+  margin-bottom: -0.06em;
+  overflow: visible;
+  /* Forzar renderizado por hardware en la GPU de Apple */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+:global(.stroke-text__svg) {
+  display: block;
+  width: auto;
+  height: 100%;
+  overflow: visible;
+  /* Aislar la capa vectorial del SVG */
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
