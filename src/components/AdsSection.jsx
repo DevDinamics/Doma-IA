@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-// Ícono minimalista de Check circular con trazado SVG nítido y blindado
+// Ícono minimalista de Check circular con trazado SVG nítido
 const CheckIcon = ({ active, delay = 0 }) => (
   <svg 
     className={`w-5 h-5 text-[#8257e6] shrink-0 mt-0.5 transition-transform duration-500 ${
@@ -32,7 +32,7 @@ const CheckIcon = ({ active, delay = 0 }) => (
   </svg>
 );
 
-// Sub-componente para cada tarjeta con Scroll-Scrubbing 3D Nítido y optimizado para GPU
+// Sub-componente para cada tarjeta con Scroll-Scrubbing 3D Nítido y soporte Light/Dark
 const AdModeCard = ({ 
   badge, 
   title, 
@@ -135,9 +135,9 @@ const AdModeCard = ({
             ? 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease' 
             : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease',
         }}
-        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-[#12121c] border border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-white/80 dark:bg-[#12121c] border border-slate-200/80 dark:border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl transition-colors duration-300"
       >
-        {/* Spotlight interactivo optimizado */}
+        {/* Spotlight interactivo */}
         <div
           className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-0"
           style={{
@@ -164,7 +164,7 @@ const AdModeCard = ({
                 transform: `translate3d(0, ${videoParallaxY}px, 0)`,
                 transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
               }}
-              className="relative w-full max-w-[230px] sm:max-w-none aspect-[9/16] rounded-2xl overflow-hidden bg-[#0a0a0f] border border-white/15 shadow-[0_12px_30px_rgba(0,0,0,0.7)] group-hover:border-[#437ceb]/50 transition-colors duration-500"
+              className="relative w-full max-w-[230px] sm:max-w-none aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200/50 dark:border-white/15 shadow-[0_12px_30px_rgba(0,0,0,0.2)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.7)] group-hover:border-[#437ceb]/50 transition-colors duration-500"
             >
               <video
                 ref={videoRef}
@@ -177,7 +177,7 @@ const AdModeCard = ({
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
               />
 
-              <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/10 dark:ring-white/10 pointer-events-none"></div>
             </div>
           </div>
 
@@ -205,7 +205,7 @@ const AdModeCard = ({
                 opacity: isEntered ? 1 : 0,
                 transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 120ms, opacity 0.4s ease 120ms'
               }}
-              className="font-poppins text-xl sm:text-2xl font-bold text-white tracking-tight mb-5"
+              className="font-poppins text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-5 transition-colors duration-300"
             >
               {title}
             </h3>
@@ -225,7 +225,7 @@ const AdModeCard = ({
                     className="group/item flex items-start gap-3"
                   >
                     <CheckIcon active={isEntered} delay={itemDelay} />
-                    <span className="font-gilroy text-sm sm:text-[15px] text-gray-300 leading-snug group-hover/item:text-white transition-colors duration-200">
+                    <span className="font-gilroy text-sm sm:text-[15px] text-slate-600 dark:text-gray-300 leading-snug group-hover/item:text-slate-900 dark:group-hover/item:text-white transition-colors duration-200">
                       {item}
                     </span>
                   </li>
@@ -286,26 +286,26 @@ export default function AdsSection() {
     <section 
       ref={sectionRef}
       id="ads" 
-      className="relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 bg-[#0a0a0f] overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300"
     >
       {/* Línea divisoria superior con expansión ligada al scroll */}
       <div 
         style={{ transform: `translateX(-50%) scaleX(${0.2 + headerProgress * 0.8})` }}
-        className="absolute top-0 left-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent origin-center"
+        className="absolute top-0 left-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-white/15 to-transparent origin-center"
       />
 
-      {/* Resplandor ambiental de fondo optimizado */}
+      {/* Resplandor ambiental de fondo */}
       <div 
         style={{
           transform: `translate(-50%, -50%) scale(${0.85 + headerProgress * 0.2})`,
           opacity: headerProgress * 0.75,
         }}
-        className="absolute top-1/3 left-1/2 w-[500px] lg:w-[850px] h-[400px] bg-[#a100ff]/[0.06] rounded-full blur-[130px] pointer-events-none transition-transform duration-150 ease-out"
+        className="absolute top-1/3 left-1/2 w-[500px] lg:w-[850px] h-[400px] bg-[#a100ff]/[0.05] dark:bg-[#a100ff]/[0.06] rounded-full blur-[130px] pointer-events-none transition-transform duration-150 ease-out"
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
         
-        {/* ENCABEZADO Y DESCRIPCIÓN VINCULADOS AL SCROLL */}
+        {/* ENCABEZADO Y DESCRIPCIÓN */}
         <div 
           style={{
             transform: `translate3d(0, ${headerTranslateY}px, 0) scale(${headerScale})`,
@@ -315,11 +315,11 @@ export default function AdsSection() {
           }}
           className="max-w-3xl mb-12 sm:mb-16"
         >
-          <h2 className="font-poppins text-2xl sm:text-4xl lg:text-[42px] font-bold text-white tracking-tight leading-tight mb-5">
+          <h2 className="font-poppins text-2xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-5 transition-colors duration-300">
             Tu nuevo <span className="text-[#a100ff]">canal de comunicación</span>
           </h2>
 
-          <p className="font-gilroy text-base sm:text-lg lg:text-[19px] text-gray-300 leading-relaxed">
+          <p className="font-gilroy text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed transition-colors duration-300">
             <span className="text-[#a100ff] font-bold">DOMA</span> está presente justo en el momento en que tu cliente interactúa con tu marca y donde es más receptivo a información. En este momento Doma puede mostrarles{' '}
             <span className="text-[#a100ff] font-semibold">promociones</span>,{' '}
             <span className="text-[#a100ff] font-semibold">lanzamientos</span> o{' '}
@@ -338,7 +338,7 @@ export default function AdsSection() {
           <span className="font-poppins text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#8257e6]">
             Dos momentos, dos formatos
           </span>
-          <div className="h-[2px] flex-1 max-w-[140px] bg-white/10 overflow-hidden rounded-full">
+          <div className="h-[2px] flex-1 max-w-[140px] bg-slate-200 dark:bg-white/10 overflow-hidden rounded-full">
             <div 
               style={{ width: `${headerProgress * 100}%` }}
               className="h-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] transition-all duration-75"
@@ -346,7 +346,7 @@ export default function AdsSection() {
           </div>
         </div>
 
-        {/* GRID DE LAS 2 MODALIDADES (Estado A y Estado B) */}
+        {/* GRID DE LAS 2 MODALIDADES */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           
           {/* Tarjeta 1: Estado A */}

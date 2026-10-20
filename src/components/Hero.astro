@@ -2,19 +2,24 @@
 // src/components/Hero.astro
 ---
 
-<section id="hero" class="relative min-h-[100dvh] lg:min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-20 lg:pb-0 overflow-hidden bg-[#0a0a0f]">
+<section 
+  id="hero" 
+  class="relative min-h-[100dvh] lg:min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-20 lg:pb-0 overflow-hidden bg-slate-50 dark:bg-[#0a0a0f] transition-colors duration-300"
+>
   
-  <!-- Luces y efectos ambientales de fondo con cuadrícula -->
+  <!-- Luces y efectos ambientales de fondo adaptables al tema -->
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-[-10%] right-[-10%] w-[320px] lg:w-[650px] h-[320px] lg:h-[650px] bg-[#a100ff]/20 rounded-full blur-[100px] lg:blur-[140px] animate-pulse"></div>
-    <div class="absolute bottom-[-10%] left-[-10%] w-[280px] lg:w-[550px] h-[280px] lg:h-[550px] bg-[#437ceb]/15 rounded-full blur-[90px] lg:blur-[120px]"></div>
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] lg:bg-[size:4.5rem_4.5rem] [mask-image:radial-gradient(ellipse:80%_60%_at_50%_40%,#000_75%,transparent_100%)]"></div>
+    <div class="absolute top-[-10%] right-[-10%] w-[320px] lg:w-[650px] h-[320px] lg:h-[650px] bg-[#a100ff]/15 dark:bg-[#a100ff]/20 rounded-full blur-[100px] lg:blur-[140px] animate-pulse"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[280px] lg:w-[550px] h-[280px] lg:h-[550px] bg-[#437ceb]/10 dark:bg-[#437ceb]/15 rounded-full blur-[90px] lg:blur-[120px]"></div>
+    
+    <!-- Cuadrícula técnica (sutil en modo claro, brillante en modo oscuro) -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] lg:bg-[size:4.5rem_4.5rem] [mask-image:radial-gradient(ellipse:80%_60%_at_50%_40%,#000_75%,transparent_100%)]"></div>
   </div>
 
   <div class="container mx-auto px-4 sm:px-6 relative z-10 w-full">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-8">      
       
-      <!-- Columna izquierda: Textos (ocupa todo el ancho en móvil, centrado o alineado a la izquierda) -->
+      <!-- Columna izquierda: Textos -->
       <div class="w-full lg:flex-1 flex flex-col items-center text-center lg:items-start lg:text-left max-w-2xl lg:max-w-3xl mx-auto lg:mx-0"> 
         
         <!-- TÍTULO H1 CON LA ANIMACIÓN EXACTA DE REACT BITS (StrokeText + Wipe Fill) -->
@@ -28,7 +33,8 @@
             class="stroke-text-line" 
             data-text="El primer" 
             data-stroke="#A78BFA" 
-            data-fill="#FFFFFF"
+            data-fill="#111827"
+            data-dark-fill="#FFFFFF"
             data-delay="0"
           ></span>
 
@@ -37,7 +43,8 @@
             class="stroke-text-line" 
             data-text="empleado digital" 
             data-stroke="#A78BFA" 
-            data-fill="#FFFFFF"
+            data-fill="#111827"
+            data-dark-fill="#FFFFFF"
             data-delay="0.22"
           ></span>
 
@@ -46,28 +53,30 @@
             class="stroke-text-line" 
             data-text="para" 
             data-stroke="#A78BFA" 
-            data-fill="#FFFFFF"
+            data-fill="#111827"
+            data-dark-fill="#FFFFFF"
             data-delay="0.44"
           ></span>
 
-          <!-- Línea 4: espacios físicos. (Relleno azul #437ceb y trazo violeta/azul) -->
+          <!-- Línea 4: espacios físicos. -->
           <span 
             class="stroke-text-line" 
             data-text="espacios físicos." 
             data-stroke="#A78BFA" 
             data-fill="#437ceb"
+            data-dark-fill="#437ceb"
             data-delay="0.62"
           ></span>
         </h1>
         
-        <!-- Párrafo descriptivo con animación estilo Apple (aparece después del título principal) -->
-        <p class="font-gilroy text-base sm:text-lg lg:text-xl text-gray-400 max-w-xl leading-relaxed animate-apple-sequent">
-          DOMA conecta el conocimiento completo de tu empresa con un <span class="text-white font-semibold">empleado digital</span>, disponible 24/7. Consistente. Escalable.
+        <!-- Párrafo descriptivo con soporte Light/Dark -->
+        <p class="font-gilroy text-base sm:text-lg lg:text-xl text-slate-600 dark:text-gray-400 max-w-xl leading-relaxed animate-apple-sequent transition-colors duration-300">
+          DOMA conecta el conocimiento completo de tu empresa con un <span class="text-slate-900 dark:text-white font-semibold">empleado digital</span>, disponible 24/7. Consistente. Escalable.
         </p>
 
       </div>
 
-      <!-- Columna derecha: Avatar (Oculto en móvil, escala balanceada en Desktop) -->
+      <!-- Columna derecha: Avatar con Imagen Estática nítida -->
       <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-md xl:max-w-lg animate-avatar-enter delay-500">
         <div class="relative w-full flex items-end justify-center h-[460px] lg:h-[520px] xl:h-[600px]">
           
@@ -95,7 +104,7 @@
     id="scroll-indicator"
     href="#producto"
     aria-label="Hacer scroll hacia abajo"
-    class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-gray-400/70 hover:text-white transition-all duration-500 cursor-pointer p-2 animate-bounce-soft"
+    class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-slate-400 dark:text-gray-400/70 hover:text-slate-900 dark:hover:text-white transition-all duration-500 cursor-pointer p-2 animate-bounce-soft"
   >
     <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M6 9l6 6 6-6" />
@@ -119,7 +128,7 @@
 
   window.addEventListener('scroll', handleScroll, { passive: true });
 
-  // 2. Lógica exacta de React Bits StrokeText (Draw + Wipe Fill + Hover Redraw)
+  // 2. Lógica exacta de React Bits StrokeText con soporte dinámico de color por Tema
   const STROKE_WIDTH = 1.4;
   const DRAW_DURATION = 1.6;
   const FILL_DELAY = 0.2;
@@ -131,11 +140,14 @@
   const initStrokeText = () => {
     const lines = document.querySelectorAll('.stroke-text-line');
     const svgNS = 'http://www.w3.org/2000/svg';
+    const isDark = document.documentElement.classList.contains('dark');
 
     lines.forEach((lineEl, lineIdx) => {
       const text = lineEl.getAttribute('data-text') || '';
       const strokeColor = lineEl.getAttribute('data-stroke') || '#A78BFA';
-      const fillColor = lineEl.getAttribute('data-fill') || '#FFFFFF';
+      const darkFill = lineEl.getAttribute('data-dark-fill') || '#FFFFFF';
+      const lightFill = lineEl.getAttribute('data-fill') || '#111827';
+      const fillColor = isDark ? darkFill : lightFill;
       const lineDelay = parseFloat(lineEl.getAttribute('data-delay') || '0');
       const wipeId = `stroke-text-wipe-${lineIdx}`;
       const characters = Array.from(text);
@@ -149,7 +161,7 @@
       svg.setAttribute('aria-hidden', 'true');
       svg.style.visibility = 'hidden';
 
-      // Crear <defs> y <clipPath> para el efecto wipeFrom="left"
+      // Crear <defs> y <clipPath> para el efecto wipe
       const defs = document.createElementNS(svgNS, 'defs');
       const clipPath = document.createElementNS(svgNS, 'clipPath');
       clipPath.setAttribute('id', wipeId);
@@ -179,7 +191,7 @@
       strokeText.setAttribute('stroke-linecap', 'round');
       Object.assign(strokeText.style, fontStyles);
 
-      const strokeSpans: SVGTSpanElement[] = [];
+      const strokeSpans = [];
       characters.forEach((char) => {
         const tspan = document.createElementNS(svgNS, 'tspan');
         tspan.setAttribute('data-stroke-char', 'true');
@@ -242,13 +254,17 @@
         gsap.set(strokeSpans, { strokeDasharray: dash, strokeDashoffset: dash, strokeOpacity: 1 });
         gsap.set(wipeRect, { attr: startFrame });
 
-        const tl = gsap.timeline({ delay: lineDelay, defaults: { overwrite: 'auto' } });
+        const tl = gsap.timeline({ 
+          delay: lineDelay, 
+          defaults: { overwrite: 'auto', force3D: true } 
+        });
 
         tl.to(strokeSpans, {
           strokeDashoffset: 0,
           duration: DRAW_DURATION,
           ease: EASE,
-          stagger: STAGGER
+          stagger: STAGGER,
+          lazy: false
         }, 0);
 
         tl.to(wipeRect, {
@@ -263,6 +279,7 @@
           ease: 'power1.out'
         }, DRAW_DURATION + FILL_DELAY + fillDuration * 0.7);
 
+        // Hover Redraw
         let redrawTl: gsap.core.Timeline | null = null;
         lineEl.addEventListener('pointerenter', () => {
           if (tl.progress() < 1 || redrawTl?.isActive()) return;
@@ -292,35 +309,44 @@
   };
 
   initStrokeText();
+
+  // Escuchar si se presiona el botón de cambio de tema para actualizar el color de relleno del título
+  const themeBtn = document.getElementById('theme-toggle');
+  themeBtn?.addEventListener('click', () => {
+    setTimeout(initStrokeText, 50);
+  });
 </script>
 
 <style>
-  /* TAMAÑO DE TEXTO AMPLIADO (Más grande responsivamente) */
+  /* TAMAÑO DE TEXTO AMPLIADO RESPONSIVO Y OPTIMIZADO PARA GPU */
   .stroke-text-line {
     display: inline-block;
     height: 1.22em;
     aspect-ratio: var(--stroke-text-aspect, auto);
-    font-size: 2.75rem; /* 44px en móvil */
+    font-size: 2.75rem; 
     line-height: 1;
     margin-bottom: -0.06em;
     overflow: visible;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform, opacity;
   }
 
   @media (min-width: 640px) {
     .stroke-text-line {
-      font-size: 3.75rem; /* 60px en sm */
+      font-size: 3.75rem; 
     }
   }
 
   @media (min-width: 1024px) {
     .stroke-text-line {
-      font-size: 4.5rem; /* 72px en lg */
+      font-size: 4.5rem; 
     }
   }
 
   @media (min-width: 1280px) {
     .stroke-text-line {
-      font-size: 5rem; /* 80px en xl - ¡Mucho más grande y imponente! */
+      font-size: 5rem; 
     }
   }
 
@@ -329,9 +355,10 @@
     width: auto;
     height: 100%;
     overflow: visible;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
   }
 
-  /* Animación estilo Apple Keynote para el párrafo secundario (aparece escalonado después del título) */
   @keyframes appleSequent {
     0% {
       opacity: 0;
@@ -383,5 +410,4 @@
   }
 
   .delay-500 { animation-delay: 550ms; }
-  .delay-600 { animation-delay: 700ms; }
 </style>

@@ -3,28 +3,38 @@ import React, { useState } from 'react';
 const FaqItem = ({ question, answer, isOpen, onClick }) => {
   return (
     <div 
-      className={`group border-b border-white/10 transition-all duration-500 ${isOpen ? 'bg-white/[0.03]' : 'hover:bg-white/[0.01]'}`}
+      className={`group border-b border-slate-200/80 dark:border-white/10 transition-colors duration-300 ${
+        isOpen ? 'bg-slate-100/60 dark:bg-white/[0.03]' : 'hover:bg-slate-50/50 dark:hover:bg-white/[0.01]'
+      }`}
     >
       <button
         onClick={onClick}
-        className="w-full py-7 px-4 flex items-center justify-between text-left transition-all"
+        className="w-full py-7 px-4 flex items-center justify-between text-left transition-all cursor-pointer"
       >
-        <span className={`font-poppins text-lg md:text-xl font-medium pr-8 transition-colors duration-300 ${isOpen ? 'text-[#a100ff]' : 'text-white/90 group-hover:text-white'}`}>
+        <span className={`font-poppins text-lg md:text-xl font-medium pr-8 transition-colors duration-300 ${
+          isOpen ? 'text-[#a100ff]' : 'text-slate-900/90 dark:text-white/90 group-hover:text-black dark:group-hover:text-white'
+        }`}>
           {question}
         </span>
         
-        {/* PARCHE SAFARI 1: Agregamos transform-gpu al ícono que rota */}
-        <div className={`relative flex-shrink-0 w-6 h-6 transition-transform duration-500 transform-gpu ${isOpen ? 'rotate-180' : ''}`}>
+        {/* PARCHE SAFARI 1: transform-gpu en el ícono */}
+        <div className={`relative flex-shrink-0 w-6 h-6 transition-transform duration-500 transform-gpu text-slate-800 dark:text-white ${
+          isOpen ? 'rotate-180 text-[#a100ff] dark:text-[#a100ff]' : ''
+        }`}>
           <div className="absolute top-1/2 left-0 w-full h-[2px] bg-current"></div>
-          <div className={`absolute top-0 left-1/2 h-full w-[2px] bg-current transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></div>
+          <div className={`absolute top-0 left-1/2 h-full w-[2px] bg-current transition-opacity duration-300 ${
+            isOpen ? 'opacity-0' : 'opacity-100'
+          }`}></div>
         </div>
       </button>
       
-      {/* PARCHE SAFARI 2: Agregamos transform-gpu al contenedor que se expande */}
+      {/* PARCHE SAFARI 2: transform-gpu en el contenedor colapsable */}
       <div 
-        className={`transform-gpu overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`transform-gpu overflow-hidden transition-all duration-500 ease-in-out ${
+          isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
       >
-        <div className="px-4 pb-8 font-gilroy text-gray-400 text-lg leading-relaxed max-w-3xl">
+        <div className="px-4 pb-8 font-gilroy text-slate-600 dark:text-gray-400 text-lg leading-relaxed max-w-3xl transition-colors duration-300">
           {answer}
         </div>
       </div>
@@ -79,9 +89,9 @@ export default function Faq() {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-[#0a0a0f] relative overflow-hidden">
+    <section id="faq" className="py-24 bg-slate-50 dark:bg-[#0a0a0f] relative overflow-hidden transition-colors duration-300">
       
-      {/* PARCHE SAFARI 3: Agregamos transform-gpu al glow difuminado */}
+      {/* PARCHE SAFARI 3: transform-gpu en el glow */}
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#437ceb]/5 rounded-full blur-[120px] pointer-events-none transform-gpu"></div>
 
       <div className="container mx-auto px-6">
@@ -89,19 +99,19 @@ export default function Faq() {
           
           <div className="lg:w-1/3">
             <div className="sticky top-32">
-              <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[#a100ff] text-xs font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_15px_rgba(161,0,255,0.1)]">
+              <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
                 FAQ
               </span>
-              <h2 className="font-poppins text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              <h2 className="font-poppins text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight transition-colors duration-300">
                 Preguntas<br/>frecuentes.
               </h2>
-              <p className="font-gilroy text-xl text-gray-400">
+              <p className="font-gilroy text-xl text-slate-600 dark:text-gray-400 transition-colors duration-300">
                 Todo lo que necesitas saber antes de agendar tu demo.
               </p>
             </div>
           </div>
 
-          <div className="lg:w-2/3 border-t border-white/10">
+          <div className="lg:w-2/3 border-t border-slate-200/80 dark:border-white/10 transition-colors duration-300">
             {faqs.map((faq, index) => (
               <FaqItem
                 key={index}

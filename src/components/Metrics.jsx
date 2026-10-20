@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-// Sub-componente para cada tarjeta individual con estética Apple Bento
+// Sub-componente para cada tarjeta individual con estética Bento y soporte Dark/Light
 const MetricCard = ({ 
   target, 
   prefix = "", 
@@ -34,14 +34,13 @@ const MetricCard = ({
     if (!isVisible) return;
 
     let startTime = null;
-    const duration = 2000; // 2 segundos exactos con curva suave Apple
+    const duration = 2000;
 
     const animate = (currentTime) => {
       if (!startTime) startTime = currentTime;
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Apple-style Custom Ease Out Expo
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       
       setCount(Math.floor(easeProgress * target));
@@ -67,32 +66,31 @@ const MetricCard = ({
         transitionDelay: `${delay}ms`,
         transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)'
       }}
-      className={`group relative p-7 sm:p-8 xl:p-9 rounded-[28px] sm:rounded-[32px] bg-[#12121a]/70 backdrop-blur-xl border border-white/[0.07] flex flex-col items-center justify-between text-center overflow-hidden transition-all duration-1000 will-change-transform
+      className={`group relative p-7 sm:p-8 xl:p-9 rounded-[28px] sm:rounded-[32px] bg-white/80 dark:bg-[#12121a]/70 backdrop-blur-xl border border-slate-200/80 dark:border-white/[0.07] flex flex-col items-center justify-between text-center overflow-hidden transition-all duration-1000 will-change-transform
         ${isVisible 
           ? 'translate-y-0 scale-100 opacity-100 blur-0' 
           : 'translate-y-12 scale-[0.94] opacity-0 blur-md'}
-        hover:border-white/[0.15] hover:bg-[#161622]/90 hover:-translate-y-1.5 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]
+        hover:border-slate-300 dark:hover:border-white/[0.15] hover:bg-white dark:hover:bg-[#161622]/90 hover:-translate-y-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-none hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]
       `}
     >
-      {/* Reflejo especular superior (Estilo cristal Apple) */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+      {/* Reflejo especular superior */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-white/25 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
       
       {/* Resplandor ambiental interno sutil */}
       <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-gradient-to-b ${glowColor} to-transparent rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}></div>
 
-      {/* Contenedor de la cifra principal (nunca se desborda) */}
+      {/* Contenedor de la cifra principal */}
       <div className="relative z-10 flex items-baseline justify-center gap-1.5 my-2 sm:my-3 w-full">
         <span 
           className={`font-poppins text-4xl sm:text-5xl lg:text-[44px] xl:text-[54px] font-bold tracking-tighter leading-none tabular-nums transition-transform duration-500 ease-out group-hover:scale-[1.03] ${
             isGradient 
               ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] via-[#b656ff] to-[#437ceb]' 
-              : 'text-white'
+              : 'text-slate-900 dark:text-white transition-colors duration-300'
           }`}
         >
           {prefix}{count}{suffix}
         </span>
 
-        {/* Unidad opcional (ej. MXN) estilizada para que no rompa la caja */}
         {unit && (
           <span className="font-poppins text-lg sm:text-xl xl:text-2xl font-bold tracking-tight text-[#b656ff]">
             {unit}
@@ -100,8 +98,8 @@ const MetricCard = ({
         )}
       </div>
 
-      {/* Copy descriptivo minimalista */}
-      <p className="relative z-10 font-gilroy text-gray-400 text-[11px] sm:text-xs uppercase tracking-[0.16em] leading-relaxed max-w-[230px] mt-3 group-hover:text-gray-200 transition-colors duration-300">
+      {/* Copy descriptivo */}
+      <p className="relative z-10 font-gilroy text-slate-500 dark:text-gray-400 text-[11px] sm:text-xs uppercase tracking-[0.16em] leading-relaxed max-w-[230px] mt-3 group-hover:text-slate-800 dark:group-hover:text-gray-200 transition-colors duration-300">
         {text}
       </p>
     </div>
@@ -129,14 +127,14 @@ export default function MetricsGrid() {
   }, []);
 
   return (
-    <section id="metrics" className="relative py-20 sm:py-28 lg:py-36 px-4 sm:px-6 bg-[#0a0a0f] overflow-hidden">
+    <section id="metrics" className="relative py-20 sm:py-28 lg:py-36 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300">
       
-      {/* Línea divisoria superior minimalista */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+      {/* Línea divisoria superior */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-white/10 to-transparent"></div>
 
       <div className="max-w-6xl xl:max-w-7xl mx-auto relative z-10">
         
-        {/* Encabezado introductorio con revelado tipo Keynote */}
+        {/* Encabezado */}
         <div 
           ref={headerRef}
           style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
@@ -144,7 +142,7 @@ export default function MetricsGrid() {
             ${headerVisible ? 'translate-y-0 opacity-100 blur-0' : 'translate-y-8 opacity-0 blur-sm'}
           `}
         >
-          <h2 className="font-poppins text-2xl sm:text-3xl lg:text-[40px] font-bold text-white tracking-tight leading-[1.25] sm:leading-[1.2]">
+          <h2 className="font-poppins text-2xl sm:text-3xl lg:text-[40px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.25] sm:leading-[1.2] transition-colors duration-300">
             En el <span className="text-[#a100ff]">mundo digital</span>, las empresas aprendieron cómo estar siempre disponibles... en el{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] via-[#b656ff] to-[#437ceb]">
               mundo físico no.
@@ -152,10 +150,9 @@ export default function MetricsGrid() {
           </h2>
         </div>
 
-        {/* Retícula Bento Responsiva (1 col en móvil, 2 en tablet, 4 en desktop) */}
+        {/* Retícula Bento Responsiva */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           
-          {/* Tarjeta 1: 78% */}
           <MetricCard 
             target={78} 
             suffix="%" 
@@ -164,7 +161,6 @@ export default function MetricsGrid() {
             delay={100}
           />
           
-          {/* Tarjeta 2: 70% */}
           <MetricCard 
             target={70} 
             suffix="%" 
@@ -173,7 +169,6 @@ export default function MetricsGrid() {
             delay={220}
           />
           
-          {/* Tarjeta 3: ~30% */}
           <MetricCard 
             target={30} 
             prefix="~"
@@ -183,7 +178,6 @@ export default function MetricsGrid() {
             delay={340}
           />
           
-          {/* Tarjeta 4: $200K MXN (Ahora también anima de $0K a $200K MXN y cabe perfecto) */}
           <MetricCard 
             target={200} 
             prefix="$"

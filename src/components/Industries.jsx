@@ -98,7 +98,7 @@ const MobileScrollCard = ({ item }) => {
   return (
     <div
       ref={cardRef}
-      className={`relative w-full rounded-3xl overflow-hidden border border-white/10 bg-[#12111a] p-6 sm:p-8 flex flex-col justify-end min-h-[500px] transform transition-all duration-700 ease-out will-change-transform ${
+      className={`relative w-full rounded-3xl overflow-hidden border border-slate-200/80 dark:border-white/10 bg-slate-900 dark:bg-[#12111a] p-6 sm:p-8 flex flex-col justify-end min-h-[500px] transform transition-all duration-700 ease-out will-change-transform shadow-[0_12px_36px_rgba(0,0,0,0.12)] dark:shadow-none ${
         isVisible ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-95'
       }`}
     >
@@ -112,12 +112,12 @@ const MobileScrollCard = ({ item }) => {
             'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80';
         }}
       />
-      {/* Capa de contraste oscuro */}
+      {/* Capa de contraste oscuro (necesaria para legibilidad sobre foto en ambos modos) */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/85 to-transparent"></div>
 
       {/* Pill de sector */}
       <div className="absolute top-5 left-5 z-10">
-        <span className="px-3.5 py-1.5 rounded-full text-xs font-gilroy font-semibold tracking-wide bg-white/10 border border-white/15 text-white backdrop-blur-md">
+        <span className="px-3.5 py-1.5 rounded-full text-xs font-gilroy font-semibold tracking-wide bg-white/10 border border-white/20 text-white backdrop-blur-md">
           {item.sector}
         </span>
       </div>
@@ -131,19 +131,19 @@ const MobileScrollCard = ({ item }) => {
               {item.role}
             </h3>
           </div>
-          <p className="font-gilroy text-sm text-gray-300 leading-relaxed mb-4">
+          <p className="font-gilroy text-sm text-gray-200 leading-relaxed mb-4">
             {item.description}
           </p>
         </div>
 
         {/* Tarjeta interna con la información que gestiona */}
-        <div className="bg-[#181722]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-5">
+        <div className="bg-[#181722]/90 backdrop-blur-xl border border-white/15 rounded-2xl p-4 sm:p-5">
           <h4 className="font-poppins text-xs font-bold uppercase tracking-wider text-[#437ceb] mb-3">
             Información que gestiona
           </h4>
           <ul className="space-y-2 text-left">
             {item.features.map((feat, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs font-gilroy text-gray-300">
+              <li key={idx} className="flex items-start gap-2 text-xs font-gilroy text-gray-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#a100ff] mt-1.5 shrink-0"></span>
                 <span>{feat}</span>
               </li>
@@ -168,23 +168,23 @@ export default function RolesGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section id="roles" className="relative py-20 lg:py-32 px-4 sm:px-6 bg-[#0a0a0f] overflow-hidden select-none">
+    <section id="roles" className="relative py-20 lg:py-32 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden select-none transition-colors duration-300">
       
       {/* Luces y ambientación de fondo */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-[#a100ff]/20 to-transparent"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[900px] h-[500px] bg-[#a100ff]/5 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-[#a100ff]/20 to-transparent"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[900px] h-[500px] bg-[#a100ff]/[0.05] dark:bg-[#a100ff]/5 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* ENCABEZADO */}
         <div className="text-center max-w-3xl mx-auto mb-14 lg:mb-16">
-          <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-4 inline-block shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-4 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
             PRODUCTOS
           </span>
-          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-4 transition-colors duration-300">
             Un catálogo de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">roles diferentes</span> por sector
           </h2>
-          <p className="font-gilroy text-base sm:text-lg text-gray-400 max-w-xl mx-auto">
+          <p className="font-gilroy text-base sm:text-lg text-slate-600 dark:text-gray-400 max-w-xl mx-auto transition-colors duration-300">
             Cada puesto tiene un rol, un alcance y una promesa claros desde el primer día.
           </p>
         </div>
@@ -202,7 +202,9 @@ export default function RolesGallery() {
                 onMouseEnter={() => setActiveIndex(idx)}
                 onClick={() => setActiveIndex(idx)}
                 className={`relative rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col justify-end p-8 ${
-                  isActive ? 'flex-[5.5] bg-[#12111a]/40 border border-white/15' : 'flex-[1] bg-[#12111a]/20 border border-white/5'
+                  isActive 
+                    ? 'flex-[5.5] bg-[#12111a]/40 border border-slate-300 dark:border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.18)] dark:shadow-none' 
+                    : 'flex-[1] bg-slate-200/50 dark:bg-[#12111a]/20 border border-slate-200 dark:border-white/5'
                 }`}
               >
                 {/* Imagen con transición y filtro */}
@@ -211,7 +213,7 @@ export default function RolesGallery() {
                     src={item.image}
                     alt={item.role}
                     className={`w-full h-full object-cover object-top transition-all duration-700 ease-out ${
-                      isActive ? 'grayscale-0 brightness-100 scale-100' : 'grayscale brightness-[0.35] contrast-125 scale-105'
+                      isActive ? 'grayscale-0 brightness-100 scale-100' : 'grayscale brightness-[0.45] dark:brightness-[0.35] contrast-125 scale-105'
                     }`}
                     onError={(e) => {
                       e.currentTarget.src =
@@ -248,7 +250,7 @@ export default function RolesGallery() {
                   {isActive && (
                     <div className="animate-fadeIn pl-4 space-y-4 mt-2">
                       <p className="font-gilroy text-xs font-bold tracking-[2px] text-[#437ceb] uppercase">
-                        {item.sector} <span className="text-gray-500">•</span> {item.avatarName}
+                        {item.sector}
                       </p>
                       <p className="font-gilroy text-sm text-gray-200 leading-relaxed max-w-lg">
                         {item.description}
@@ -261,7 +263,7 @@ export default function RolesGallery() {
                         </h4>
                         <ul className="grid grid-cols-1 gap-2 text-left">
                           {item.features.map((feat, i) => (
-                            <li key={i} className="flex items-start gap-2.5 text-xs font-gilroy text-gray-300">
+                            <li key={i} className="flex items-start gap-2.5 text-xs font-gilroy text-gray-200">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#a100ff] mt-1.5 shrink-0"></span>
                               <span>{feat}</span>
                             </li>

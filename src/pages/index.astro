@@ -27,7 +27,7 @@ const homeSchemas = [
       "priceCurrency": "USD"
     }
   },
-  // 2. Rich Snippets de Preguntas Frecuentes (Alineadas con tu componente Faqs)
+  // 2. Rich Snippets de Preguntas Frecuentes
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -60,15 +60,14 @@ const homeSchemas = [
 >
   <Navbar />
   
-  <main>
+  <main class="w-full transition-colors duration-300">
     <Hero />
     <Metrics client:visible />
     <Product client:visible />
-     <AdsSection client:load />
+    <AdsSection client:load />
     <Industries client:visible />
     <Model client:visible />
     <Faqs client:visible />
-   
     <Cta />
     <Footer />
   </main>
