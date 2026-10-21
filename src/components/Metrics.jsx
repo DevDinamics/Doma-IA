@@ -7,7 +7,8 @@ const MetricCard = ({
   suffix = "", 
   unit = "",
   text, 
-  isGradient = false, 
+  staticValue = null, // Nuevo prop para "1 de cada 2"
+  textColorClass = "text-slate-900 dark:text-white", // Nuevo prop para color fijo
   glowColor = "from-[#a100ff]/20", 
   delay = 0 
 }) => {
@@ -31,7 +32,7 @@ const MetricCard = ({
   }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || staticValue) return; // No animar si hay valor estático
 
     let startTime = null;
     const duration = 2000;
@@ -57,7 +58,7 @@ const MetricCard = ({
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [isVisible, target, delay]);
+  }, [isVisible, target, delay, staticValue]);
 
   return (
     <div
@@ -82,17 +83,13 @@ const MetricCard = ({
       {/* Contenedor de la cifra principal */}
       <div className="relative z-10 flex items-baseline justify-center gap-1.5 my-2 sm:my-3 w-full">
         <span 
-          className={`font-poppins text-4xl sm:text-5xl lg:text-[44px] xl:text-[54px] font-bold tracking-tighter leading-none tabular-nums transition-transform duration-500 ease-out group-hover:scale-[1.03] ${
-            isGradient 
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] via-[#b656ff] to-[#437ceb]' 
-              : 'text-slate-900 dark:text-white transition-colors duration-300'
-          }`}
+          className={`font-poppins text-4xl sm:text-5xl lg:text-[44px] xl:text-[54px] font-bold tracking-tighter leading-none tabular-nums transition-transform duration-500 ease-out group-hover:scale-[1.03] transition-colors duration-300 ${textColorClass}`}
         >
-          {prefix}{count}{suffix}
+          {staticValue ? staticValue : `${prefix}${count}${suffix}`}
         </span>
 
         {unit && (
-          <span className="font-poppins text-lg sm:text-xl xl:text-2xl font-bold tracking-tight text-[#b656ff]">
+          <span className={`font-poppins text-lg sm:text-xl xl:text-2xl font-bold tracking-tight ${textColorClass}`}>
             {unit}
           </span>
         )}
@@ -144,7 +141,7 @@ export default function MetricsGrid() {
         >
           <h2 className="font-poppins text-2xl sm:text-3xl lg:text-[40px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.25] sm:leading-[1.2] transition-colors duration-300">
             En el <span className="text-[#a100ff]">mundo digital</span>, las empresas aprendieron cómo estar siempre disponibles... en el{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] via-[#b656ff] to-[#437ceb]">
+            <span className="text-[#437ceb]">
               mundo físico no.
             </span>
           </h2>
@@ -154,10 +151,10 @@ export default function MetricsGrid() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           
           <MetricCard 
-            target={78} 
-            suffix="%" 
-            text="De los clientes elige a la marca que responde primero" 
-            glowColor="from-[#ff498b]/25"
+            staticValue="1 de cada 2"
+            text="clientes abandonan a una marca tras una mala experiencia" 
+            textColorClass="text-[#a100ff]" // Morado DOMA
+            glowColor="from-[#a100ff]/25"
             delay={100}
           />
           
@@ -165,7 +162,8 @@ export default function MetricsGrid() {
             target={70} 
             suffix="%" 
             text="De las consultas en sucursal nunca reciben respuesta" 
-            glowColor="from-[#a100ff]/25"
+            textColorClass="text-[#906ef7]" // Violeta DOMA
+            glowColor="from-[#906ef7]/25"
             delay={220}
           />
           
@@ -174,7 +172,8 @@ export default function MetricsGrid() {
             prefix="~"
             suffix="%" 
             text="Rotación anual de personal operativo" 
-            glowColor="from-[#a100ff]/25"
+            textColorClass="text-[#437ceb]" // Azul DOMA
+            glowColor="from-[#437ceb]/25"
             delay={340}
           />
           
@@ -184,8 +183,8 @@ export default function MetricsGrid() {
             suffix="K"
             unit="MXN"
             text="Costo promedio por reemplazar una posición" 
-            isGradient={true}
-            glowColor="from-[#437ceb]/30"
+            textColorClass="text-[#a100ff]" // Morado DOMA
+            glowColor="from-[#a100ff]/30"
             delay={460}
           />
 

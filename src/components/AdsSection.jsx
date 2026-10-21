@@ -313,9 +313,14 @@ export default function AdsSection() {
             transformOrigin: 'left bottom',
             willChange: 'transform, opacity'
           }}
-          className="max-w-3xl mb-12 sm:mb-16"
+          className="text-center sm:text-left max-w-3xl mb-12 sm:mb-16 mx-auto sm:mx-0"
         >
-          <h2 className="font-poppins text-2xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-5 transition-colors duration-300">
+          {/* EL CUADRITO DE TÍTULO AGREGADO (DOMA ADS) */}
+          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
+            DOMA ADS
+          </span>
+
+          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-5 transition-colors duration-300">
             Tu nuevo <span className="text-[#a100ff]">canal de comunicación</span>
           </h2>
 

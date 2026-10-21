@@ -40,6 +40,12 @@ export default function Product() {
         
         {/* ENCABEZADOS PRINCIPALES */}
         <div className="text-center max-w-4xl mx-auto mb-14 lg:mb-20">
+          
+          {/* EL CUADRITO DE TÍTULO AGREGADO (¿CÓMO FUNCIONA?) */}
+          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
+            ¿CÓMO FUNCIONA?
+          </span>
+
           <h2 className="font-poppins text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-4 transition-colors duration-300">
             Un <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8257e6] to-[#a87ffb]">empleado digital</span> que fortalece tu primera línea de atención.
           </h2>

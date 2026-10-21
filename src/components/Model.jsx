@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ScrollFloat from './ScrollFloat.jsx';
 
 export default function Model() {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,36 +20,143 @@ export default function Model() {
   }, []);
 
   return (
-    <section id="modelo" className="relative py-24 md:py-32 px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300">
-      
-      {/* Ambient Lights */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#a100ff]/[0.06] dark:bg-[#a100ff]/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <section 
+      id="modelo" 
+      className="relative pt-10 pb-16 md:pt-14 md:pb-20 px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300"
+    >
+      {/* Luces ambientales */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[250px] bg-[#a100ff]/[0.05] dark:bg-[#a100ff]/10 rounded-full blur-[130px] pointer-events-none"></div>
 
       <div className="max-w-4xl mx-auto relative z-10">
-        
-        {/* HEADER */}
         <div 
           ref={headerRef}
-          className={`text-center transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
+          className={`text-center transform transition-all duration-700 ease-out ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`}
         >
-          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
-            El modelo
-          </span>
+          {/* Bloque de las 3 frases */}
+          <div className="font-poppins text-4xl md:text-5xl lg:text-[58px] font-bold leading-[1.18] mb-5 flex flex-col items-center justify-center gap-1 sm:gap-1.5 select-none tracking-tight">
+            
+            {/* Frase 1: Blanco / Slate oscuro */}
+            <ScrollFloat
+              effect="float"
+              splitBy="chars"
+              direction="up"
+              order="start"
+              fromColor="currentColor"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              distance={120}
+              stretch={2.3}
+              smoothing={0}
+              containerClassName="!m-0 !overflow-visible"
+              textClassName="text-slate-900 dark:text-white transition-colors duration-300 inline-block py-0.5"
+            >
+              Siempre disponible
+            </ScrollFloat>
+            
+            {/* Frase 2: Gris */}
+            <ScrollFloat
+              effect="float"
+              splitBy="chars"
+              direction="up"
+              order="start"
+              fromColor="currentColor"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              distance={120}
+              stretch={2.3}
+              smoothing={0}
+              containerClassName="!m-0 !overflow-visible"
+              textClassName="text-slate-500 dark:text-[#60606a] transition-colors duration-300 inline-block py-0.5"
+            >
+              Siempre preparado
+            </ScrollFloat>
+            
+            {/* Frase 3: Degradado continuo */}
+            <div className="gradient-phrase-wrapper inline-block py-0.5">
+              <ScrollFloat
+                effect="float"
+                splitBy="chars"
+                direction="up"
+                order="start"
+                fromColor="currentColor"
+                animationDuration={1}
+                ease="back.inOut(2)"
+                scrollStart="center bottom+=50%"
+                scrollEnd="bottom bottom-=40%"
+                stagger={0.03}
+                distance={120}
+                stretch={2.3}
+                smoothing={0}
+                containerClassName="!m-0 !overflow-visible"
+                textClassName="inline-block"
+              >
+                Siempre consistente
+              </ScrollFloat>
+            </div>
+
+          </div>
           
-          <h2 className="font-poppins text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white leading-[1.1] mb-6 transition-colors duration-300">
-            Siempre disponible.<br/>
-            <span className="text-slate-400 dark:text-gray-500 transition-colors duration-300">Siempre preparado.</span><br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">
-              Siempre consistente.
-            </span>
-          </h2>
-          
-          <p className="font-gilroy text-lg md:text-xl text-slate-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors duration-300">
+          <p className="font-gilroy text-base sm:text-lg md:text-xl text-slate-600 dark:text-gray-400 max-w-xl mx-auto transition-colors duration-300 mt-5 leading-relaxed">
             Doma trabaja 24/7, siempre está actualizado y responde de forma consistente.
           </p>
         </div>
-
       </div>
+
+      <style>{`
+        .gradient-phrase-wrapper .scroll-float-text {
+          display: inline-block;
+          position: relative;
+        }
+
+        .gradient-phrase-wrapper .scroll-float-word {
+          display: inline-block;
+        }
+
+        /* 1. Asignamos el degradado exacto que pediste, pero lo hacemos 20 veces más ancho */
+        .gradient-phrase-wrapper .scroll-float-char {
+          display: inline-block;
+          background-image: linear-gradient(90deg, #a100ff 0%, #7033ff 38%, #4f5bfa 68%, #38bdf8 100%) !important;
+          background-size: 2000% 100% !important;
+          -webkit-background-clip: text !important;
+          background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          color: transparent !important;
+          will-change: transform, opacity;
+        }
+
+        /* 2. Mapeo matemático letra por letra para un degradado CONTINUO perfecto e irrompible */
+        
+        /* Palabra 1: "Siempre" (7 letras) - Tonos Morados */
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(1) .scroll-float-char:nth-child(1) { background-position: 0% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(1) .scroll-float-char:nth-child(2) { background-position: 5% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(1) .scroll-float-char:nth-child(3) { background-position: 10% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(1) .scroll-float-char:nth-child(4) { background-position: 15% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(1) .scroll-float-char:nth-child(5) { background-position: 20% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(1) .scroll-float-char:nth-child(6) { background-position: 25% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(1) .scroll-float-char:nth-child(7) { background-position: 30% 50% !important; }
+
+        /* Palabra 2: "consistente." (12 letras) - Transición a Azul Celeste */
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(1) { background-position: 40% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(2) { background-position: 45.4% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(3) { background-position: 50.9% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(4) { background-position: 56.3% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(5) { background-position: 61.8% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(6) { background-position: 67.2% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(7) { background-position: 72.7% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(8) { background-position: 78.1% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(9) { background-position: 83.6% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(10) { background-position: 89% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(11) { background-position: 94.5% 50% !important; }
+        .gradient-phrase-wrapper .scroll-float-word:nth-of-type(2) .scroll-float-char:nth-child(12) { background-position: 100% 50% !important; }
+      `}</style>
     </section>
   );
 }

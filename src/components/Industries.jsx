@@ -1,82 +1,71 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// --- BASE DE DATOS DE LOS 5 ROLES CON INFORMACIÓN QUE GESTIONA ---
+// --- BASE DE DATOS ACTUALIZADA CON COPIES DE CANVA ---
 const rolesData = [
   {
-    id: 'retail',
-    role: 'DOMA Finder',
+    id: 'advisor',
+    role: 'DOMA Advisor',
+    subtitle: 'Mejores decisiones de compra, en el momento justo.',
     sector: 'Retail',
     image: '/RECURSOS DOMA SITIOMesa de trabajo 8.webp',
-    description: 'Asesora a clientes en comercios y tiendas departamentales. Ayuda a encontrar productos en tienda y recomienda opciones según lo que la persona necesita.',
+    description: 'Ideal para comercios y tiendas departamentales que manejan un catálogo de productos. Ayuda a encontrar productos en tienda y brinda recomendaciones.',
     features: [
-      'Catálogo de productos',
-      'Ubicación por pasillo o sección',
-      'Información y características',
-      'Promociones vigentes'
+      'Indica en qué pasillo o sección se encuentra un producto.',
+      'Detecta qué busca el cliente para recomendarle opciones del catálogo.',
+      'Explica y compara características de los productos.',
+      'Informa sobre promociones o descuentos.'
     ],
     color: 'from-[#a100ff] to-[#437ceb]'
   },
   {
-    id: 'banking',
+    id: 'guide',
     role: 'DOMA Guide',
-    sector: 'Banca y seguros',
+    subtitle: 'Cada trámite, claro desde el primer paso.',
+    sector: 'Banca y Trámites',
     image: '/RECURSOS DOMA SITIOMesa de trabajo 7.webp',
-    description: 'Recibe a los usuarios en sucursales bancarias. Orienta sobre trámites, requisitos y los canaliza con el ejecutivo correspondiente para su atención.',
+    description: 'Ideal para edificios y sedes con muchas áreas y puntos de atención donde las personas realizan trámites o servicios. Informa sobre ubicaciones, requisitos, etc.',
     features: [
-      'Trámites y requisitos',
-      'Filas, ventanillas y canales',
-      'Horarios y ubicaciones',
-      'Productos y promociones',
-      'Avisos institucionales'
+      'Identifica necesidades de los usuarios (a dónde va, qué trámite desea, etc.)',
+      'Muestra el camino exacto hacia el edificio, piso u oficina.',
+      'Lista los requisitos y documentos que el usuario debe tener a la mano.',
+      'Dirige al visitante hacia la fila o ventanilla correcta.'
     ],
     color: 'from-[#437ceb] to-[#2563eb]'
   },
   {
-    id: 'hospitality',
+    id: 'concierge',
     role: 'DOMA Concierge',
-    sector: 'Hoteles y hospitalidad',
+    subtitle: 'Todo lo que tu espacio ofrece, a la vista.',
+    sector: 'Hospitalidad',
     image: '/RECURSOS DOMA SITIOMesa de trabajo 5.webp',
-    description: 'Brinda atención a huéspedes de hoteles y otros servicios de alojamiento. Da a conocer servicios, experiencias y promociones del lugar.',
+    description: 'Ideal para lugares de eventos, ferias, lobbies, complejos y espacios con agenda, servicios o experiencias. Orienta sobre ubicaciones, servicios, experiencias y promociones del lugar.',
     features: [
-      'Horarios y catálogo de servicios',
-      'Mapa de instalaciones',
-      'Información de Wi-Fi y accesos',
-      'Agenda de actividades',
-      'Promociones y programas de lealtad'
+      'Informa sobre horarios y catálogo de servicios.',
+      'Muestra el mapa de instalaciones.',
+      'Brinda información de Wi-Fi y accesos.',
+      'Sugiere opciones personalizadas según lo que le interesa al visitante.',
+      'Informa canales de atención para gestionar servicios sobre su reserva.'
     ],
     color: 'from-[#437ceb] to-[#a100ff]'
   },
   {
-    id: 'health',
-    role: 'DOMA Navigator',
-    sector: 'Centros de salud',
-    image: '/RECURSOS DOMA SITIOMesa de trabajo 6.webp',
-    description: 'Orienta a pacientes y visitantes dentro de la institución, localiza consultorios y resuelve dudas de atención médica y hospitalaria.',
-    features: [
-      'Directorio de médicos y áreas administrativas',
-      'Horarios de atención',
-      'Mapas e indicaciones',
-      'Información de trámites y requisitos'
-    ],
-    color: 'from-[#b656ff] to-[#437ceb]'
-  },
-  {
-    id: 'corporate',
+    id: 'host',
     role: 'DOMA Host',
-    sector: 'Corporativos y empresas',
+    subtitle: 'La primera impresión, resuelta.',
+    sector: 'Corporativos',
     image: '/RECURSOS DOMA SITIOMesa de trabajo 9.webp',
-    description: 'Recibe a visitantes de oficinas y corporativos. Da la bienvenida en nombre de la organización, los orienta y registra su visita.',
+    description: 'Ideal para accesos, recepciones y puntos de bienvenida de edificios, sedes y eventos. Registra, canaliza y direcciona visitantes.',
     features: [
-      'Formulario de registro',
-      'Directorio de áreas y salas',
-      'Accesos y estacionamiento',
-      'Información institucional'
+      'Da la bienvenida en nombre de la empresa.',
+      'Informa sobre horarios, accesos o estacionamientos.',
+      'Realiza el registro de las visitas.',
+      'Canaliza a las visitas hacia su destino.'
     ],
     color: 'from-[#a100ff] to-[#7c3aed]'
   }
 ];
 
-// Subcomponente individual para móvil
+// --- SUBCOMPONENTE PARA MÓVIL ---
 const MobileScrollCard = ({ item }) => {
   const cardRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -98,72 +87,81 @@ const MobileScrollCard = ({ item }) => {
   return (
     <div
       ref={cardRef}
-      className={`relative w-full rounded-3xl overflow-hidden border border-slate-200/80 dark:border-white/10 bg-slate-900 dark:bg-[#12111a] p-6 sm:p-8 flex flex-col justify-end min-h-[500px] transform transition-all duration-700 ease-out will-change-transform shadow-[0_12px_36px_rgba(0,0,0,0.12)] dark:shadow-none ${
+      className={`relative w-full rounded-3xl overflow-hidden border border-slate-200/80 dark:border-white/10 bg-slate-900 dark:bg-[#12111a] p-6 sm:p-8 flex flex-col justify-start min-h-[600px] transform transition-all duration-700 ease-out will-change-transform shadow-[0_12px_36px_rgba(0,0,0,0.12)] dark:shadow-none ${
         isVisible ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-95'
       }`}
     >
-      {/* Imagen de fondo */}
+      {/* Imagen de fondo adaptada: Avatar arriba, oscurecido abajo */}
       <img
         src={item.image}
         alt={item.role}
-        className="absolute inset-0 w-full h-full object-cover object-top"
+        className="absolute top-0 right-0 w-3/4 max-w-[280px] h-auto object-contain object-top opacity-90"
         onError={(e) => {
           e.currentTarget.src =
             'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80';
         }}
       />
-      {/* Capa de contraste oscuro (necesaria para legibilidad sobre foto en ambos modos) */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/85 to-transparent"></div>
+      
+      {/* Capa de contraste oscuro para legibilidad (siempre oscura en móvil para mantener el diseño UI) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0f]/95 via-[#0a0a0f]/80 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent"></div>
 
       {/* Pill de sector */}
-      <div className="absolute top-5 left-5 z-10">
-        <span className="px-3.5 py-1.5 rounded-full text-xs font-gilroy font-semibold tracking-wide bg-white/10 border border-white/20 text-white backdrop-blur-md">
+      <div className="relative z-10 mb-6 mt-2">
+        <span className="px-3.5 py-1.5 rounded-full text-[11px] font-gilroy font-semibold tracking-widest uppercase bg-white/10 border border-white/20 text-white backdrop-blur-md">
           {item.sector}
         </span>
       </div>
 
-      {/* Información del Rol en móvil */}
-      <div className="relative z-10 space-y-4">
+      {/* Información del Rol */}
+      <div className="relative z-10 flex flex-col h-full justify-between">
         <div>
           <div className="flex items-center gap-2.5 mb-2">
             <span className="w-1.5 h-6 bg-[#a100ff] shadow-[0_0_12px_rgba(161,0,255,0.85)] rounded-full"></span>
-            <h3 className="font-poppins text-2xl font-bold text-white tracking-tight leading-none">
+            <h3 className="font-poppins text-3xl font-bold text-white tracking-tight leading-none">
               {item.role}
             </h3>
           </div>
-          <p className="font-gilroy text-sm text-gray-200 leading-relaxed mb-4">
+          
+          <h4 className="font-gilroy text-sm font-bold text-[#437ceb] mb-3">
+            {item.subtitle}
+          </h4>
+          
+          <p className="font-gilroy text-sm text-gray-300 leading-relaxed mb-6 max-w-[85%]">
             {item.description}
           </p>
         </div>
 
-        {/* Tarjeta interna con la información que gestiona */}
-        <div className="bg-[#181722]/90 backdrop-blur-xl border border-white/15 rounded-2xl p-4 sm:p-5">
-          <h4 className="font-poppins text-xs font-bold uppercase tracking-wider text-[#437ceb] mb-3">
-            Información que gestiona
-          </h4>
-          <ul className="space-y-2 text-left">
-            {item.features.map((feat, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs font-gilroy text-gray-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#a100ff] mt-1.5 shrink-0"></span>
-                <span>{feat}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div className="space-y-4">
+          {/* Tarjeta interna: Qué puede hacer */}
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5">
+            <h4 className="font-poppins text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-4">
+              ¿Qué puede hacer?
+            </h4>
+            <ul className="space-y-3 text-left">
+              {item.features.map((feat, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm font-gilroy text-gray-200 leading-snug">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#a100ff] mt-1.5 shrink-0 shadow-[0_0_8px_rgba(161,0,255,0.6)]"></span>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Botón interactivo inferior */}
-        <div className="pt-2">
-          <div className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-xs text-center shadow-[0_0_20px_rgba(161,0,255,0.35)]">
-            ¡Tú decides qué información consume DOMA!
+          {/* Botón interactivo inferior */}
+          <div className="w-full py-3.5 px-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-xs sm:text-sm text-center shadow-[0_0_20px_rgba(161,0,255,0.35)]">
+            ¡Tú controlas qué información consume DOMA!
           </div>
         </div>
       </div>
 
-      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${item.color}`}></div>
+      {/* Línea de color inferior decorativa */}
+      <div className={`absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r ${item.color}`}></div>
     </div>
   );
 };
 
+// --- COMPONENTE PRINCIPAL ---
 export default function RolesGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -172,27 +170,27 @@ export default function RolesGallery() {
       
       {/* Luces y ambientación de fondo */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-[#a100ff]/20 to-transparent"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[900px] h-[500px] bg-[#a100ff]/[0.05] dark:bg-[#a100ff]/5 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[900px] h-[500px] bg-[#a100ff]/[0.03] dark:bg-[#a100ff]/5 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* ENCABEZADO */}
-        <div className="text-center max-w-3xl mx-auto mb-14 lg:mb-16">
-          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-4 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
+        {/* ENCABEZADO CON COPY ACTUALIZADO */}
+        <div className="text-center max-w-4xl mx-auto mb-12 lg:mb-16">
+          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-5 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
             PRODUCTOS
           </span>
-          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-4 transition-colors duration-300">
-            Un catálogo de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">roles diferentes</span> por sector
-          </h2>
-          <p className="font-gilroy text-base sm:text-lg text-slate-600 dark:text-gray-400 max-w-xl mx-auto transition-colors duration-300">
-            Cada puesto tiene un rol, un alcance y una promesa claros desde el primer día.
+<h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-[1.35] lg:leading-[1.3] py-1 mb-4 transition-colors duration-300">
+  La <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">misma experiencia de servicio</span> adaptada a diferentes <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">necesidades de atención</span>
+</h2>
+          <p className="font-gilroy text-base sm:text-lg text-slate-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors duration-300">
+            Contamos con un catálogo de productos que resuelve las necesidades más comunes de diferentes industrias.
           </p>
         </div>
 
         {/* ========================================================= */}
-        {/* VERSIÓN DESKTOP: ACCORDION GALLERY AMPLIADO              */}
+        {/* VERSIÓN DESKTOP: ACCORDION GALLERY PRO MAX               */}
         {/* ========================================================= */}
-        <div className="hidden lg:flex gap-3 h-[580px] w-full">
+        <div className="hidden lg:flex gap-4 h-[640px] w-full">
           {rolesData.map((item, idx) => {
             const isActive = activeIndex === idx;
 
@@ -201,85 +199,89 @@ export default function RolesGallery() {
                 key={item.id}
                 onMouseEnter={() => setActiveIndex(idx)}
                 onClick={() => setActiveIndex(idx)}
-                className={`relative rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col justify-end p-8 ${
+                className={`relative rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col p-8 ${
                   isActive 
-                    ? 'flex-[5.5] bg-[#12111a]/40 border border-slate-300 dark:border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.18)] dark:shadow-none' 
-                    : 'flex-[1] bg-slate-200/50 dark:bg-[#12111a]/20 border border-slate-200 dark:border-white/5'
+                    ? 'flex-[6.5] bg-white dark:bg-[#12111a]/60 border border-slate-200 dark:border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:shadow-2xl' 
+                    : 'flex-[1] bg-slate-200/50 dark:bg-[#12111a]/20 border border-slate-200 dark:border-white/5 hover:bg-slate-200 dark:hover:bg-[#12111a]/40'
                 }`}
               >
-                {/* Imagen con transición y filtro */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
+                {/* Imagen del Avatar - Posicionada a la derecha cuando está activo */}
+                <div className={`absolute bottom-0 transition-all duration-700 ease-out z-0 ${
+                  isActive ? 'right-0 w-[45%] h-[95%] opacity-100' : 'inset-0 w-full h-full opacity-60 dark:opacity-40'
+                }`}>
                   <img
                     src={item.image}
                     alt={item.role}
-                    className={`w-full h-full object-cover object-top transition-all duration-700 ease-out ${
-                      isActive ? 'grayscale-0 brightness-100 scale-100' : 'grayscale brightness-[0.45] dark:brightness-[0.35] contrast-125 scale-105'
+                    className={`w-full h-full object-cover transition-all duration-700 ease-out ${
+                      isActive 
+                        ? 'object-bottom grayscale-0 brightness-100 scale-100' 
+                        : 'object-top grayscale brightness-[0.6] dark:brightness-[0.35] contrast-125 scale-105'
                     }`}
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80';
-                    }}
                   />
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent transition-opacity duration-600 ${
-                      isActive ? 'opacity-90' : 'opacity-60'
-                    }`}
-                  ></div>
-                </div>
-
-                {/* Contenido inferior al hacer hover/active */}
-                <div className="relative z-10 flex flex-col justify-end">
-                  
-                  {/* Barra morada + Título */}
-                  <div className="flex items-center gap-3 mb-2">
-                    <span
-                      className={`w-1.5 h-7 rounded-full bg-[#a100ff] shadow-[0_0_14px_rgba(161,0,255,0.9)] transition-opacity duration-500 ${
-                        isActive ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    ></span>
-                    <h3
-                      className={`font-poppins font-bold text-white transition-all duration-500 whitespace-nowrap ${
-                        isActive ? 'text-3xl opacity-100 translate-x-0' : 'text-xl opacity-0 -translate-x-3'
-                      }`}
-                    >
-                      {item.role}
-                    </h3>
-                  </div>
-
-                  {/* Detalles completos al estar activo */}
+                  {/* Gradiente sutil para fusionar el avatar inactivo */}
+                  {!isActive && (
+                    <div className="absolute inset-0 bg-slate-900/20 dark:bg-[#0a0a0f]/60"></div>
+                  )}
+                  {/* Gradiente en activo para difuminar bordes en modo oscuro */}
                   {isActive && (
-                    <div className="animate-fadeIn pl-4 space-y-4 mt-2">
-                      <p className="font-gilroy text-xs font-bold tracking-[2px] text-[#437ceb] uppercase">
-                        {item.sector}
-                      </p>
-                      <p className="font-gilroy text-sm text-gray-200 leading-relaxed max-w-lg">
-                        {item.description}
-                      </p>
-
-                      {/* Tarjeta de información que gestiona en Desktop */}
-                      <div className="bg-[#181722]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-5 max-w-md shadow-2xl">
-                        <h4 className="font-poppins text-xs font-bold uppercase tracking-wider text-[#437ceb] mb-3">
-                          Información que gestiona
-                        </h4>
-                        <ul className="grid grid-cols-1 gap-2 text-left">
-                          {item.features.map((feat, i) => (
-                            <li key={i} className="flex items-start gap-2.5 text-xs font-gilroy text-gray-200">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#a100ff] mt-1.5 shrink-0"></span>
-                              <span>{feat}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Botón inferior institucional */}
-                      <div className="inline-block pt-1">
-                        <div className="py-2.5 px-5 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-xs tracking-wide shadow-[0_0_20px_rgba(161,0,255,0.4)]">
-                          ¡Tú decides qué información consume DOMA!
-                        </div>
-                      </div>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent dark:from-[#12111a] dark:via-transparent dark:to-transparent w-[20%]"></div>
                   )}
                 </div>
+
+                {/* Título Rotado cuando está inactivo */}
+                {!isActive && (
+                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-full flex justify-center">
+                    <h3 className="font-poppins font-bold text-slate-800 dark:text-white text-xl -rotate-90 whitespace-nowrap origin-center tracking-widest uppercase opacity-60">
+                      {item.sector}
+                    </h3>
+                  </div>
+                )}
+
+                {/* Contenido Principal al estar activo (Alineado a la izquierda) */}
+                {isActive && (
+                  <div className="relative z-10 flex flex-col h-full w-[60%] justify-center animate-fadeInLeft">
+                    
+                    <div className="mb-6">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="w-1.5 h-8 rounded-full bg-[#a100ff] shadow-[0_0_14px_rgba(161,0,255,0.9)]"></span>
+                        <h3 className="font-poppins font-bold text-slate-900 dark:text-white text-4xl tracking-tight">
+                          {item.role}
+                        </h3>
+                      </div>
+                      
+                      <h4 className="font-gilroy text-lg font-bold text-[#437ceb] mt-3 mb-4">
+                        {item.subtitle}
+                      </h4>
+                      
+                      <p className="font-gilroy text-base text-slate-600 dark:text-gray-300 leading-relaxed max-w-md">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Tarjeta "Qué puede hacer" */}
+                    <div className="bg-slate-50 dark:bg-white/[0.03] backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-sm mb-6 max-w-lg">
+                      <h4 className="font-poppins text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-gray-400 mb-4">
+                        ¿Qué puede hacer?
+                      </h4>
+                      <ul className="grid grid-cols-1 gap-3 text-left">
+                        {item.features.map((feat, i) => (
+                          <li key={i} className="flex items-start gap-3 text-sm font-gilroy text-slate-700 dark:text-gray-200">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#a100ff] mt-1.5 shrink-0 shadow-[0_0_8px_rgba(161,0,255,0.6)]"></span>
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Botón inferior institucional */}
+                    <div className="inline-block">
+                      <div className="inline-flex py-3 px-6 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(161,0,255,0.3)] hover:shadow-[0_0_25px_rgba(161,0,255,0.5)] transition-shadow cursor-default">
+                        ¡Tú controlas qué información consume DOMA!
+                      </div>
+                    </div>
+
+                  </div>
+                )}
               </div>
             );
           })}
@@ -288,7 +290,7 @@ export default function RolesGallery() {
         {/* ========================================================= */}
         {/* VERSIÓN MÓVIL: TARJETAS VERTICALES                        */}
         {/* ========================================================= */}
-        <div className="flex lg:hidden flex-col gap-6 w-full">
+        <div className="flex lg:hidden flex-col gap-6 w-full max-w-md mx-auto">
           {rolesData.map((item) => (
             <MobileScrollCard key={item.id} item={item} />
           ))}
@@ -297,12 +299,14 @@ export default function RolesGallery() {
       </div>
 
       <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInLeft {
+          from { opacity: 0; transform: translateX(-15px); }
+          to { opacity: 1; transform: translateX(0); }
         }
-        .animate-fadeIn {
-          animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .animate-fadeInLeft {
+          animation: fadeInLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.15s;
+          opacity: 0;
         }
       `}</style>
     </section>
