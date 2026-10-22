@@ -135,7 +135,7 @@ const AdModeCard = ({
             ? 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease' 
             : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease',
         }}
-        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-white/80 dark:bg-[#12121c] border border-slate-200/80 dark:border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl transition-colors duration-300"
+        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-white/80 dark:bg-[#12121c] border border-slate-200/80 dark:border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl "
       >
         {/* Spotlight interactivo */}
         <div
@@ -205,7 +205,7 @@ const AdModeCard = ({
                 opacity: isEntered ? 1 : 0,
                 transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 120ms, opacity 0.4s ease 120ms'
               }}
-              className="font-poppins text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-5 transition-colors duration-300"
+              className="font-poppins text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-5 "
             >
               {title}
             </h3>
@@ -286,7 +286,7 @@ export default function AdsSection() {
     <section 
       ref={sectionRef}
       id="ads" 
-      className="relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300"
+      className="relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden "
     >
       {/* Línea divisoria superior con expansión ligada al scroll */}
       <div 
@@ -320,11 +320,11 @@ export default function AdsSection() {
             DOMA ADS
           </span>
 
-          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-5 transition-colors duration-300">
+          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-5 ">
             Tu nuevo <span className="text-[#a100ff]">canal de comunicación</span>
           </h2>
 
-          <p className="font-gilroy text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed transition-colors duration-300">
+          <p className="font-gilroy text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed ">
             <span className="text-[#a100ff] font-bold">DOMA</span> está presente justo en el momento en que tu cliente interactúa con tu marca y donde es más receptivo a información. En este momento Doma puede mostrarles{' '}
             <span className="text-[#a100ff] font-semibold">promociones</span>,{' '}
             <span className="text-[#a100ff] font-semibold">lanzamientos</span> o{' '}

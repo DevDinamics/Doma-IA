@@ -83,7 +83,7 @@ const MetricCard = ({
       {/* Contenedor de la cifra principal */}
       <div className="relative z-10 flex items-baseline justify-center gap-1.5 my-2 sm:my-3 w-full">
         <span 
-          className={`font-poppins text-4xl sm:text-5xl lg:text-[44px] xl:text-[54px] font-bold tracking-tighter leading-none tabular-nums transition-transform duration-500 ease-out group-hover:scale-[1.03] transition-colors duration-300 ${textColorClass}`}
+          className={`font-poppins text-4xl sm:text-5xl lg:text-[44px] xl:text-[54px] font-bold tracking-tighter leading-none tabular-nums transition-transform duration-500 ease-out group-hover:scale-[1.03]  ${textColorClass}`}
         >
           {staticValue ? staticValue : `${prefix}${count}${suffix}`}
         </span>
@@ -96,7 +96,7 @@ const MetricCard = ({
       </div>
 
       {/* Copy descriptivo */}
-      <p className="relative z-10 font-gilroy text-slate-500 dark:text-gray-400 text-[11px] sm:text-xs uppercase tracking-[0.16em] leading-relaxed max-w-[230px] mt-3 group-hover:text-slate-800 dark:group-hover:text-gray-200 transition-colors duration-300">
+      <p className="relative z-10 font-gilroy text-slate-500 dark:text-gray-400 text-[11px] sm:text-xs uppercase tracking-[0.16em] leading-relaxed max-w-[230px] mt-3 group-hover:text-slate-800 dark:group-hover:text-gray-200 ">
         {text}
       </p>
     </div>
@@ -124,7 +124,7 @@ export default function MetricsGrid() {
   }, []);
 
   return (
-    <section id="metrics" className="relative py-20 sm:py-28 lg:py-36 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300">
+    <section id="metrics" className="relative py-20 sm:py-28 lg:py-36 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden ">
       
       {/* Línea divisoria superior */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-white/10 to-transparent"></div>
@@ -139,7 +139,7 @@ export default function MetricsGrid() {
             ${headerVisible ? 'translate-y-0 opacity-100 blur-0' : 'translate-y-8 opacity-0 blur-sm'}
           `}
         >
-          <h2 className="font-poppins text-2xl sm:text-3xl lg:text-[40px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.25] sm:leading-[1.2] transition-colors duration-300">
+          <h2 className="font-poppins text-2xl sm:text-3xl lg:text-[40px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.25] sm:leading-[1.2] ">
             En el <span className="text-[#a100ff]">mundo digital</span>, las empresas aprendieron cómo estar siempre disponibles... en el{' '}
             <span className="text-[#437ceb]">
               mundo físico no.

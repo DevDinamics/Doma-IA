@@ -22,7 +22,7 @@ export default function Model() {
   return (
     <section 
       id="modelo" 
-      className="relative pt-10 pb-16 md:pt-14 md:pb-20 px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300"
+      className="relative pt-10 pb-16 md:pt-14 md:pb-20 px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden "
     >
       {/* Luces ambientales */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[250px] bg-[#a100ff]/[0.05] dark:bg-[#a100ff]/10 rounded-full blur-[130px] pointer-events-none"></div>
@@ -53,7 +53,7 @@ export default function Model() {
               stretch={2.3}
               smoothing={0}
               containerClassName="!m-0 !overflow-visible"
-              textClassName="text-slate-900 dark:text-white transition-colors duration-300 inline-block py-0.5"
+              textClassName="text-slate-900 dark:text-white  inline-block py-0.5"
             >
               Siempre disponible
             </ScrollFloat>
@@ -74,7 +74,7 @@ export default function Model() {
               stretch={2.3}
               smoothing={0}
               containerClassName="!m-0 !overflow-visible"
-              textClassName="text-slate-500 dark:text-[#60606a] transition-colors duration-300 inline-block py-0.5"
+              textClassName="text-slate-500 dark:text-[#60606a]  inline-block py-0.5"
             >
               Siempre preparado
             </ScrollFloat>
@@ -104,7 +104,7 @@ export default function Model() {
 
           </div>
           
-          <p className="font-gilroy text-base sm:text-lg md:text-xl text-slate-600 dark:text-gray-400 max-w-xl mx-auto transition-colors duration-300 mt-5 leading-relaxed">
+          <p className="font-gilroy text-base sm:text-lg md:text-xl text-slate-600 dark:text-gray-400 max-w-xl mx-auto  mt-5 leading-relaxed">
             Doma trabaja 24/7, siempre está actualizado y responde de forma consistente.
           </p>
         </div>

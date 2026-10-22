@@ -4,7 +4,7 @@
 
 <section 
   id="hero" 
-  class="relative min-h-[100dvh] lg:min-h-screen flex items-center pt-20 pb-12 sm:pt-24 sm:pb-16 lg:py-0 overflow-hidden bg-slate-50 dark:bg-[#0a0a0f] transition-colors duration-300"
+  class="relative min-h-[100dvh] lg:min-h-screen flex items-center pt-20 pb-12 sm:pt-24 sm:pb-16 lg:py-0 overflow-hidden bg-slate-50 dark:bg-[#0a0a0f]"
 >
   
   <!-- Luces y efectos ambientales de fondo adaptables al tema -->
@@ -19,62 +19,61 @@
   <div class="container mx-auto px-4 sm:px-6 relative z-10 w-full">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-6">      
       
-      <!-- Columna izquierda: Textos equilibrados -->
-      <div class="w-full lg:flex-1 flex flex-col items-center text-center lg:items-start lg:text-left max-w-xl lg:max-w-2xl mx-auto lg:mx-0"> 
-        
-        <!-- TÍTULO H1: Interlineado y escala tipográfica compactada -->
-        <h1 
-          id="hero-stroke-heading"
-          class="font-poppins font-bold tracking-tight mb-4 lg:mb-5 flex flex-col items-center lg:items-start w-full select-none"
-          aria-label="El primer empleado digital para espacios físicos."
-        >
-          <!-- Línea 1: El primer -->
-          <span 
-            class="stroke-text-line" 
-            data-text="El primer" 
-            data-stroke="#A78BFA" 
-            data-fill="#111827"
-            data-dark-fill="#FFFFFF"
-            data-delay="0"
-          ></span>
+<!-- Columna izquierda: Textos distribuidos hacia la derecha -->
+<div class="w-full lg:flex-1 flex flex-col items-center text-center lg:items-start lg:text-left max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto lg:mx-0 relative z-10 lg:ml-24 xl:ml-36 2xl:ml-48">        
+  <!-- TÍTULO H1 -->
+<h1 
+  id="hero-stroke-heading"
+  class="font-poppins font-bold tracking-tight mb-5 lg:mb-6 flex flex-col items-center lg:items-start w-full select-none"
+  aria-label="El primer empleado digital para espacios físicos."
+>
+    <!-- Línea 1: El primer -->
+    <span 
+      class="stroke-text-line" 
+      data-text="El primer" 
+      data-stroke="#A78BFA" 
+      data-fill="#111827"
+      data-dark-fill="#FFFFFF"
+      data-delay="0"
+    ></span>
 
-          <!-- Línea 2: empleado digital -->
-          <span 
-            class="stroke-text-line" 
-            data-text="empleado digital" 
-            data-stroke="#A78BFA" 
-            data-fill="#111827"
-            data-dark-fill="#FFFFFF"
-            data-delay="0.18"
-          ></span>
+    <!-- Línea 2: empleado digital -->
+    <span 
+      class="stroke-text-line" 
+      data-text="empleado digital" 
+      data-stroke="#A78BFA" 
+      data-fill="#111827"
+      data-dark-fill="#FFFFFF"
+      data-delay="0.18"
+    ></span>
 
-          <!-- Línea 3: para -->
-          <span 
-            class="stroke-text-line" 
-            data-text="para" 
-            data-stroke="#A78BFA" 
-            data-fill="#111827"
-            data-dark-fill="#FFFFFF"
-            data-delay="0.36"
-          ></span>
+    <!-- Línea 3: para -->
+    <span 
+      class="stroke-text-line" 
+      data-text="para" 
+      data-stroke="#A78BFA" 
+      data-fill="#111827"
+      data-dark-fill="#FFFFFF"
+      data-delay="0.36"
+    ></span>
 
-          <!-- Línea 4: espacios físicos. -->
-          <span 
-            class="stroke-text-line" 
-            data-text="espacios físicos." 
-            data-stroke="#A78BFA" 
-            data-fill="#437ceb"
-            data-dark-fill="#437ceb"
-            data-delay="0.52"
-          ></span>
-        </h1>
-        
-        <!-- Párrafo descriptivo con altura equilibrada -->
-        <p class="font-gilroy text-sm sm:text-base lg:text-lg text-slate-600 dark:text-gray-400 max-w-lg leading-relaxed animate-apple-sequent transition-colors duration-300">
-          DOMA conecta el conocimiento completo de tu empresa con un <span class="text-slate-900 dark:text-white font-semibold">empleado digital</span>, disponible 24/7. Consistente. Escalable.
-        </p>
+    <!-- Línea 4: espacios físicos -->
+    <span 
+      class="stroke-text-line" 
+      data-text="espacios físicos" 
+      data-stroke="#A78BFA" 
+      data-fill="#437ceb"
+      data-dark-fill="#437ceb"
+      data-delay="0.52"
+    ></span>
+  </h1>
+  
+  <!-- Párrafo descriptivo visible y con mayor amplitud horizontal -->
+  <p class="font-gilroy text-sm sm:text-base lg:text-lg text-slate-600 dark:text-gray-400 max-w-xl leading-relaxed animate-apple-sequent">
+    DOMA conecta el conocimiento completo de tu empresa con un <span class="text-slate-900 dark:text-white font-semibold">empleado digital</span>, disponible 24/7. Consistente. Escalable.
+  </p>
 
-      </div>
+</div>
 
       <!-- Columna derecha: Avatar con escala visual contenida -->
       <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-sm xl:max-w-md animate-avatar-enter delay-500">
@@ -126,7 +125,7 @@
   };
   window.addEventListener('scroll', handleScroll, { passive: true });
 
-  // 2. Parámetros ajustados de animación React Bits StrokeText
+  // 2. Parámetros ajustados de animación StrokeText
   const STROKE_WIDTH = 1.3;
   const DRAW_DURATION = 1.4;
   const FILL_DELAY = 0.15;
@@ -311,12 +310,12 @@
 <style>
   /* Interlineado ajustado y alturas proporcionadas */
   .stroke-text-line {
-    display: inline-block;
-    height: 1.12em; /* Reducido de 1.22em para eliminar el interlineado excesivo */
+    display: block;
+    height: 1.05em; /* Altura compacta para evitar separación excesiva */
     aspect-ratio: var(--stroke-text-aspect, auto);
     font-size: 2.25rem; /* ~36px en móviles */
     line-height: 1;
-    margin-bottom: -0.04em;
+    margin-bottom: -0.1em; /* Margen negativo controlado para juntar las líneas sin romper el flujo */
     overflow: visible;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -325,19 +324,22 @@
 
   @media (min-width: 640px) {
     .stroke-text-line {
-      font-size: 2.85rem; /* ~45px */
+      font-size: 2.85rem;
+      margin-bottom: -0.1em;
     }
   }
 
   @media (min-width: 1024px) {
     .stroke-text-line {
-      font-size: 3.4rem; /* ~54px */
+      font-size: 3.4rem;
+      margin-bottom: -0.12em;
     }
   }
 
   @media (min-width: 1280px) {
     .stroke-text-line {
-      font-size: 3.85rem; /* ~61px (Ajustado desde los 80px previos para no desbordar la pantalla) */
+      font-size: 3.85rem;
+      margin-bottom: -0.19em;
     }
   }
 

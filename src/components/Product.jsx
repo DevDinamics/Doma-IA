@@ -30,7 +30,7 @@ const steps = [
 
 export default function Product() {
   return (
-    <section id="producto" className="relative py-20 lg:py-28 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden transition-colors duration-300">
+    <section id="producto" className="relative py-20 lg:py-28 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden ">
       
       {/* Luces y resplandores ambientales de fondo */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-[#8257e6]/20 to-transparent"></div>
@@ -46,10 +46,10 @@ export default function Product() {
             ¿CÓMO FUNCIONA?
           </span>
 
-          <h2 className="font-poppins text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-4 transition-colors duration-300">
+          <h2 className="font-poppins text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-4 ">
             Un <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8257e6] to-[#a87ffb]">empleado digital</span> que fortalece tu primera línea de atención.
           </h2>
-          <p className="font-gilroy text-base sm:text-xl lg:text-2xl text-slate-600 dark:text-gray-300 font-medium leading-relaxed transition-colors duration-300">
+          <p className="font-gilroy text-base sm:text-xl lg:text-2xl text-slate-600 dark:text-gray-300 font-medium leading-relaxed ">
             <span className="text-[#8257e6] font-bold">DOMA</span> brinda a tus clientes una atención{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8257e6] to-[#a87ffb] font-semibold">ágil, efectiva y consistente</span>{' '}
             en todos tus puntos de contacto físicos.
@@ -79,10 +79,10 @@ export default function Product() {
                   {step.num}
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-poppins text-base font-bold text-slate-900 dark:text-white mb-0.5 transition-colors duration-300">
+                  <h4 className="font-poppins text-base font-bold text-slate-900 dark:text-white mb-0.5 ">
                     {step.title}
                   </h4>
-                  <p className="font-gilroy text-xs sm:text-sm text-slate-600 dark:text-gray-400 leading-snug transition-colors duration-300">
+                  <p className="font-gilroy text-xs sm:text-sm text-slate-600 dark:text-gray-400 leading-snug ">
                     {step.desc}
                   </p>
                 </div>
@@ -102,10 +102,10 @@ export default function Product() {
             {/* 01. Presencia */}
             <div className="flex flex-row items-center justify-end gap-3 text-right w-full">
               <div className="max-w-[230px]">
-                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 transition-colors duration-300">
+                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 ">
                   {steps[0].title}
                 </h4>
-                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug transition-colors duration-300">
+                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug ">
                   {steps[0].desc}
                 </p>
               </div>
@@ -118,10 +118,10 @@ export default function Product() {
             {/* 03. Contexto e información */}
             <div className="flex flex-row items-center justify-end gap-3 text-right w-full">
               <div className="max-w-[230px]">
-                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 transition-colors duration-300">
+                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 ">
                   {steps[2].title}
                 </h4>
-                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug transition-colors duration-300">
+                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug ">
                   {steps[2].desc}
                 </p>
               </div>
@@ -134,10 +134,10 @@ export default function Product() {
             {/* 05. Resolución o derivación */}
             <div className="flex flex-row items-center justify-end gap-3 text-right w-full">
               <div className="max-w-[230px]">
-                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 transition-colors duration-300">
+                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 ">
                   {steps[4].title}
                 </h4>
-                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug transition-colors duration-300">
+                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug ">
                   {steps[4].desc}
                 </p>
               </div>
@@ -171,10 +171,10 @@ export default function Product() {
               </div>
               <div className="w-14 border-b-2 border-dotted border-[#8257e6]/70"></div>
               <div className="max-w-[230px]">
-                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 transition-colors duration-300">
+                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 ">
                   {steps[1].title}
                 </h4>
-                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug transition-colors duration-300">
+                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug ">
                   {steps[1].desc}
                 </p>
               </div>
@@ -187,10 +187,10 @@ export default function Product() {
               </div>
               <div className="w-14 border-b-2 border-dotted border-[#8257e6]/70"></div>
               <div className="max-w-[230px]">
-                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 transition-colors duration-300">
+                <h4 className="font-poppins text-lg font-bold text-slate-900 dark:text-white mb-0.5 ">
                   {steps[3].title}
                 </h4>
-                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug transition-colors duration-300">
+                <p className="font-gilroy text-sm text-slate-600 dark:text-gray-400 leading-snug ">
                   {steps[3].desc}
                 </p>
               </div>

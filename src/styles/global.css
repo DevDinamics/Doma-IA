@@ -9,13 +9,14 @@
 /* OPTIMIZACIONES DE GPU PARA SAFARI / iOS (Adiós al LAG)      */
 /* ========================================================== */
 .stroke-text-line {
-  display: inline-block;
-  height: 1.22em;
+  display: block;
+  /* Altura exacta compacta */
+  height: 1.05em;
   aspect-ratio: var(--stroke-text-aspect, auto);
   line-height: 1;
-  margin-bottom: -0.06em;
+  /* Margen negativo sutil y seguro */
+  margin-bottom: -0.14em;
   overflow: visible;
-  /* Forzar renderizado por hardware en la GPU de Apple */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   will-change: transform, opacity;
@@ -29,4 +30,23 @@
   /* Aislar la capa vectorial del SVG */
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
+}
+
+
+/* ========================================================== */
+/* VIEW TRANSITIONS PARA TEMA CLARO / OSCURO                  */
+/* ========================================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  will-change: clip-path;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
 }
