@@ -11,10 +11,10 @@
     {/* --- CONTENEDOR CON MAGIC BORDER --- */}
     <div class="max-w-6xl mx-auto relative p-[1px] rounded-[42px] overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-2xl">
       
-      {/* 1. Capa animada con haz de luz */}
+      {/* Capa animada con haz de luz */}
       <div class="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_40%,#437ceb_70%,#a100ff_100%)] opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-      {/* 2. Tarjeta Principal */}
+      {/* Tarjeta Principal */}
       <div class="relative w-full h-full bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur-2xl rounded-[40px] p-8 md:p-16 text-center z-10">
         
         <div class="absolute inset-0 bg-gradient-to-br from-black/[0.02] to-transparent dark:from-white/[0.03] dark:to-transparent rounded-[40px] pointer-events-none"></div>
@@ -31,7 +31,6 @@
             Conoce cómo opera <span class="text-[#a100ff] font-bold">DOMA</span> en situaciones reales. Completa el formulario y accede a una demo para interactuar en tiempo real con <span class="text-[#a100ff] font-bold">DOMA</span>.
           </p>
 
-          {/* Botón que detona el Modal (reemplaza WhatsApp) */}
           <div class="flex items-center justify-center mb-4">
             <button 
               id="open-modal-demo-btn"
@@ -48,164 +47,197 @@
   </div>
 
   {/* ========================================================= */}
-  {/* MODAL: FORMULARIO DE AGENDAR DEMO                         */}
+  {/* MODAL: FORMULARIO DE AGENDAR DEMO CON DISEÑO DOMA        */}
   {/* ========================================================= */}
   <div 
     id="demo-modal" 
-    class="fixed inset-0 z-[99999] bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300"
+    class="fixed inset-0 z-[99999] bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300"
     role="dialog"
     aria-modal="true"
   >
+    {/* Contenedor con borde luminoso sutil */}
     <div 
       id="demo-modal-card"
-      class="relative w-full max-w-xl bg-white dark:bg-[#12111c] border border-slate-200 dark:border-white/10 rounded-3xl p-6 sm:p-9 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[92vh] overflow-y-auto"
+      class="relative w-full max-w-xl p-[1px] rounded-[32px] overflow-hidden transform scale-95 transition-transform duration-300 shadow-2xl bg-gradient-to-b from-white/20 via-transparent to-transparent dark:from-[#a100ff]/30 dark:via-white/10 dark:to-transparent"
     >
-      {/* Botón Cerrar Modal */}
-      <button 
-        id="close-modal-demo-btn"
-        type="button" 
-        class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-        aria-label="Cerrar modal"
-      >
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+      <div class="relative w-full bg-white dark:bg-[#0e0d17] rounded-[31px] p-6 sm:p-9 max-h-[92vh] overflow-y-auto">
+        
+        {/* Glow interior decorativo */}
+        <div class="absolute top-0 right-0 w-[240px] h-[240px] bg-[#a100ff]/10 dark:bg-[#a100ff]/15 rounded-full blur-[80px] pointer-events-none"></div>
 
-      {/* VISTA 1: FORMULARIO */}
-      <div id="modal-form-view">
-        <div class="mb-6">
-          <span class="text-[#a100ff] text-xs font-poppins font-semibold uppercase tracking-widest block mb-1">
-            DEMO EXCLUSIVA
-          </span>
-          <h3 class="font-poppins font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white tracking-tight">
-            Agenda tu sesión con DOMA
-          </h3>
-          <p class="font-gilroy font-normal text-xs sm:text-sm text-slate-500 dark:text-gray-400 mt-1">
-            Todos los campos son obligatorios para validar tu solicitud.
-          </p>
-        </div>
-
-        <form id="demo-form" class="space-y-4 text-left">
-          {/* Mensaje de error global */}
-          <div id="form-error-msg" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-gilroy font-semibold"></div>
-
-          {/* Campo: Nombre completo */}
-          <div>
-            <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-nombre">
-              Nombre completo *
-            </label>
-            <input 
-              type="text" 
-              id="form-nombre" 
-              name="nombre" 
-              required 
-              placeholder="Ej. Carlos Valadez" 
-              class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
-            />
-          </div>
-
-          {/* Campo: Correo corporativo (Con restricción de dominios personales) */}
-          <div>
-            <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-email">
-              Correo corporativo *
-            </label>
-            <input 
-              type="email" 
-              id="form-email" 
-              name="email" 
-              required 
-              placeholder="nombre@tuempresa.com" 
-              class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
-            />
-            <span id="email-warning" class="hidden text-[11px] font-gilroy text-red-500 mt-1 block">
-              Por favor usa tu correo empresarial (no Gmail, Yahoo o Hotmail).
-            </span>
-          </div>
-
-          {/* Fila doble: Nombre de empresa y Puesto */}
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            <div>
-              <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-empresa">
-                Nombre de empresa *
-              </label>
-              <input 
-                type="text" 
-                id="form-empresa" 
-                name="empresa" 
-                required 
-                placeholder="Ej. Corporativo Retail" 
-                class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
-              />
-            </div>
-
-            <div>
-              <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-puesto">
-                Puesto *
-              </label>
-              <input 
-                type="text" 
-                id="form-puesto" 
-                name="puesto" 
-                required 
-                placeholder="Ej. Director de Operaciones" 
-                class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
-              />
-            </div>
-          </div>
-
-          {/* Menú desplegable: Tamaño de empresa (Rangos a partir de 200) */}
-          <div>
-            <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-tamano">
-              número de empleados*
-            </label>
-            <select 
-              id="form-tamano" 
-              name="tamano" 
-              required 
-              class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#191825] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all cursor-pointer"
-            >
-              <option value="" disabled selected>Selecciona un rango de empleados</option>
-              <option value="200-500">200-500 empleados</option>
-              <option value="501-1,000">501-1,000 empleados</option>
-              <option value="1,001-5,000">1,001-5,000 empleados</option>
-              <option value="5,001-10,000">5,001-10,000 empleados</option>
-              <option value="10,001+">10,001+ empleados</option>
-            </select>
-          </div>
-
-          <button 
-            id="form-submit-btn"
-            type="submit"
-            class="w-full py-4 rounded-xl bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-poppins font-semibold text-sm shadow-[0_0_20px_rgba(161,0,255,0.4)] hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer mt-2"
-          >
-            Enviar solicitud
-          </button>
-        </form>
-      </div>
-
-      {/* VISTA 2: POP-UP DE CONFIRMACIÓN */}
-      <div id="modal-success-view" class="hidden py-8 px-2 text-center flex-col items-center">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-[#a100ff] to-[#437ceb] flex items-center justify-center text-white mb-5 shadow-[0_0_25px_rgba(161,0,255,0.5)] animate-bounce-soft">
-          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h4 class="font-poppins font-bold text-2xl text-slate-900 dark:text-white mb-2">
-          ¡Solicitud confirmada!
-        </h4>
-        <p class="font-gilroy font-normal text-sm text-slate-600 dark:text-gray-300 max-w-sm mb-6 leading-relaxed">
-          Hemos recibido los datos de tu empresa. El equipo de DOMA se pondrá en contacto a tu correo corporativo para coordinar la sesión.
-        </p>
+        {/* Botón Cerrar */}
         <button 
-          id="modal-success-close-btn"
-          type="button"
-          class="px-8 py-3 rounded-full bg-slate-900 text-white dark:bg-white dark:text-[#0a0a0f] font-poppins font-semibold text-xs tracking-wider uppercase hover:opacity-90 transition-opacity"
+          id="close-modal-demo-btn"
+          type="button" 
+          class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white flex items-center justify-center transition-colors cursor-pointer z-20"
+          aria-label="Cerrar modal"
         >
-          Entendido
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
-      </div>
 
+        {/* VISTA 1: FORMULARIO */}
+        <div id="modal-form-view" class="relative z-10">
+          <div class="mb-6">
+            <span class="inline-block px-3 py-1 rounded-full text-[11px] font-poppins font-semibold uppercase tracking-widest bg-[#8a00ff]/10 text-[#906ef1] dark:text-[#a100ff] mb-2">
+              DEMO EXCLUSIVA
+            </span>
+            <h3 class="font-poppins font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white tracking-tight">
+              Agenda tu sesión con DOMA
+            </h3>
+            <p class="font-gilroy font-normal text-xs sm:text-sm text-slate-500 dark:text-gray-400 mt-1">
+              Todos los campos son obligatorios para validar tu solicitud.
+            </p>
+          </div>
+
+          <form id="demo-form" class="space-y-4 text-left">
+            {/* Mensaje de error global */}
+            <div id="form-error-msg" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-gilroy font-semibold"></div>
+
+            {/* Campo: Nombre completo */}
+            <div>
+              <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-nombre">
+                Nombre completo *
+              </label>
+              <input 
+                type="text" 
+                id="form-nombre" 
+                name="nombre" 
+                required 
+                placeholder="Ej. Carlos Valadez" 
+                class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#161524] border border-slate-300/80 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+              />
+            </div>
+
+            {/* Campo: Correo corporativo */}
+            <div>
+              <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-email">
+                Correo corporativo *
+              </label>
+              <input 
+                type="email" 
+                id="form-email" 
+                name="email" 
+                required 
+                placeholder="nombre@tuempresa.com" 
+                class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#161524] border border-slate-300/80 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+              />
+              <span id="email-warning" class="hidden text-[11px] font-gilroy text-red-500 mt-1 block">
+                Por favor usa tu correo empresarial (no Gmail, Yahoo o Hotmail).
+              </span>
+            </div>
+
+            {/* Fila doble: Empresa y Puesto */}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-empresa">
+                  Nombre de empresa *
+                </label>
+                <input 
+                  type="text" 
+                  id="form-empresa" 
+                  name="empresa" 
+                  required 
+                  placeholder="Ej. Corporativo Retail" 
+                  class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#161524] border border-slate-300/80 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+                />
+              </div>
+
+              <div>
+                <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5" for="form-puesto">
+                  Puesto *
+                </label>
+                <input 
+                  type="text" 
+                  id="form-puesto" 
+                  name="puesto" 
+                  required 
+                  placeholder="Ej. Director de Operaciones" 
+                  class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#161524] border border-slate-300/80 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 text-sm font-gilroy outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all"
+                />
+              </div>
+            </div>
+
+            {/* SELECTOR PERSONALIZADO: NÚMERO DE EMPLEADOS */}
+            <div class="relative">
+              <label class="block font-poppins font-semibold text-xs text-slate-700 dark:text-gray-300 mb-1.5">
+                Número de empleados *
+              </label>
+
+              {/* Input invisible que recopila el valor para enviar */}
+              <input type="hidden" id="form-tamano" name="tamano" required value="" />
+
+              {/* Gatillo del Dropdown */}
+              <button
+                type="button"
+                id="custom-select-trigger"
+                class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#161524] border border-slate-300/80 dark:border-white/10 text-slate-400 dark:text-gray-400 text-sm font-gilroy flex items-center justify-between outline-none focus:border-[#a100ff] focus:ring-1 focus:ring-[#a100ff] transition-all cursor-pointer"
+              >
+                <span id="custom-select-label">Selecciona un rango de empleados</span>
+                <svg id="custom-select-chevron" class="w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Menú de opciones personalizadas */}
+              <div 
+                id="custom-select-menu"
+                class="hidden absolute left-0 right-0 mt-2 p-1.5 bg-white/95 dark:bg-[#161524]/95 border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl backdrop-blur-xl z-50 text-sm font-gilroy overflow-hidden"
+              >
+                <div class="space-y-1">
+                  <div data-value="200-500" class="custom-option px-3.5 py-2.5 rounded-xl cursor-pointer text-slate-700 dark:text-gray-200 hover:bg-[#a100ff]/10 hover:text-[#a100ff] dark:hover:bg-[#a100ff]/20 dark:hover:text-white transition-colors flex items-center justify-between">
+                    <span>200 - 500 empleados</span>
+                  </div>
+                  <div data-value="501-1,000" class="custom-option px-3.5 py-2.5 rounded-xl cursor-pointer text-slate-700 dark:text-gray-200 hover:bg-[#a100ff]/10 hover:text-[#a100ff] dark:hover:bg-[#a100ff]/20 dark:hover:text-white transition-colors flex items-center justify-between">
+                    <span>501 - 1,000 empleados</span>
+                  </div>
+                  <div data-value="1,001-5,000" class="custom-option px-3.5 py-2.5 rounded-xl cursor-pointer text-slate-700 dark:text-gray-200 hover:bg-[#a100ff]/10 hover:text-[#a100ff] dark:hover:bg-[#a100ff]/20 dark:hover:text-white transition-colors flex items-center justify-between">
+                    <span>1,001 - 5,000 empleados</span>
+                  </div>
+                  <div data-value="5,001-10,000" class="custom-option px-3.5 py-2.5 rounded-xl cursor-pointer text-slate-700 dark:text-gray-200 hover:bg-[#a100ff]/10 hover:text-[#a100ff] dark:hover:bg-[#a100ff]/20 dark:hover:text-white transition-colors flex items-center justify-between">
+                    <span>5,001 - 10,000 empleados</span>
+                  </div>
+                  <div data-value="10,001+" class="custom-option px-3.5 py-2.5 rounded-xl cursor-pointer text-slate-700 dark:text-gray-200 hover:bg-[#a100ff]/10 hover:text-[#a100ff] dark:hover:bg-[#a100ff]/20 dark:hover:text-white transition-colors flex items-center justify-between">
+                    <span>10,001+ empleados</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button 
+              id="form-submit-btn"
+              type="submit"
+              class="w-full py-4 rounded-xl bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-poppins font-semibold text-sm shadow-[0_0_20px_rgba(161,0,255,0.4)] hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer mt-4"
+            >
+              Enviar solicitud
+            </button>
+          </form>
+        </div>
+
+        {/* VISTA 2: POP-UP DE CONFIRMACIÓN */}
+        <div id="modal-success-view" class="hidden py-8 px-2 text-center flex-col items-center relative z-10">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-[#a100ff] to-[#437ceb] flex items-center justify-center text-white mb-5 shadow-[0_0_25px_rgba(161,0,255,0.5)]">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h4 class="font-poppins font-bold text-2xl text-slate-900 dark:text-white mb-2">
+            ¡Solicitud confirmada!
+          </h4>
+          <p class="font-gilroy font-normal text-sm text-slate-600 dark:text-gray-300 max-w-sm mb-6 leading-relaxed">
+            Hemos recibido los datos de tu empresa. El equipo de DOMA se pondrá en contacto a tu correo corporativo para coordinar la sesión.
+          </p>
+          <button 
+            id="modal-success-close-btn"
+            type="button"
+            class="px-8 py-3 rounded-full bg-slate-900 text-white dark:bg-white dark:text-[#0a0a0f] font-poppins font-semibold text-xs tracking-wider uppercase hover:opacity-90 transition-opacity"
+          >
+            Entendido
+          </button>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -225,7 +257,59 @@
   const errorMsg = document.getElementById('form-error-msg');
   const submitBtn = document.getElementById('form-submit-btn');
 
-  // Conectar también cualquier botón externo de "Agendar Demo" (ej. Navbar / Footer)
+  // Control del Custom Dropdown
+  const selectTrigger = document.getElementById('custom-select-trigger');
+  const selectMenu = document.getElementById('custom-select-menu');
+  const selectLabel = document.getElementById('custom-select-label');
+  const selectChevron = document.getElementById('custom-select-chevron');
+  const hiddenInput = document.getElementById('form-tamano') as HTMLInputElement;
+  const customOptions = document.querySelectorAll('.custom-option');
+
+  let isDropdownOpen = false;
+
+  const toggleDropdown = () => {
+    isDropdownOpen = !isDropdownOpen;
+    if (isDropdownOpen) {
+      selectMenu?.classList.remove('hidden');
+      selectChevron?.classList.add('rotate-180');
+      selectTrigger?.classList.add('border-[#a100ff]', 'ring-1', 'ring-[#a100ff]');
+    } else {
+      selectMenu?.classList.add('hidden');
+      selectChevron?.classList.remove('rotate-180');
+      selectTrigger?.classList.remove('border-[#a100ff]', 'ring-1', 'ring-[#a100ff]');
+    }
+  };
+
+  selectTrigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+
+  customOptions.forEach((option) => {
+    option.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const val = option.getAttribute('data-value') || '';
+      const text = option.querySelector('span')?.textContent || '';
+
+      if (hiddenInput) hiddenInput.value = val;
+      if (selectLabel) {
+        selectLabel.textContent = text;
+        selectLabel.classList.remove('text-slate-400', 'dark:text-gray-400');
+        selectLabel.classList.add('text-slate-900', 'dark:text-white', 'font-medium');
+      }
+
+      toggleDropdown();
+    });
+  });
+
+  // Cerrar menú al hacer click afuera
+  document.addEventListener('click', (e) => {
+    if (isDropdownOpen && !selectTrigger?.contains(e.target as Node) && !selectMenu?.contains(e.target as Node)) {
+      toggleDropdown();
+    }
+  });
+
+  // Conectar botones externos de "Agendar Demo"
   document.querySelectorAll('a[href="#cta-final"], a[href^="https://wa.me/"]').forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
@@ -248,14 +332,20 @@
     modalCard?.classList.add('scale-95');
     document.body.style.overflow = '';
     
-    // Resetear vistas tras cerrar
     setTimeout(() => {
       form?.reset();
+      if (hiddenInput) hiddenInput.value = '';
+      if (selectLabel) {
+        selectLabel.textContent = 'Selecciona un rango de empleados';
+        selectLabel.classList.add('text-slate-400', 'dark:text-gray-400');
+        selectLabel.classList.remove('text-slate-900', 'dark:text-white', 'font-medium');
+      }
       formView?.classList.remove('hidden');
       successView?.classList.add('hidden');
       successView?.classList.remove('flex');
       errorMsg?.classList.add('hidden');
       emailWarning?.classList.add('hidden');
+      if (isDropdownOpen) toggleDropdown();
     }, 300);
   }
 
@@ -266,7 +356,7 @@
     if (e.target === modal) closeModal();
   });
 
-  // Lista de dominios personales bloqueados
+  // Validación de correos corporativos
   const blockedDomains = [
     'gmail.com', 'googlemail.com', 'yahoo.com', 'yahoo.es', 'hotmail.com',
     'outlook.com', 'live.com', 'icloud.com', 'proton.me', 'protonmail.com',
@@ -292,7 +382,7 @@
     }
   });
 
-  // Envío AJAX al PHP
+  // Envío AJAX
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorMsg?.classList.add('hidden');
@@ -301,6 +391,14 @@
     if (!validateEmailDomain(email)) {
       emailWarning?.classList.remove('hidden');
       emailInput.focus();
+      return;
+    }
+
+    if (!hiddenInput.value) {
+      if (errorMsg) {
+        errorMsg.textContent = 'Por favor selecciona el número de empleados.';
+        errorMsg.classList.remove('hidden');
+      }
       return;
     }
 
@@ -322,7 +420,6 @@
       const res = await response.json();
 
       if (response.ok && res.success) {
-        // Transición a la vista Pop-up de confirmación
         formView?.classList.add('hidden');
         successView?.classList.remove('hidden');
         successView?.classList.add('flex');

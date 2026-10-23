@@ -62,23 +62,32 @@
 
       </div>
 
-      <!-- Columna derecha: Tótem DOMA optimizado como imagen -->
-      <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-md xl:max-w-lg animate-avatar-enter">
-        <div class="relative w-full flex items-end justify-center h-[360px] lg:h-[420px] xl:h-[480px]">
-          <img 
-            id="hero-totem-image"
-            src="/TOTEM DOMA SITIO 3.webp" 
-            alt="Tótem DOMA Inteligencia Artificial"
-            width="500"
-            height="600"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-            class="relative z-10 w-auto h-full object-contain object-bottom drop-shadow-[0_15px_35px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_20px_45px_rgba(161,0,255,0.22)] transition-transform duration-500 hover:scale-[1.02]"
-            style="transform: translateZ(0); -webkit-backface-visibility: hidden;"
-          />
-        </div>
-      </div>
+     <!-- Columna derecha: Tótem DOMA optimizado con fade inferior invisible -->
+<div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-md xl:max-w-lg animate-avatar-enter">
+  <div 
+    class="relative w-full flex items-end justify-center h-[380px] lg:h-[440px] xl:h-[500px] overflow-hidden"
+    style="
+      -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+    "
+  >
+    <img 
+      id="hero-totem-image"
+      src="/TOTEM DOMA SITIO 3.webp" 
+      alt="Tótem DOMA Inteligencia Artificial"
+      width="500"
+      height="600"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      class="relative z-10 w-auto h-full object-contain object-bottom drop-shadow-[0_15px_35px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_20px_45px_rgba(161,0,255,0.22)] transition-transform duration-500 hover:scale-[1.02]"
+      style="transform: translateZ(0); -webkit-backface-visibility: hidden;"
+    />
+
+    <!-- Overlay complementario para asegurar una transición imperceptible con el fondo -->
+    <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-slate-50 dark:from-[#0a0a0f] to-transparent pointer-events-none z-20"></div>
+  </div>
+</div>
 
     </div>
   </div>
