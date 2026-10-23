@@ -325,12 +325,11 @@ export default function AdsSection() {
             Tu nuevo <span className="text-[#a100ff]">canal de comunicación</span>
           </h2>
 
-          {/* Texto de cuerpo según manual: Gilroy Regular con énfasis Bold/SemiBold */}
-          <p className="font-gilroy font-normal text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed">
-            <span className="text-[#a100ff] font-bold">DOMA</span> está presente justo en el momento en que tu cliente interactúa con tu marca y donde es más receptivo a información. En este momento Doma puede mostrarles{' '}
-            <span className="text-[#a100ff] font-semibold">promociones</span>,{' '}
-            <span className="text-[#a100ff] font-semibold">lanzamientos</span> o{' '}
-            <span className="text-[#a100ff] font-semibold">campañas</span> de acuerdo a tus necesidades. Además, cuenta con dos modalidades para no interrumpir la interacción con el usuario.
+{/* Texto de cuerpo según manual: Gilroy Regular con énfasis Bold/SemiBold */}
+          <p className="font-gilroy font-normal text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed max-w-2xl text-pretty [text-wrap:pretty]">
+            <span className="text-[#a100ff] font-bold">DOMA</span> está presente en el momento en que un usuario interactúa con tu marca. <span className="text-[#a100ff] font-bold">DOMA</span> puede mostrar{' '}
+            <span className="text-[#a100ff] font-semibold">promociones</span> o{' '}
+            <span className="text-[#a100ff] font-semibold">campañas</span> de acuerdo a tus necesidades sin interrumpir la conversación.
           </p>
         </div>
 

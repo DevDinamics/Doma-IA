@@ -38,27 +38,29 @@ export default function Product() {
 
       <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* ENCABEZADOS PRINCIPALES */}
-        <div className="text-center max-w-4xl mx-auto mb-14 lg:mb-20">
-          
-          {/* Tag de cabecera */}
-          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
-            ¿CÓMO FUNCIONA?
-          </span>
+{/* ENCABEZADOS PRINCIPALES */}
+<div className="text-center max-w-4xl mx-auto mb-14 lg:mb-20 px-3 sm:px-6">
+  
+  {/* Tag de cabecera */}
+  <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-poppins font-semibold uppercase tracking-widest mb-5 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
+    ¿CÓMO FUNCIONA?
+  </span>
 
-          {/* Subtítulo de sección: Poppins Bold */}
-          <h2 className="font-poppins font-bold text-2xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white tracking-tight leading-tight mb-4">
-            Un <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8257e6] to-[#a87ffb]">empleado digital</span> que fortalece 
-            <br/> tu primera línea de atención
-          </h2>
+  {/* Subtítulo de sección: Balanceado automáticamente */}
+  <h2 className="font-poppins font-bold text-2xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white tracking-tight leading-[1.25] lg:leading-[1.2] py-1 mb-5 max-w-2xl sm:max-w-3xl mx-auto text-balance [text-wrap:balance]">
+    Un <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8257e6] to-[#a87ffb]">empleado digital</span> que fortalece tu primera línea de atención
+  </h2>
 
-          {/* Texto de cuerpo/intro: Gilroy Regular */}
-          <p className="font-gilroy font-normal text-base sm:text-xl lg:text-2xl text-slate-600 dark:text-gray-300 leading-relaxed">
-            <span className="text-[#8257e6] font-semibold">DOMA</span> brinda a tus clientes una atención{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8257e6] to-[#a87ffb] font-semibold">ágil, efectiva <br/> y consistente</span>{' '}
-            en todos tus puntos de contacto físicos
-          </p>
-        </div>
+  {/* Párrafo descriptivo: Agrupado por frases naturales */}
+  <p className="font-gilroy font-normal text-sm sm:text-lg lg:text-xl text-slate-600 dark:text-gray-300 leading-relaxed max-w-lg sm:max-w-2xl mx-auto text-pretty [text-wrap:pretty]">
+    <span className="text-[#8257e6] font-semibold">DOMA</span> brinda a tus clientes una atención{' '}
+    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8257e6] to-[#a87ffb] font-semibold whitespace-nowrap">
+      ágil, efectiva y consistente
+    </span>{' '}
+    <span className="inline-block">en todos tus puntos de contacto físicos.</span>
+  </p>
+
+</div>
 
         {/* ========================================================= */}
         {/* VERSIÓN MÓVIL (< lg)                                      */}
