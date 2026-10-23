@@ -3,10 +3,10 @@ import React, { useEffect, useState, useRef } from 'react';
 // Ícono minimalista de Check circular con trazado SVG nítido
 const CheckIcon = ({ active, delay = 0 }) => (
   <svg 
-    className={`w-5 h-5 text-[#8257e6] shrink-0 mt-0.5 transition-transform duration-500 ${
+    className={`w-5 h-5 text-[#8257e6] shrink-0 mt-0.5 transition-transform duration-300 ${
       active ? 'scale-100' : 'scale-75'
     }`} 
-    style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)', transitionDelay: `${delay}ms` }}
+    style={{ transitionDelay: `${delay}ms` }}
     fill="none" 
     viewBox="0 0 24 24" 
     stroke="currentColor" 
@@ -16,7 +16,7 @@ const CheckIcon = ({ active, delay = 0 }) => (
       cx="12" 
       cy="12" 
       r="9" 
-      className="transition-opacity duration-500"
+      className="transition-opacity duration-300"
       style={{ stroke: 'rgba(130, 87, 230, 0.35)', opacity: active ? 1 : 0.2 }}
     />
     <path 
@@ -26,13 +26,13 @@ const CheckIcon = ({ active, delay = 0 }) => (
       style={{
         strokeDasharray: 20,
         strokeDashoffset: active ? 0 : 20,
-        transition: `stroke-dashoffset 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${delay + 120}ms`
+        transition: `stroke-dashoffset 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${delay + 80}ms`
       }}
     />
   </svg>
 );
 
-// Sub-componente para cada tarjeta con Scroll-Scrubbing 3D Nítido y soporte Light/Dark
+// Sub-componente para cada tarjeta con Scroll-Scrubbing acelerado por hardware
 const AdModeCard = ({ 
   badge, 
   title, 
@@ -43,56 +43,36 @@ const AdModeCard = ({
 }) => {
   const cardRef = useRef(null);
   const videoRef = useRef(null);
-  
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isEntered, setIsEntered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
-    let rafId = null;
+    const cardEl = cardRef.current;
+    if (!cardEl) return;
 
-    const updateScroll = () => {
-      if (!cardRef.current) return;
-      const rect = cardRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+    // IntersectionObserver para pausar y reproducir video sin costo de CPU
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsEntered(true);
+            if (videoRef.current && videoRef.current.paused) {
+              videoRef.current.play().catch(() => {});
+            }
+          } else {
+            setIsEntered(false);
+            if (videoRef.current && !videoRef.current.paused) {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
 
-      const start = windowHeight * 0.96;
-      const end = windowHeight * 0.38;
-      const rawProgress = (start - rect.top) / (start - end);
-      const clamped = Math.max(0, Math.min(1, rawProgress));
-
-      const eased = 1 - Math.pow(1 - clamped, 3);
-      setScrollProgress(eased);
-
-      if (clamped > 0.2) {
-        setIsEntered(true);
-        if (videoRef.current && videoRef.current.paused) {
-          videoRef.current.play().catch(() => {});
-        }
-      } else {
-        setIsEntered(false);
-        if (videoRef.current && !videoRef.current.paused) {
-          videoRef.current.pause();
-        }
-      }
-    };
-
-    const onScroll = () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(updateScroll);
-    };
-
-    updateScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
+    observer.observe(cardEl);
+    return () => observer.disconnect();
   }, []);
 
   const handleMouseMove = (e) => {
@@ -101,70 +81,59 @@ const AdModeCard = ({
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     
-    const rotateY = ((x - 50) / 50) * 3; 
-    const rotateX = ((50 - y) / 50) * 3; 
+    const rotateY = ((x - 50) / 50) * 2.5; 
+    const rotateX = ((50 - y) / 50) * 2.5; 
 
     setMousePos({ x, y });
-    setTilt({ rotateX, rotateY });
+    cardRef.current.style.setProperty('--card-rot-x', `${rotateX}deg`);
+    cardRef.current.style.setProperty('--card-rot-y', `${rotateY}deg`);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    setTilt({ rotateX: 0, rotateY: 0 });
+    if (cardRef.current) {
+      cardRef.current.style.setProperty('--card-rot-x', '0deg');
+      cardRef.current.style.setProperty('--card-rot-y', '0deg');
+    }
   };
 
-  const staggerOffset = index === 0 ? 50 : 80;
-  const translateY = (1 - scrollProgress) * staggerOffset;
-  const scale = 0.94 + scrollProgress * 0.06;
-  const scrollRotateX = (1 - scrollProgress) * 8; 
-  const opacity = Math.min(1, 0.2 + scrollProgress * 0.8);
-  const videoParallaxY = (1 - scrollProgress) * 16;
-
   return (
-    <div style={{ perspective: '1200px' }}>
+    <div style={{ perspective: '1000px' }}>
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         style={{
-          transform: `translate3d(0, ${translateY}px, 0) scale(${scale}) rotateX(${scrollRotateX + tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
-          opacity: opacity,
+          transform: `translate3d(0, ${isEntered ? '0px' : '24px'}, 0) rotateX(var(--card-rot-x, 0deg)) rotateY(var(--card-rot-y, 0deg))`,
+          opacity: isEntered ? 1 : 0.6,
           willChange: 'transform, opacity',
-          transition: isHovered 
-            ? 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease' 
-            : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden'
         }}
-        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-white/80 dark:bg-[#12121c] border border-slate-200/80 dark:border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-white/95 dark:bg-[#12121c]/95 border border-slate-200/90 dark:border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-[transform,opacity,border-color] duration-500 ease-out"
       >
-        {/* Spotlight interactivo */}
+        {/* Spotlight interactivo optimizado */}
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-0"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-200 z-0"
           style={{
             opacity: isHovered ? 1 : 0,
-            background: `radial-gradient(420px circle at ${mousePos.x}% ${mousePos.y}%, rgba(130, 87, 230, 0.12), rgba(67, 124, 235, 0.04) 40%, transparent 70%)`,
+            background: `radial-gradient(350px circle at ${mousePos.x}% ${mousePos.y}%, rgba(130, 87, 230, 0.1), transparent 70%)`,
           }}
         />
 
-        {/* Línea de luz superior ligada al scroll */}
+        {/* Línea de luz superior decorativa */}
         <div 
-          style={{
-            transform: `scaleX(${scrollProgress})`,
-            opacity: scrollProgress
-          }}
-          className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-[#a100ff] to-transparent origin-center transition-transform duration-100"
+          className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-[#a100ff]/60 to-transparent origin-center"
         />
 
         <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-stretch gap-6 sm:gap-7">
           
-          {/* Contenedor del Video con Parallax */}
+          {/* Contenedor del Video */}
           <div className="w-full sm:w-[200px] md:w-[220px] shrink-0 flex justify-center">
             <div 
-              style={{
-                transform: `translate3d(0, ${videoParallaxY}px, 0)`,
-                transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
-              className="relative w-full max-w-[230px] sm:max-w-none aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200/50 dark:border-white/15 shadow-[0_12px_30px_rgba(0,0,0,0.2)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.7)] group-hover:border-[#437ceb]/50 transition-colors duration-500"
+              style={{ transform: 'translateZ(0)' }}
+              className="relative w-full max-w-[230px] sm:max-w-none aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200/50 dark:border-white/15 shadow-md group-hover:border-[#437ceb]/50 transition-colors duration-300"
             >
               <video
                 ref={videoRef}
@@ -173,8 +142,8 @@ const AdModeCard = ({
                 muted
                 loop
                 playsInline
-                preload="auto"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                preload="metadata"
+                className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
               />
 
               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/10 dark:ring-white/10 pointer-events-none"></div>
@@ -184,43 +153,43 @@ const AdModeCard = ({
           {/* Columna de Información */}
           <div className="flex-1 flex flex-col justify-center w-full py-2 sm:py-4 text-left">
             
-            {/* Pastilla Azul: Poppins SemiBold */}
+            {/* Pastilla Azul */}
             <div 
               style={{
-                transform: `translate3d(0, ${isEntered ? 0 : 14}px, 0)`,
+                transform: `translate3d(0, ${isEntered ? 0 : 10}px, 0)`,
                 opacity: isEntered ? 1 : 0,
-                transition: 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 60ms, opacity 0.35s ease 60ms'
+                transition: 'transform 0.4s ease 40ms, opacity 0.3s ease 40ms'
               }}
               className="mb-4"
             >
-              <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-poppins font-semibold bg-[#437ceb] text-white shadow-[0_4px_14px_rgba(67,124,235,0.4)]">
+              <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-poppins font-semibold bg-[#437ceb] text-white shadow-[0_4px_12px_rgba(67,124,235,0.3)]">
                 {badge}
               </span>
             </div>
 
-            {/* Sub-subtítulo según manual: Poppins SemiBold */}
+            {/* Título */}
             <h3 
               style={{
-                transform: `translate3d(0, ${isEntered ? 0 : 16}px, 0)`,
+                transform: `translate3d(0, ${isEntered ? 0 : 12}px, 0)`,
                 opacity: isEntered ? 1 : 0,
-                transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 120ms, opacity 0.4s ease 120ms'
+                transition: 'transform 0.45s ease 80ms, opacity 0.35s ease 80ms'
               }}
               className="font-poppins font-semibold text-xl sm:text-2xl text-slate-900 dark:text-white tracking-tight mb-5"
             >
               {title}
             </h3>
 
-            {/* Lista de características: Gilroy Regular */}
-            <ul className="space-y-4">
+            {/* Lista de características */}
+            <ul className="space-y-3.5">
               {features.map((item, idx) => {
-                const itemDelay = 180 + idx * 90;
+                const itemDelay = 120 + idx * 70;
                 return (
                   <li 
                     key={idx}
                     style={{
-                      transform: `translate3d(${isEntered ? 0 : 18}px, 0, 0)`,
+                      transform: `translate3d(${isEntered ? 0 : 12}px, 0, 0)`,
                       opacity: isEntered ? 1 : 0,
-                      transition: `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${itemDelay}ms, opacity 0.4s ease ${itemDelay}ms`,
+                      transition: `transform 0.45s ease ${itemDelay}ms, opacity 0.35s ease ${itemDelay}ms`,
                     }}
                     className="group/item flex items-start gap-3"
                   >
@@ -244,43 +213,24 @@ const AdModeCard = ({
 // Componente Principal de la Sección Ads
 export default function AdsSection() {
   const sectionRef = useRef(null);
-  const [headerProgress, setHeaderProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    let rafId = null;
+    const el = sectionRef.current;
+    if (!el) return;
 
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
 
-      const start = windowHeight * 0.92;
-      const end = windowHeight * 0.42;
-      const rawProgress = (start - rect.top) / (start - end);
-      const clamped = Math.max(0, Math.min(1, rawProgress));
-      const eased = 1 - Math.pow(1 - clamped, 3);
-
-      setHeaderProgress(eased);
-    };
-
-    const onScroll = () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(handleScroll);
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
-
-  const headerTranslateY = (1 - headerProgress) * 35;
-  const headerScale = 0.97 + headerProgress * 0.03;
 
   return (
     <section 
@@ -290,72 +240,62 @@ export default function AdsSection() {
     >
       {/* Línea divisoria superior */}
       <div 
-        style={{ transform: `translateX(-50%) scaleX(${0.2 + headerProgress * 0.8})` }}
-        className="absolute top-0 left-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-white/15 to-transparent origin-center"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-white/15 to-transparent origin-center pointer-events-none"
       />
 
       {/* Resplandor ambiental de fondo */}
       <div 
-        style={{
-          transform: `translate(-50%, -50%) scale(${0.85 + headerProgress * 0.2})`,
-          opacity: headerProgress * 0.75,
-        }}
-        className="absolute top-1/3 left-1/2 w-[500px] lg:w-[850px] h-[400px] bg-[#a100ff]/[0.05] dark:bg-[#a100ff]/[0.06] rounded-full blur-[130px] pointer-events-none transition-transform duration-150 ease-out"
+        style={{ transform: 'translate3d(-50%, -50%, 0)' }}
+        className="absolute top-1/3 left-1/2 w-[500px] lg:w-[850px] h-[400px] bg-[#a100ff]/[0.04] dark:bg-[#a100ff]/[0.05] rounded-full blur-[100px] pointer-events-none"
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
         
-        {/* ENCABEZADO Y DESCRIPCIÓN */}
+        {/* Encabezado */}
         <div 
           style={{
-            transform: `translate3d(0, ${headerTranslateY}px, 0) scale(${headerScale})`,
-            opacity: Math.min(1, 0.15 + headerProgress * 0.85),
-            transformOrigin: 'left bottom',
+            transform: `translate3d(0, ${isVisible ? '0px' : '20px'}, 0)`,
+            opacity: isVisible ? 1 : 0,
             willChange: 'transform, opacity'
           }}
-          className="text-center sm:text-left max-w-3xl mb-12 sm:mb-16 mx-auto sm:mx-0"
+          className="text-center sm:text-left max-w-3xl mb-12 sm:mb-16 mx-auto sm:mx-0 transition-[transform,opacity] duration-500 ease-out"
         >
-          {/* Badge: Poppins SemiBold */}
           <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-poppins font-semibold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
             DOMA ADS
           </span>
 
-          {/* Subtítulo de sección según manual: Poppins Bold */}
           <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-[42px] text-slate-900 dark:text-white tracking-tight leading-tight mb-5">
             Tu nuevo <span className="text-[#a100ff]">canal de comunicación</span>
           </h2>
 
-{/* Texto de cuerpo según manual: Gilroy Regular con énfasis Bold/SemiBold */}
-          <p className="font-gilroy font-normal text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed max-w-2xl text-pretty [text-wrap:pretty]">
+          <p className="font-gilroy font-normal text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed max-w-2xl text-pretty">
             <span className="text-[#a100ff] font-bold">DOMA</span> está presente en el momento en que un usuario interactúa con tu marca. <span className="text-[#a100ff] font-bold">DOMA</span> puede mostrar{' '}
             <span className="text-[#a100ff] font-semibold">promociones</span> o{' '}
             <span className="text-[#a100ff] font-semibold">campañas</span> de acuerdo a tus necesidades sin interrumpir la conversación.
           </p>
         </div>
 
-        {/* ETIQUETA SUPERIOR DEL DIAGRAMA: Poppins SemiBold */}
+        {/* Etiqueta superior de las modalidades */}
         <div 
           style={{
-            transform: `translate3d(0, ${(1 - headerProgress) * 18}px, 0)`,
-            opacity: headerProgress,
+            transform: `translate3d(0, ${isVisible ? '0px' : '15px'}, 0)`,
+            opacity: isVisible ? 1 : 0,
           }}
-          className="mb-6 flex items-center gap-4"
+          className="mb-6 flex items-center gap-4 transition-[transform,opacity] duration-500 delay-100 ease-out"
         >
           <span className="font-poppins font-semibold text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#8257e6]">
             Dos momentos, dos formatos
           </span>
           <div className="h-[2px] flex-1 max-w-[140px] bg-slate-200 dark:bg-white/10 overflow-hidden rounded-full">
             <div 
-              style={{ width: `${headerProgress * 100}%` }}
-              className="h-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] transition-all duration-75"
+              style={{ width: isVisible ? '100%' : '0%' }}
+              className="h-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] transition-[width] duration-700 ease-out"
             />
           </div>
         </div>
 
-        {/* GRID DE LAS 2 MODALIDADES */}
+        {/* Grid de las 2 modalidades */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-          
-          {/* Tarjeta 1: Estado A */}
           <AdModeCard
             index={0}
             badge="Estado A"
@@ -369,7 +309,6 @@ export default function AdsSection() {
             ]}
           />
 
-          {/* Tarjeta 2: Estado B */}
           <AdModeCard
             index={1}
             badge="Estado B"
@@ -382,7 +321,6 @@ export default function AdsSection() {
               "Rotación continua en ciclos cortos"
             ]}
           />
-
         </div>
 
       </div>

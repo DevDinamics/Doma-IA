@@ -8,6 +8,13 @@ import './ScrollFloat.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Optimización crítica para Safari en móviles
+if (typeof window !== 'undefined') {
+  ScrollTrigger.config({
+    ignoreMobileResize: true
+  });
+}
+
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 const clampToScroll = position =>
@@ -70,14 +77,7 @@ const ScrollFloat = ({
     return parts.every(part => typeof part === 'string' || typeof part === 'number') ? parts.join('') : null;
   }, [children]);
 
-  const shiftColor = fromColor && fromColor !== 'currentColor' ? fromColor : null;
-  const shiftStyle = useMemo(
-    () =>
-      shiftColor
-        ? { color: `color-mix(in oklab, ${shiftColor} calc(var(--scroll-float-mix, 0) * 100%), currentColor)` }
-        : undefined,
-    [shiftColor]
-  );
+  const hasColorShift = fromColor && fromColor !== 'currentColor';
 
   const splitText = useMemo(() => {
     if (text === null) return null;
@@ -87,14 +87,14 @@ const ScrollFloat = ({
       ) : (
         <span className="scroll-float-word" key={wordIndex}>
           {Array.from(word).map((char, charIndex) => (
-            <span className="scroll-float-char" key={charIndex} style={shiftStyle}>
+            <span className="scroll-float-char" key={charIndex}>
               {char}
             </span>
           ))}
         </span>
       )
     );
-  }, [text, shiftStyle]);
+  }, [text]);
 
   const [mounted, setMounted] = useState(false);
 
@@ -119,7 +119,10 @@ const ScrollFloat = ({
     const squeeze = stretch > 0 ? stretch ** -0.43 : 1;
     const baseEase = gsap.parseEase(ease) || (p => p);
     const timing = p => clamp01(baseEase(p));
-    const size = () => parseFloat(getComputedStyle(textEl).fontSize) || 16;
+
+    // Lectura única del fontSize para evitar forzar reflows constantes
+    const currentSize = parseFloat(window.getComputedStyle(textEl).fontSize) || 16;
+
     const swell = p => {
       const t = timing(p);
       return 1 - Math.cos(t * Math.PI * 2.5) * Math.pow(1 - t, 2.6);
@@ -128,6 +131,7 @@ const ScrollFloat = ({
       const t = timing(p);
       return Math.sin(t * Math.PI * 2.5) * Math.pow(1 - t, 2.6);
     };
+
     const mm = gsap.matchMedia();
 
     mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -138,15 +142,17 @@ const ScrollFloat = ({
           start: scrollStart,
           end: clampToScroll(scrollEnd),
           scrub: smoothing > 0 ? smoothing : true,
-          invalidateOnRefresh: true
+          invalidateOnRefresh: true,
+          fastScrollEnd: true
         }
       });
+
       const add = (fromVars, toVars) => {
-        gsap.set(targets, { willChange: 'opacity, transform', ...fromVars });
+        gsap.set(targets, { willChange: 'opacity, transform', force3D: true, ...fromVars });
         return timeline.fromTo(
           targets,
-          { willChange: 'opacity, transform', ...fromVars },
-          { duration: animationDuration, stagger: index => delays[index] || 0, ...toVars },
+          { willChange: 'opacity, transform', force3D: true, ...fromVars },
+          { duration: animationDuration, stagger: index => delays[index] || 0, force3D: true, ...toVars },
           0
         );
       };
@@ -155,8 +161,8 @@ const ScrollFloat = ({
         add(
           {
             rotationX: -90 * sign,
-            transformPerspective: () => size() * 4,
-            transformOrigin: () => `50% 50% ${(-size() * 0.55 * reach).toFixed(2)}`,
+            transformPerspective: currentSize * 4,
+            transformOrigin: `50% 50% ${(-currentSize * 0.55 * reach).toFixed(2)}px`,
             backfaceVisibility: 'hidden'
           },
           { ease, rotationX: 0 }
@@ -165,8 +171,8 @@ const ScrollFloat = ({
       } else if (effect === 'scatter') {
         add(
           {
-            x: at(index => ((random(index, 1) * 2 - 1) * 1.3 - edge(index) * 0.9) * size() * reach),
-            y: at(index => sign * (0.35 + random(index, 2)) * size() * 1.1 * reach),
+            x: at(index => ((random(index, 1) * 2 - 1) * 1.3 - edge(index) * 0.9) * currentSize * reach),
+            y: at(index => sign * (0.35 + random(index, 2)) * currentSize * 1.1 * reach),
             rotation: at(index => (random(index, 3) < 0.5 ? -1 : 1) * (40 + random(index, 4) * 120)),
             scale: at(index => 0.35 + random(index, 5) * 0.9),
             transformOrigin: '50% 50%'
@@ -179,9 +185,9 @@ const ScrollFloat = ({
           {
             willChange: 'opacity, transform, filter',
             opacity: 0,
-            y: () => sign * size() * 0.3 * reach,
+            y: sign * currentSize * 0.3 * reach,
             scale: 1.45,
-            filter: () => `blur(${(size() * 0.2).toFixed(2)}px)`,
+            filter: `blur(${(currentSize * 0.2).toFixed(2)}px)`,
             transformOrigin: '50% 50%'
           },
           { ease, opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
@@ -211,8 +217,9 @@ const ScrollFloat = ({
         );
       }
 
-      if (shiftColor) {
-        add({ '--scroll-float-mix': 1 }, { ease: p => smoothstep(0.5, 1, timing(p)), '--scroll-float-mix': 0 });
+      // Animación de color optimizada sin CSS color-mix
+      if (hasColorShift) {
+        add({ color: fromColor }, { ease: p => smoothstep(0.5, 1, timing(p)), color: 'inherit' });
       }
     });
 
@@ -225,7 +232,8 @@ const ScrollFloat = ({
     splitBy,
     direction,
     order,
-    shiftColor,
+    hasColorShift,
+    fromColor,
     animationDuration,
     ease,
     scrollStart,
@@ -245,7 +253,6 @@ const ScrollFloat = ({
       <span
         ref={textRef}
         className={`scroll-float-text ${textClassName}`}
-        style={text === null ? shiftStyle : undefined}
         aria-hidden={text !== null ? true : undefined}
       >
         {splitText ?? children}

@@ -7,10 +7,16 @@
   class="relative min-h-[68vh] sm:min-h-[72vh] lg:min-h-[75vh] xl:min-h-[78vh] flex items-center pt-20 pb-4 sm:pt-24 sm:pb-6 lg:pt-24 lg:pb-8 overflow-hidden bg-slate-50 dark:bg-[#0a0a0f]"
 >
   
-  <!-- Luces y efectos ambientales de fondo adaptables al tema -->
+  <!-- Luces y efectos ambientales estáticos acelerados por GPU -->
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-[-5%] right-[-5%] w-[260px] lg:w-[420px] h-[260px] lg:h-[420px] bg-[#a100ff]/15 dark:bg-[#a100ff]/20 rounded-full blur-[80px] lg:blur-[110px] animate-pulse"></div>
-    <div class="absolute bottom-[-5%] left-[-5%] w-[220px] lg:w-[380px] h-[220px] lg:h-[380px] bg-[#437ceb]/10 dark:bg-[#437ceb]/15 rounded-full blur-[70px] lg:blur-[90px]"></div>
+    <div 
+      class="absolute top-[-5%] right-[-5%] w-[260px] lg:w-[420px] h-[260px] lg:h-[420px] bg-[#a100ff]/15 dark:bg-[#a100ff]/20 rounded-full blur-[80px] lg:blur-[100px]"
+      style="transform: translateZ(0);"
+    ></div>
+    <div 
+      class="absolute bottom-[-5%] left-[-5%] w-[220px] lg:w-[380px] h-[220px] lg:h-[380px] bg-[#437ceb]/10 dark:bg-[#437ceb]/15 rounded-full blur-[70px] lg:blur-[90px]"
+      style="transform: translateZ(0);"
+    ></div>
     
     <!-- Cuadrícula técnica sutil -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem] lg:bg-[size:3.75rem_3.75rem] [mask-image:radial-gradient(ellipse:80%_60%_at_50%_40%,#000_75%,transparent_100%)]"></div>
@@ -19,10 +25,10 @@
   <div class="container mx-auto px-4 sm:px-6 relative z-10 w-full">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 max-w-6xl mx-auto">      
       
-      <!-- Columna izquierda: Textos distribuidos horizontalmente -->
+      <!-- Columna izquierda: Textos -->
       <div class="w-full lg:flex-[1.2] flex flex-col items-center text-center lg:items-start lg:text-left max-w-xl lg:max-w-2xl relative z-10">        
         
-        <!-- TÍTULO H1: Poppins ExtraBold según manual de marca -->
+        <!-- TÍTULO H1: Poppins ExtraBold -->
         <h1 
           id="hero-stroke-heading"
           class="font-poppins font-extrabold tracking-tight mb-3 lg:mb-4 flex flex-col items-center lg:items-start w-full select-none"
@@ -49,40 +55,40 @@
           ></span>
         </h1>
         
-        <!-- Párrafo descriptivo: Gilroy Regular según manual de marca -->
+        <!-- Párrafo descriptivo -->
         <p class="font-gilroy font-normal text-sm sm:text-base lg:text-lg text-slate-600 dark:text-gray-400 max-w-xl leading-relaxed animate-apple-sequent">
           Una experiencia de atención que combina <span class="text-slate-900 dark:text-white font-semibold">inteligencia y conversación natural</span> con la información y operación de tu empresa.
         </p>
 
       </div>
 
-<div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-md xl:max-w-lg animate-avatar-enter delay-500">
-  
-  <div class="relative w-full flex items-end justify-center h-[340px] lg:h-[400px] xl:h-[460px]">
-    
-    <video 
-      id="hero-avatar-video"
-      src="/BANNER SITIO DOMA PANTALLA VERDE (1).webm" 
-      autoplay 
-      muted 
-      playsinline 
-      preload="auto"
-      class="relative z-10 w-auto h-full object-contain object-bottom brightness-105 contrast-110 transition-transform duration-700 hover:scale-[1.02]"
-      style="mix-blend-mode: screen;"
-    ></video>
-
-  </div>
-</div>
+      <!-- Columna derecha: Tótem DOMA optimizado como imagen -->
+      <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-md xl:max-w-lg animate-avatar-enter">
+        <div class="relative w-full flex items-end justify-center h-[360px] lg:h-[420px] xl:h-[480px]">
+          <img 
+            id="hero-totem-image"
+            src="/TOTEM DOMA SITIO 3.webp" 
+            alt="Tótem DOMA Inteligencia Artificial"
+            width="500"
+            height="600"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            class="relative z-10 w-auto h-full object-contain object-bottom drop-shadow-[0_15px_35px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_20px_45px_rgba(161,0,255,0.22)] transition-transform duration-500 hover:scale-[1.02]"
+            style="transform: translateZ(0); -webkit-backface-visibility: hidden;"
+          />
+        </div>
+      </div>
 
     </div>
   </div>
 
-  <!-- FLECHA MINIMALISTA INDICADORA DE SCROLL -->
+  <!-- Flecha indicadora de scroll -->
   <a 
     id="scroll-indicator"
     href="#producto"
     aria-label="Hacer scroll hacia abajo"
-    class="absolute bottom-1 left-1/2 -translate-x-1/2 z-20 text-slate-400 dark:text-gray-400/70 hover:text-slate-900 dark:hover:text-white transition-all duration-500 cursor-pointer p-1.5 animate-bounce-soft"
+    class="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 text-slate-400 dark:text-gray-400/70 hover:text-slate-900 dark:hover:text-white transition-opacity duration-300 cursor-pointer p-1.5 animate-bounce-soft"
   >
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M6 9l6 6 6-6" />
@@ -93,23 +99,24 @@
 <script>
   import { gsap } from 'gsap';
 
+  // 1. Manejo del indicador de scroll
   const scrollIndicator = document.getElementById('scroll-indicator');
   const handleScroll = () => {
     if (window.scrollY > 25) {
-      scrollIndicator?.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+      scrollIndicator?.classList.add('opacity-0', 'pointer-events-none');
     } else {
-      scrollIndicator?.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+      scrollIndicator?.classList.remove('opacity-0', 'pointer-events-none');
     }
   };
   window.addEventListener('scroll', handleScroll, { passive: true });
 
-// 2. Parámetros ajustados de animación StrokeText
-  const STROKE_WIDTH = 1.8; // Subimos de 1.3 a 1.8 para mantener el peso visual
-  const DRAW_DURATION = 1.4;
-  const FILL_DELAY = 0.15;
-  const STAGGER = 0.04;
+  // 2. Parámetros ajustados de animación StrokeText
+  const STROKE_WIDTH = 1.8;
+  const DRAW_DURATION = 1.2;
+  const FILL_DELAY = 0.12;
+  const STAGGER = 0.035;
   const EASE = 'power2.out';
-  const FONT_SIZE = 82; // ¡Subimos de 52 a 82 para hacerlo gigante!
+  const FONT_SIZE = 82;
   const LETTER_SPACING = -1.5;
 
   const initStrokeText = () => {
@@ -147,7 +154,6 @@
       defs.appendChild(clipPath);
       svg.appendChild(defs);
 
-      // Poppins ExtraBold (800) explícito para el renderizado del texto SVG
       const fontStyles = {
         fontFamily: "'Poppins', sans-serif",
         fontSize: `${FONT_SIZE}px`,
@@ -206,6 +212,7 @@
         }
         if (!bbox || !bbox.width) return;
 
+        // Cálculos corregidos con operadores válidos
         const pad = Math.max(STROKE_WIDTH, FONT_SIZE * 0.1);
         const box = {
           x: bbox.x - pad,
@@ -218,7 +225,7 @@
         (lineEl as HTMLElement).style.setProperty('--stroke-text-aspect', `${box.width / box.height}`);
         svg.style.visibility = 'visible';
 
-        const dash = Math.max(FONT_SIZE * 6, 180);
+        const dash = Math.max(FONT_SIZE * 5, 180);
         const fillDuration = Math.max(0.35, DRAW_DURATION * 0.45);
 
         const startFrame = { x: box.x, y: box.y, width: 0, height: box.height };
@@ -248,9 +255,9 @@
 
         tl.to(strokeSpans, {
           strokeOpacity: 0,
-          duration: 0.3,
+          duration: 0.25,
           ease: 'power1.out'
-        }, DRAW_DURATION + FILL_DELAY + fillDuration * 0.65);
+        }, DRAW_DURATION + FILL_DELAY + fillDuration * 0.6);
 
         let redrawTl: gsap.core.Timeline | null = null;
         lineEl.addEventListener('pointerenter', () => {
@@ -282,32 +289,29 @@
 
   initStrokeText();
 
+  // Re-renderizado del texto al alternar el modo oscuro
   const themeBtn = document.getElementById('theme-toggle');
   themeBtn?.addEventListener('click', () => {
-    setTimeout(initStrokeText, 50);
+    setTimeout(initStrokeText, 80);
   });
 </script>
 
 <style>
-.stroke-text-line {
+  .stroke-text-line {
     font-family: 'Poppins', sans-serif;
-    font-weight: 800; /* ExtraBold */
+    font-weight: 800;
     display: block;
     height: 1.05em;
     aspect-ratio: var(--stroke-text-aspect, auto);
-    
-    /* TAMAÑO BASE (Móvil) */
     font-size: 2.75rem; 
-    
     line-height: 1;
     margin-bottom: -0.08em;
     overflow: visible;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     will-change: transform, opacity;
   }
 
-  /* TAMAÑO TABLET */
   @media (min-width: 640px) {
     .stroke-text-line {
       font-size: 3.5rem;
@@ -315,7 +319,6 @@
     }
   }
 
-  /* TAMAÑO LAPTOP */
   @media (min-width: 1024px) {
     .stroke-text-line {
       font-size: 4.25rem;
@@ -323,10 +326,9 @@
     }
   }
 
-  /* TAMAÑO PANTALLAS GRANDES */
   @media (min-width: 1280px) {
     .stroke-text-line {
-      font-size: 5rem; /* Mucho más grande, como pidieron */
+      font-size: 5rem;
       margin-bottom: -0.14em;
     }
   }
@@ -340,55 +342,51 @@
     -webkit-transform: translate3d(0, 0, 0);
   }
 
+  /* Animaciones puras basadas en transform y opacity para aceleración en GPU */
   @keyframes appleSequent {
     0% {
       opacity: 0;
-      transform: translateY(16px);
-      filter: blur(4px);
+      transform: translate3d(0, 14px, 0);
     }
     100% {
       opacity: 1;
-      transform: translateY(0);
-      filter: blur(0px);
+      transform: translate3d(0, 0, 0);
     }
   }
 
   @keyframes avatarEntrance {
     0% {
       opacity: 0;
-      transform: translateY(20px) scale(0.97);
-      filter: blur(6px);
+      transform: translate3d(0, 20px, 0) scale(0.98);
     }
     100% {
       opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: blur(0px);
+      transform: translate3d(0, 0, 0) scale(1);
     }
   }
 
   @keyframes bounceSoft {
     0%, 100% {
-      transform: translate(-50%, 0);
+      transform: translate3d(-50%, 0, 0);
     }
     50% {
-      transform: translate(-50%, 4px);
+      transform: translate3d(-50%, 4px, 0);
     }
   }
 
   .animate-apple-sequent {
     opacity: 0;
-    animation: appleSequent 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
-    will-change: transform, opacity, filter;
+    animation: appleSequent 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    will-change: transform, opacity;
   }
 
   .animate-avatar-enter {
-    animation: avatarEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    will-change: transform, opacity, filter;
+    opacity: 0;
+    animation: avatarEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    will-change: transform, opacity;
   }
 
   .animate-bounce-soft {
     animation: bounceSoft 2.2s ease-in-out infinite;
   }
-
-  .delay-500 { animation-delay: 450ms; }
 </style>

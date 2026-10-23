@@ -53,11 +53,11 @@ if (in_array($domain, $blockedDomains)) {
     exit;
 }
 
-// Configuración del correo de destino (Vicky)
-$to = 'diego.delgado@qualtop.com'; // Correo de Vicky
+// correo de destino ////
+
+$to = 'diego.delgado@qualtop.com'; 
 $subject = "Nueva Solicitud de Demo: {$empresa} - {$nombre}";
 
-// Plantilla HTML con diseño moderno corporativo de DOMA
 $htmlBody = '
 <!DOCTYPE html>
 <html lang="es">
