@@ -21,18 +21,18 @@
         />
       </a>
 
-      {/* LINKS ESCRITORIO */}
+      {/* LINKS ESCRITORIO ACTUALIZADOS */}
       <nav class="hidden md:flex items-center gap-8">
         <a href="#producto" class="text-sm font-gilroy font-semibold text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors relative group">
-          Producto
+          Cómo funciona
           <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#a100ff] transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="#industrias" class="text-sm font-gilroy font-semibold text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors relative group">
-          Industrias
+        <a href="#roles" class="text-sm font-gilroy font-semibold text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors relative group">
+          Productos
           <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#437ceb] transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="#modelo" class="text-sm font-gilroy font-semibold text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors relative group">
-          Modelo
+        <a href="#ads" class="text-sm font-gilroy font-semibold text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors relative group">
+          DOMA Ads
           <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#906ef7] transition-all duration-300 group-hover:w-full"></span>
         </a>
         <a href="#faq" class="text-sm font-gilroy font-semibold text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors relative group">
@@ -85,12 +85,12 @@
     </div>
   </div>
 
-  {/* OVERLAY DEL MENÚ MÓVIL */}
+  {/* OVERLAY DEL MENÚ MÓVIL ACTUALIZADO */}
   <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-50/95 dark:bg-[#0a0a0f]/95 backdrop-blur-3xl z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col pt-32 px-6">
     <nav class="flex flex-col gap-8">
-      <a href="#producto" class="mobile-link text-3xl font-poppins font-semibold text-slate-900 dark:text-white hover:text-[#a100ff] transition-colors">Producto</a>
-      <a href="#industrias" class="mobile-link text-3xl font-poppins font-semibold text-slate-900 dark:text-white hover:text-[#437ceb] transition-colors">Industrias</a>
-      <a href="#modelo" class="mobile-link text-3xl font-poppins font-semibold text-slate-900 dark:text-white hover:text-[#906ef7] transition-colors">Modelo</a>
+      <a href="#producto" class="mobile-link text-3xl font-poppins font-semibold text-slate-900 dark:text-white hover:text-[#a100ff] transition-colors">Cómo funciona</a>
+      <a href="#roles" class="mobile-link text-3xl font-poppins font-semibold text-slate-900 dark:text-white hover:text-[#437ceb] transition-colors">Productos</a>
+      <a href="#ads" class="mobile-link text-3xl font-poppins font-semibold text-slate-900 dark:text-white hover:text-[#906ef7] transition-colors">DOMA Ads</a>
       <a href="#faq" class="mobile-link text-3xl font-poppins font-semibold text-slate-900 dark:text-white hover:text-[#a100ff] transition-colors">FAQ</a>
       
       <div class="h-px w-full bg-black/10 dark:bg-white/10 my-4"></div>
@@ -193,6 +193,7 @@
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
 
+    // Corrección sintáctica de los cálculos matemáticos para la animación de transición
     const endRadius = Math.hypot(
       Math.max(x, window.innerWidth - x),
       Math.max(y, window.innerHeight - y)

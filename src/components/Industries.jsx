@@ -56,7 +56,6 @@ const rolesData = [
   }
 ];
 
-
 // --- COMPONENTE PRINCIPAL ---
 export default function RolesGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -72,16 +71,22 @@ export default function RolesGallery() {
         
         {/* ENCABEZADO */}
         <div className="text-center max-w-4xl mx-auto mb-12 lg:mb-16">
-          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-5 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
+          {/* Badge: Poppins SemiBold */}
+          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-poppins font-semibold uppercase tracking-widest mb-5 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
             PRODUCTOS
           </span>
-          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-[1.35] lg:leading-[1.3] py-1 mb-4 ">
-            La <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">misma experiencia de servicio</span> adaptada a diferentes <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a100ff] to-[#437ceb]">necesidades de atención</span>
+          
+          {/* Subtítulo de Sección H2: Poppins Bold */}
+          <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white tracking-tight leading-[1.35] lg:leading-[1.3] py-1 mb-4">
+            La <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#906ef1] to-[#906ef1]">misma experiencia </span> de servicio adaptada a <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#437ceb] to-[#437ceb]"> diferentes necesidades  </span> 
           </h2>
-          <p className="font-gilroy text-base sm:text-lg text-slate-600 dark:text-gray-400 max-w-2xl mx-auto ">
-            Contamos con un catálogo de productos que resuelve las necesidades más comunes de diferentes industrias.
-          </p>
+          
+{/* Texto de cuerpo: Gilroy Regular ajustado al tamaño de la sección anterior */}
+<p className="font-gilroy font-normal text-base sm:text-xl lg:text-2xl text-slate-600 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto text-center">
+  Contamos con un <span className="text-[#906ef1] font-bold">catálogo de productos</span> que resuelve las necesidades más comunes de <span className="text-[#8257e6] font-bold">diferentes industrias.</span>
+</p>
         </div>
+
 
         {/* ========================================================= */}
         {/* VERSIÓN DESKTOP: ACORDEÓN HORIZONTAL                     */}
@@ -101,25 +106,45 @@ export default function RolesGallery() {
                     : 'flex-[1] bg-slate-200/50 dark:bg-[#12111a]/20 border-2 border-slate-300 dark:border-white/10 hover:border-[#a100ff]/60 dark:hover:border-[#a100ff]/60 hover:bg-slate-200 dark:hover:bg-[#12111a]/40'
                 }`}
               >
-                <div className={`absolute bottom-0 transition-all duration-700 ease-out z-0 ${
-                  isActive ? 'right-0 w-[45%] h-[95%] opacity-100' : 'inset-0 w-full h-full opacity-60 dark:opacity-40'
-                }`}>
-                  <img
-                    src={item.image}
-                    alt={item.role}
-                    className={`w-full h-full object-cover transition-all duration-700 ease-out ${
-                      isActive 
-                        ? 'object-bottom grayscale-0 brightness-100 scale-100' 
-                        : 'object-top grayscale brightness-[0.6] dark:brightness-[0.35] contrast-125 scale-105 group-hover:grayscale-0 group-hover:brightness-75'
-                    }`}
-                  />
-                  {!isActive && <div className="absolute inset-0 bg-slate-900/30 dark:bg-[#0a0a0f]/60 group-hover:bg-slate-900/10 dark:group-hover:bg-[#0a0a0f]/40"></div>}
-                  {isActive && <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent dark:from-[#12111a] dark:via-transparent dark:to-transparent w-[20%]"></div>}
-                </div>
+{/* CONTENEDOR DEL AVATAR (ACTIVO E INACTIVO) */}
+<div className={`absolute bottom-0 transition-all duration-700 ease-out z-0 ${
+  isActive ? 'right-0 w-[45%] h-[95%] opacity-100' : 'inset-0 w-full h-full opacity-100' // Opacidad al 100% siempre para que la imagen base sea nítida
+}`}>
+  <img
+    src={item.image}
+    alt={item.role}
+    className={`w-full h-full object-cover transition-all duration-700 ease-out ${
+      isActive 
+        ? 'object-bottom grayscale-0 brightness-100 scale-100' 
+        // Inactivo: Menos gris, más brillante y con ligero filtro azul/morado
+        : 'object-top grayscale-[50%] brightness-[0.85] dark:brightness-[0.7] contrast-[1.1] scale-105 group-hover:grayscale-0 group-hover:brightness-100'
+    }`}
+  />
+  
+  {/* Capa de oscurecimiento cuando está inactivo (Más suave y con toque de color para el dark mode) */}
+  {!isActive && (
+    <div className="absolute inset-0 bg-slate-200/40 dark:bg-[#12111a]/40 group-hover:bg-transparent transition-colors duration-500"></div>
+  )}
 
+  {/* Gradiente de la tarjeta activa */}
+  {isActive && (
+    <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent dark:from-[#12111a] dark:via-transparent dark:to-transparent w-[20%]"></div>
+  )}
+</div>
+
+{/* Título inactivo: Rotado y visible */}
+{!isActive && (
+  <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none drop-shadow-md">
+    <h3 className="font-poppins font-semibold text-slate-800 dark:text-gray-200 text-2xl -rotate-90 whitespace-nowrap tracking-wider group-hover:text-[#a100ff] dark:group-hover:text-[#b656ff] transition-colors duration-300">
+      {item.role}
+    </h3>
+  </div>
+)}
+
+                {/* Título inactivo: Poppins SemiBold */}
                 {!isActive && (
                   <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                    <h3 className="font-poppins font-bold text-slate-700 dark:text-gray-300 text-2xl -rotate-90 whitespace-nowrap tracking-wider group-hover:text-[#a100ff] dark:group-hover:text-[#b656ff] ">
+                    <h3 className="font-poppins font-semibold text-slate-700 dark:text-gray-300 text-2xl -rotate-90 whitespace-nowrap tracking-wider group-hover:text-[#a100ff] dark:group-hover:text-[#b656ff]">
                       {item.role}
                     </h3>
                   </div>
@@ -130,17 +155,20 @@ export default function RolesGallery() {
                     <div className="mb-6">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="w-1.5 h-8 rounded-full bg-[#a100ff] shadow-[0_0_14px_rgba(161,0,255,0.9)]"></span>
-                        <h3 className="font-poppins font-bold text-slate-900 dark:text-white text-4xl tracking-tight">{item.role}</h3>
+                        {/* Título activo: Poppins SemiBold */}
+                        <h3 className="font-poppins font-semibold text-slate-900 dark:text-white text-4xl tracking-tight">{item.role}</h3>
                       </div>
-                      <h4 className="font-gilroy text-lg font-bold text-[#437ceb] mt-3 mb-4">{item.subtitle}</h4>
-                      <p className="font-gilroy text-base text-slate-600 dark:text-gray-300 leading-relaxed max-w-md">{item.description}</p>
+                      {/* Subtítulos descriptivos: Gilroy Regular */}
+                      <h4 className="font-gilroy font-normal text-lg text-[#437ceb] mt-3 mb-4">{item.subtitle}</h4>
+                      <p className="font-gilroy font-normal text-base text-slate-600 dark:text-gray-300 leading-relaxed max-w-md">{item.description}</p>
                     </div>
 
                     <div className="bg-slate-50 dark:bg-white/[0.03] backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-sm mb-6 max-w-lg">
-                      <h4 className="font-poppins text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-gray-400 mb-4">¿Qué puede hacer?</h4>
+                      {/* Etiqueta interna: Poppins SemiBold */}
+                      <h4 className="font-poppins font-semibold text-xs uppercase tracking-widest text-slate-500 dark:text-gray-400 mb-4">¿Qué puede hacer?</h4>
                       <ul className="grid grid-cols-1 gap-3 text-left">
                         {item.features.map((feat, i) => (
-                          <li key={i} className="flex items-start gap-3 text-sm font-gilroy text-slate-700 dark:text-gray-200">
+                          <li key={i} className="flex items-start gap-3 text-sm font-gilroy font-normal text-slate-700 dark:text-gray-200">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#a100ff] mt-1.5 shrink-0 shadow-[0_0_8px_rgba(161,0,255,0.6)]"></span>
                             <span>{feat}</span>
                           </li>
@@ -149,7 +177,8 @@ export default function RolesGallery() {
                     </div>
 
                     <div className="inline-block">
-                      <div className="inline-flex py-3 px-6 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(161,0,255,0.3)] hover:shadow-[0_0_25px_rgba(161,0,255,0.5)] transition-shadow cursor-default">
+                      {/* Botón: Poppins SemiBold */}
+                      <div className="inline-flex py-3 px-6 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-poppins font-semibold text-sm tracking-wide shadow-[0_0_20px_rgba(161,0,255,0.3)] hover:shadow-[0_0_25px_rgba(161,0,255,0.5)] transition-shadow cursor-default">
                         ¡Tú controlas qué información consume DOMA!
                       </div>
                     </div>
@@ -177,7 +206,6 @@ export default function RolesGallery() {
                     : 'flex-[1] bg-slate-900/60 dark:bg-[#12111a]/40 border border-slate-700/50 dark:border-white/10 hover:border-slate-500 dark:hover:border-white/20'
                 }`}
               >
-                {/* Imagen del Avatar en Móvil */}
                 <div className={`absolute inset-0 transition-all duration-700 ease-out z-0 pointer-events-none ${
                   isActive ? 'opacity-100' : 'opacity-30 grayscale'
                 }`}>
@@ -193,7 +221,6 @@ export default function RolesGallery() {
                       e.currentTarget.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80';
                     }}
                   />
-                  {/* Degradados Mágicos */}
                   {isActive ? (
                     <>
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/95 to-transparent"></div>
@@ -204,37 +231,37 @@ export default function RolesGallery() {
                   )}
                 </div>
 
-                {/* Título Horizontal Centrado cuando la tarjeta está cerrada (Inactiva) */}
+                {/* Título Móvil inactivo: Poppins SemiBold */}
                 {!isActive && (
                   <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                    <h3 className="font-poppins font-bold text-slate-300 dark:text-gray-400 text-lg sm:text-xl tracking-wide group-hover:text-[#a100ff] dark:group-hover:text-white transition-colors duration-300">
+                    <h3 className="font-poppins font-semibold text-slate-300 dark:text-gray-400 text-lg sm:text-xl tracking-wide group-hover:text-[#a100ff] dark:group-hover:text-white transition-colors duration-300">
                       {item.role}
                     </h3>
                   </div>
                 )}
 
-                {/* Contenido Completo de la tarjeta activa (Expandida) */}
                 {isActive && (
                   <div className="relative z-10 flex flex-col justify-end h-full p-5 pt-32 animate-fadeInUp">
                     
                     <div>
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className="w-1.5 h-5 bg-[#a100ff] shadow-[0_0_10px_rgba(161,0,255,0.85)] rounded-full"></span>
-                        <h3 className="font-poppins text-2xl font-bold text-white tracking-tight leading-none">
+                        {/* Título Móvil activo: Poppins SemiBold */}
+                        <h3 className="font-poppins font-semibold text-2xl text-white tracking-tight leading-none">
                           {item.role}
                         </h3>
                       </div>
-                      <h4 className="font-gilroy text-xs font-bold text-[#437ceb] mb-2">{item.subtitle}</h4>
-                      <p className="font-gilroy text-xs text-gray-300 leading-relaxed mb-3 max-w-[95%]">{item.description}</p>
+                      <h4 className="font-gilroy font-normal text-xs text-[#437ceb] mb-2">{item.subtitle}</h4>
+                      <p className="font-gilroy font-normal text-xs text-gray-300 leading-relaxed mb-3 max-w-[95%]">{item.description}</p>
                     </div>
 
                     <div className="space-y-3 mt-1">
-                      {/* Sub-tarjeta: Qué puede hacer */}
                       <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl p-3.5 shadow-inner">
-                        <h4 className="font-poppins text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">¿Qué puede hacer?</h4>
+                        {/* Etiqueta interna móvil: Poppins SemiBold */}
+                        <h4 className="font-poppins font-semibold text-[10px] uppercase tracking-widest text-gray-400 mb-2">¿Qué puede hacer?</h4>
                         <ul className="space-y-1.5 text-left">
                           {item.features.map((feat, i) => (
-                            <li key={i} className="flex items-start gap-2 text-xs font-gilroy text-gray-200 leading-snug">
+                            <li key={i} className="flex items-start gap-2 text-xs font-gilroy font-normal text-gray-200 leading-snug">
                               <span className="w-1.25 h-1.25 rounded-full bg-[#a100ff] mt-1 shrink-0 shadow-[0_0_6px_rgba(161,0,255,0.6)]"></span>
                               <span>{feat}</span>
                             </li>
@@ -242,8 +269,8 @@ export default function RolesGallery() {
                         </ul>
                       </div>
                       
-                      {/* Botón */}
-                      <div className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-gilroy font-bold text-xs text-center shadow-[0_0_15px_rgba(161,0,255,0.35)]">
+                      {/* Botón Móvil: Poppins SemiBold */}
+                      <div className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-[#a100ff] to-[#437ceb] text-white font-poppins font-semibold text-xs text-center shadow-[0_0_15px_rgba(161,0,255,0.35)]">
                         ¡Tú controlas qué información consume DOMA!
                       </div>
                     </div>
@@ -251,7 +278,6 @@ export default function RolesGallery() {
                   </div>
                 )}
 
-                {/* Línea de color inferior decorativa */}
                 <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-r ${item.color} z-10 transition-all duration-500 ${isActive ? 'h-1.5 opacity-100' : 'h-1 opacity-40'}`}></div>
 
               </div>
@@ -261,7 +287,6 @@ export default function RolesGallery() {
 
       </div>
 
-      {/* Animaciones requeridas para las entradas de texto */}
       <style>{`
         @keyframes fadeInLeft {
           from { opacity: 0; transform: translateX(-15px); }

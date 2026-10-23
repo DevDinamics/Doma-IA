@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const FaqItem = ({ question, answer, isOpen, onClick }) => {
   return (
     <div 
-      className={`group border-b border-slate-200/80 dark:border-white/10  ${
+      className={`group border-b border-slate-200/80 dark:border-white/10 ${
         isOpen ? 'bg-slate-100/60 dark:bg-white/[0.03]' : 'hover:bg-slate-50/50 dark:hover:bg-white/[0.01]'
       }`}
     >
@@ -11,7 +11,8 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => {
         onClick={onClick}
         className="w-full py-7 px-4 flex items-center justify-between text-left transition-all cursor-pointer"
       >
-        <span className={`font-poppins text-lg md:text-xl font-medium pr-8  ${
+        {/* Pregunta: Poppins SemiBold según manual */}
+        <span className={`font-poppins text-lg md:text-xl font-semibold pr-8 ${
           isOpen ? 'text-[#a100ff]' : 'text-slate-900/90 dark:text-white/90 group-hover:text-black dark:group-hover:text-white'
         }`}>
           {question}
@@ -34,7 +35,8 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => {
           isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="px-4 pb-8 font-gilroy text-slate-600 dark:text-gray-400 text-lg leading-relaxed max-w-3xl ">
+        {/* Respuesta: Gilroy Regular según manual */}
+        <div className="px-4 pb-8 font-gilroy font-normal text-slate-600 dark:text-gray-400 text-lg leading-relaxed max-w-3xl">
           {answer}
         </div>
       </div>
@@ -89,29 +91,32 @@ export default function Faq() {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-slate-50 dark:bg-[#0a0a0f] relative overflow-hidden ">
+    <section id="faq" className="py-24 bg-slate-50 dark:bg-[#0a0a0f] relative overflow-hidden">
       
       {/* PARCHE SAFARI 3: transform-gpu en el glow */}
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#437ceb]/5 rounded-full blur-[120px] pointer-events-none transform-gpu"></div>
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-16">
           
           <div className="lg:w-1/3">
             <div className="sticky top-32">
-              <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
+              {/* Badge: Poppins SemiBold */}
+              <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-poppins font-semibold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
                 FAQ
               </span>
-              <h2 className="font-poppins text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight ">
+              {/* Subtítulo de Sección H2: Poppins Bold */}
+              <h2 className="font-poppins font-bold text-4xl md:text-5xl text-slate-900 dark:text-white mb-6 leading-tight">
                 Preguntas<br/>frecuentes.
               </h2>
-              <p className="font-gilroy text-xl text-slate-600 dark:text-gray-400 ">
+              {/* Texto de introducción: Gilroy Regular */}
+              <p className="font-gilroy font-normal text-xl text-slate-600 dark:text-gray-400">
                 Todo lo que necesitas saber antes de agendar tu demo.
               </p>
             </div>
           </div>
 
-          <div className="lg:w-2/3 border-t border-slate-200/80 dark:border-white/10 ">
+          <div className="lg:w-2/3 border-t border-slate-200/80 dark:border-white/10">
             {faqs.map((faq, index) => (
               <FaqItem
                 key={index}

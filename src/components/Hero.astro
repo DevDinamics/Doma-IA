@@ -4,88 +4,69 @@
 
 <section 
   id="hero" 
-  class="relative min-h-[100dvh] lg:min-h-screen flex items-center pt-20 pb-12 sm:pt-24 sm:pb-16 lg:py-0 overflow-hidden bg-slate-50 dark:bg-[#0a0a0f]"
+  class="relative min-h-[68vh] sm:min-h-[72vh] lg:min-h-[75vh] xl:min-h-[78vh] flex items-center pt-20 pb-4 sm:pt-24 sm:pb-6 lg:pt-24 lg:pb-8 overflow-hidden bg-slate-50 dark:bg-[#0a0a0f]"
 >
   
   <!-- Luces y efectos ambientales de fondo adaptables al tema -->
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-[-5%] right-[-5%] w-[280px] lg:w-[500px] h-[280px] lg:h-[500px] bg-[#a100ff]/15 dark:bg-[#a100ff]/20 rounded-full blur-[90px] lg:blur-[120px] animate-pulse"></div>
-    <div class="absolute bottom-[-5%] left-[-5%] w-[240px] lg:w-[450px] h-[240px] lg:h-[450px] bg-[#437ceb]/10 dark:bg-[#437ceb]/15 rounded-full blur-[80px] lg:blur-[100px]"></div>
+    <div class="absolute top-[-5%] right-[-5%] w-[260px] lg:w-[420px] h-[260px] lg:h-[420px] bg-[#a100ff]/15 dark:bg-[#a100ff]/20 rounded-full blur-[80px] lg:blur-[110px] animate-pulse"></div>
+    <div class="absolute bottom-[-5%] left-[-5%] w-[220px] lg:w-[380px] h-[220px] lg:h-[380px] bg-[#437ceb]/10 dark:bg-[#437ceb]/15 rounded-full blur-[70px] lg:blur-[90px]"></div>
     
     <!-- Cuadrícula técnica sutil -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem] lg:bg-[size:3.75rem_3.75rem] [mask-image:radial-gradient(ellipse:80%_60%_at_50%_40%,#000_75%,transparent_100%)]"></div>
   </div>
 
   <div class="container mx-auto px-4 sm:px-6 relative z-10 w-full">
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-6">      
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 max-w-6xl mx-auto">      
       
-<!-- Columna izquierda: Textos distribuidos hacia la derecha -->
-<div class="w-full lg:flex-1 flex flex-col items-center text-center lg:items-start lg:text-left max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto lg:mx-0 relative z-10 lg:ml-24 xl:ml-36 2xl:ml-48">        
-  <!-- TÍTULO H1 -->
-<h1 
-  id="hero-stroke-heading"
-  class="font-poppins font-bold tracking-tight mb-5 lg:mb-6 flex flex-col items-center lg:items-start w-full select-none"
-  aria-label="El primer empleado digital para espacios físicos."
->
-    <!-- Línea 1: El primer -->
-    <span 
-      class="stroke-text-line" 
-      data-text="El primer" 
-      data-stroke="#A78BFA" 
-      data-fill="#111827"
-      data-dark-fill="#FFFFFF"
-      data-delay="0"
-    ></span>
+      <!-- Columna izquierda: Textos distribuidos horizontalmente -->
+      <div class="w-full lg:flex-[1.2] flex flex-col items-center text-center lg:items-start lg:text-left max-w-xl lg:max-w-2xl relative z-10">        
+        
+        <!-- TÍTULO H1: Poppins ExtraBold según manual de marca -->
+        <h1 
+          id="hero-stroke-heading"
+          class="font-poppins font-extrabold tracking-tight mb-3 lg:mb-4 flex flex-col items-center lg:items-start w-full select-none"
+          aria-label="El empleado digital para el mundo físico"
+        >
+          <!-- Línea 1: El empleado digital -->
+          <span 
+            class="stroke-text-line" 
+            data-text="El empleado digital" 
+            data-stroke="#A78BFA" 
+            data-fill="#111827"
+            data-dark-fill="#FFFFFF"
+            data-delay="0"
+          ></span>
 
-    <!-- Línea 2: empleado digital -->
-    <span 
-      class="stroke-text-line" 
-      data-text="empleado digital" 
-      data-stroke="#A78BFA" 
-      data-fill="#111827"
-      data-dark-fill="#FFFFFF"
-      data-delay="0.18"
-    ></span>
+          <!-- Línea 2: para el mundo físico -->
+          <span 
+            class="stroke-text-line" 
+            data-text="para el mundo físico" 
+            data-stroke="#A78BFA" 
+            data-fill="#437ceb"
+            data-dark-fill="#437ceb"
+            data-delay="0.25"
+          ></span>
+        </h1>
+        
+        <!-- Párrafo descriptivo: Gilroy Regular según manual de marca -->
+        <p class="font-gilroy font-normal text-sm sm:text-base lg:text-lg text-slate-600 dark:text-gray-400 max-w-xl leading-relaxed animate-apple-sequent">
+          Una experiencia de atención que combina <span class="text-slate-900 dark:text-white font-semibold">inteligencia y conversación natural</span> con la información y operación de tu empresa.
+        </p>
 
-    <!-- Línea 3: para -->
-    <span 
-      class="stroke-text-line" 
-      data-text="para" 
-      data-stroke="#A78BFA" 
-      data-fill="#111827"
-      data-dark-fill="#FFFFFF"
-      data-delay="0.36"
-    ></span>
+      </div>
 
-    <!-- Línea 4: espacios físicos -->
-    <span 
-      class="stroke-text-line" 
-      data-text="espacios físicos" 
-      data-stroke="#A78BFA" 
-      data-fill="#437ceb"
-      data-dark-fill="#437ceb"
-      data-delay="0.52"
-    ></span>
-  </h1>
-  
-  <!-- Párrafo descriptivo visible y con mayor amplitud horizontal -->
-  <p class="font-gilroy text-sm sm:text-base lg:text-lg text-slate-600 dark:text-gray-400 max-w-xl leading-relaxed animate-apple-sequent">
-    Una experiencia de atención que combina <span class="text-slate-900 dark:text-white font-semibold">inteligencia y conversación natural </span>con la información y operación de tu empresa.
-  </p>
-
-</div>
-
-      <!-- Columna derecha: Avatar con escala visual contenida -->
-      <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-sm xl:max-w-md animate-avatar-enter delay-500">
-        <div class="relative w-full flex items-end justify-center h-[380px] lg:h-[450px] xl:h-[500px]">
+      <!-- Columna derecha: Avatar con escala reducida y contenida -->
+      <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-xs xl:max-w-sm animate-avatar-enter delay-500">
+        <div class="relative w-full flex items-end justify-center h-[260px] lg:h-[310px] xl:h-[350px]">
           
           <!-- Resplandor inferior calibrado -->
-          <div class="absolute bottom-1 w-[70%] h-20 bg-gradient-to-t from-[#a100ff]/25 via-[#437ceb]/15 to-transparent rounded-full blur-xl pointer-events-none z-0"></div>
+          <div class="absolute bottom-0 w-[70%] h-16 bg-gradient-to-t from-[#a100ff]/20 via-[#437ceb]/10 to-transparent rounded-full blur-lg pointer-events-none z-0"></div>
 
           <img 
             src="./TOTEM DOMA SITIO 3.webp" 
             alt="DOMA — Digital Sales Executive"
-            class="relative z-10 w-auto h-full object-contain object-bottom brightness-105 contrast-110 drop-shadow-[0_10px_30px_rgba(67,124,235,0.25)] transition-transform duration-700 hover:scale-[1.02]"
+            class="relative z-10 w-auto h-full object-contain object-bottom brightness-105 contrast-110 drop-shadow-[0_8px_25px_rgba(67,124,235,0.2)] transition-transform duration-700 hover:scale-[1.02]"
             style="
               mix-blend-mode: screen;
               -webkit-mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
@@ -103,9 +84,9 @@
     id="scroll-indicator"
     href="#producto"
     aria-label="Hacer scroll hacia abajo"
-    class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-slate-400 dark:text-gray-400/70 hover:text-slate-900 dark:hover:text-white transition-all duration-500 cursor-pointer p-2 animate-bounce-soft"
+    class="absolute bottom-1 left-1/2 -translate-x-1/2 z-20 text-slate-400 dark:text-gray-400/70 hover:text-slate-900 dark:hover:text-white transition-all duration-500 cursor-pointer p-1.5 animate-bounce-soft"
   >
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M6 9l6 6 6-6" />
     </svg>
   </a>
@@ -114,7 +95,6 @@
 <script>
   import { gsap } from 'gsap';
 
-  // 1. Control del scroll indicator
   const scrollIndicator = document.getElementById('scroll-indicator');
   const handleScroll = () => {
     if (window.scrollY > 25) {
@@ -125,14 +105,14 @@
   };
   window.addEventListener('scroll', handleScroll, { passive: true });
 
-  // 2. Parámetros ajustados de animación StrokeText
-  const STROKE_WIDTH = 1.3;
+// 2. Parámetros ajustados de animación StrokeText
+  const STROKE_WIDTH = 1.8; // Subimos de 1.3 a 1.8 para mantener el peso visual
   const DRAW_DURATION = 1.4;
   const FILL_DELAY = 0.15;
   const STAGGER = 0.04;
   const EASE = 'power2.out';
-  const FONT_SIZE = 52; 
-  const LETTER_SPACING = -1.2;
+  const FONT_SIZE = 82; // ¡Subimos de 52 a 82 para hacerlo gigante!
+  const LETTER_SPACING = -1.5;
 
   const initStrokeText = () => {
     const lines = document.querySelectorAll('.stroke-text-line');
@@ -141,6 +121,8 @@
 
     lines.forEach((lineEl, lineIdx) => {
       const text = lineEl.getAttribute('data-text') || '';
+      if (!text.trim()) return;
+
       const strokeColor = lineEl.getAttribute('data-stroke') || '#A78BFA';
       const darkFill = lineEl.getAttribute('data-dark-fill') || '#FFFFFF';
       const lightFill = lineEl.getAttribute('data-fill') || '#111827';
@@ -167,8 +149,9 @@
       defs.appendChild(clipPath);
       svg.appendChild(defs);
 
+      // Poppins ExtraBold (800) explícito para el renderizado del texto SVG
       const fontStyles = {
-        fontFamily: 'inherit',
+        fontFamily: "'Poppins', sans-serif",
         fontSize: `${FONT_SIZE}px`,
         fontWeight: '800',
         letterSpacing: `${LETTER_SPACING}px`
@@ -308,38 +291,45 @@
 </script>
 
 <style>
-  /* Interlineado ajustado y alturas proporcionadas */
-  .stroke-text-line {
+.stroke-text-line {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800; /* ExtraBold */
     display: block;
-    height: 1.05em; /* Altura compacta para evitar separación excesiva */
+    height: 1.05em;
     aspect-ratio: var(--stroke-text-aspect, auto);
-    font-size: 2.25rem; /* ~36px en móviles */
+    
+    /* TAMAÑO BASE (Móvil) */
+    font-size: 2.75rem; 
+    
     line-height: 1;
-    margin-bottom: -0.1em; /* Margen negativo controlado para juntar las líneas sin romper el flujo */
+    margin-bottom: -0.08em;
     overflow: visible;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     will-change: transform, opacity;
   }
 
+  /* TAMAÑO TABLET */
   @media (min-width: 640px) {
     .stroke-text-line {
-      font-size: 2.85rem;
+      font-size: 3.5rem;
       margin-bottom: -0.1em;
     }
   }
 
+  /* TAMAÑO LAPTOP */
   @media (min-width: 1024px) {
     .stroke-text-line {
-      font-size: 3.4rem;
+      font-size: 4.25rem;
       margin-bottom: -0.12em;
     }
   }
 
+  /* TAMAÑO PANTALLAS GRANDES */
   @media (min-width: 1280px) {
     .stroke-text-line {
-      font-size: 3.85rem;
-      margin-bottom: -0.19em;
+      font-size: 5rem; /* Mucho más grande, como pidieron */
+      margin-bottom: -0.14em;
     }
   }
 
@@ -368,8 +358,8 @@
   @keyframes avatarEntrance {
     0% {
       opacity: 0;
-      transform: translateY(24px) scale(0.97);
-      filter: blur(8px);
+      transform: translateY(20px) scale(0.97);
+      filter: blur(6px);
     }
     100% {
       opacity: 1;
@@ -383,13 +373,13 @@
       transform: translate(-50%, 0);
     }
     50% {
-      transform: translate(-50%, 6px);
+      transform: translate(-50%, 4px);
     }
   }
 
   .animate-apple-sequent {
     opacity: 0;
-    animation: appleSequent 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+    animation: appleSequent 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
     will-change: transform, opacity, filter;
   }
 

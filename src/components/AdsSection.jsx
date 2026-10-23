@@ -135,7 +135,7 @@ const AdModeCard = ({
             ? 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease' 
             : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s linear, border-color 0.3s ease',
         }}
-        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-white/80 dark:bg-[#12121c] border border-slate-200/80 dark:border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl "
+        className="group relative rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 bg-white/80 dark:bg-[#12121c] border border-slate-200/80 dark:border-white/[0.09] hover:border-[#8257e6]/50 overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl"
       >
         {/* Spotlight interactivo */}
         <div
@@ -157,7 +157,7 @@ const AdModeCard = ({
 
         <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-stretch gap-6 sm:gap-7">
           
-          {/* Contenedor del Video con Parallax opuesto */}
+          {/* Contenedor del Video con Parallax */}
           <div className="w-full sm:w-[200px] md:w-[220px] shrink-0 flex justify-center">
             <div 
               style={{
@@ -184,7 +184,7 @@ const AdModeCard = ({
           {/* Columna de Información */}
           <div className="flex-1 flex flex-col justify-center w-full py-2 sm:py-4 text-left">
             
-            {/* Pastilla Azul */}
+            {/* Pastilla Azul: Poppins SemiBold */}
             <div 
               style={{
                 transform: `translate3d(0, ${isEntered ? 0 : 14}px, 0)`,
@@ -198,19 +198,19 @@ const AdModeCard = ({
               </span>
             </div>
 
-            {/* Título */}
+            {/* Sub-subtítulo según manual: Poppins SemiBold */}
             <h3 
               style={{
                 transform: `translate3d(0, ${isEntered ? 0 : 16}px, 0)`,
                 opacity: isEntered ? 1 : 0,
                 transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 120ms, opacity 0.4s ease 120ms'
               }}
-              className="font-poppins text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-5 "
+              className="font-poppins font-semibold text-xl sm:text-2xl text-slate-900 dark:text-white tracking-tight mb-5"
             >
               {title}
             </h3>
 
-            {/* Lista de características */}
+            {/* Lista de características: Gilroy Regular */}
             <ul className="space-y-4">
               {features.map((item, idx) => {
                 const itemDelay = 180 + idx * 90;
@@ -225,7 +225,7 @@ const AdModeCard = ({
                     className="group/item flex items-start gap-3"
                   >
                     <CheckIcon active={isEntered} delay={itemDelay} />
-                    <span className="font-gilroy text-sm sm:text-[15px] text-slate-600 dark:text-gray-300 leading-snug group-hover/item:text-slate-900 dark:group-hover/item:text-white transition-colors duration-200">
+                    <span className="font-gilroy font-normal text-sm sm:text-[15px] text-slate-600 dark:text-gray-300 leading-snug group-hover/item:text-slate-900 dark:group-hover/item:text-white transition-colors duration-200">
                       {item}
                     </span>
                   </li>
@@ -286,9 +286,9 @@ export default function AdsSection() {
     <section 
       ref={sectionRef}
       id="ads" 
-      className="relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden "
+      className="relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden"
     >
-      {/* Línea divisoria superior con expansión ligada al scroll */}
+      {/* Línea divisoria superior */}
       <div 
         style={{ transform: `translateX(-50%) scaleX(${0.2 + headerProgress * 0.8})` }}
         className="absolute top-0 left-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-white/15 to-transparent origin-center"
@@ -315,16 +315,18 @@ export default function AdsSection() {
           }}
           className="text-center sm:text-left max-w-3xl mb-12 sm:mb-16 mx-auto sm:mx-0"
         >
-          {/* EL CUADRITO DE TÍTULO AGREGADO (DOMA ADS) */}
-          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-gilroy font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
+          {/* Badge: Poppins SemiBold */}
+          <span className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8a00ff] via-[#6340f2] to-[#3b82f6] text-white text-xs sm:text-sm font-poppins font-semibold uppercase tracking-widest mb-6 inline-block shadow-[0_0_24px_rgba(138,0,255,0.4)]">
             DOMA ADS
           </span>
 
-          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-5 ">
+          {/* Subtítulo de sección según manual: Poppins Bold */}
+          <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-[42px] text-slate-900 dark:text-white tracking-tight leading-tight mb-5">
             Tu nuevo <span className="text-[#a100ff]">canal de comunicación</span>
           </h2>
 
-          <p className="font-gilroy text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed ">
+          {/* Texto de cuerpo según manual: Gilroy Regular con énfasis Bold/SemiBold */}
+          <p className="font-gilroy font-normal text-base sm:text-lg lg:text-[19px] text-slate-600 dark:text-gray-300 leading-relaxed">
             <span className="text-[#a100ff] font-bold">DOMA</span> está presente justo en el momento en que tu cliente interactúa con tu marca y donde es más receptivo a información. En este momento Doma puede mostrarles{' '}
             <span className="text-[#a100ff] font-semibold">promociones</span>,{' '}
             <span className="text-[#a100ff] font-semibold">lanzamientos</span> o{' '}
@@ -332,7 +334,7 @@ export default function AdsSection() {
           </p>
         </div>
 
-        {/* ETIQUETA SUPERIOR DEL DIAGRAMA CON BARRA DE PROGRESO */}
+        {/* ETIQUETA SUPERIOR DEL DIAGRAMA: Poppins SemiBold */}
         <div 
           style={{
             transform: `translate3d(0, ${(1 - headerProgress) * 18}px, 0)`,
@@ -340,7 +342,7 @@ export default function AdsSection() {
           }}
           className="mb-6 flex items-center gap-4"
         >
-          <span className="font-poppins text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#8257e6]">
+          <span className="font-poppins font-semibold text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#8257e6]">
             Dos momentos, dos formatos
           </span>
           <div className="h-[2px] flex-1 max-w-[140px] bg-slate-200 dark:bg-white/10 overflow-hidden rounded-full">

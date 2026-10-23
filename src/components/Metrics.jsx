@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-// Sub-componente para cada tarjeta individual con estética Bento y soporte Dark/Light
+// Sub-componente para cada tarjeta individual con estética Bento y tipografía del manual
 const MetricCard = ({ 
   target, 
   prefix = "", 
   suffix = "", 
   unit = "",
   text, 
-  staticValue = null, // Nuevo prop para "1 de cada 2"
-  textColorClass = "text-slate-900 dark:text-white", // Nuevo prop para color fijo
+  staticValue = null,
+  textColorClass = "text-slate-900 dark:text-white",
   glowColor = "from-[#a100ff]/20", 
   delay = 0 
 }) => {
@@ -24,7 +24,7 @@ const MetricCard = ({
           observer.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
     );
 
     if (cardRef.current) observer.observe(cardRef.current);
@@ -32,7 +32,7 @@ const MetricCard = ({
   }, []);
 
   useEffect(() => {
-    if (!isVisible || staticValue) return; // No animar si hay valor estático
+    if (!isVisible || staticValue) return;
 
     let startTime = null;
     const duration = 2000;
@@ -74,29 +74,27 @@ const MetricCard = ({
         hover:border-slate-300 dark:hover:border-white/[0.15] hover:bg-white dark:hover:bg-[#161622]/90 hover:-translate-y-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-none hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]
       `}
     >
-      {/* Reflejo especular superior */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-white/25 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
-      
-      {/* Resplandor ambiental interno sutil */}
       <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-gradient-to-b ${glowColor} to-transparent rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}></div>
 
-      {/* Contenedor de la cifra principal */}
+      {/* Cifra principal: Poppins ExtraBold según manual */}
       <div className="relative z-10 flex items-baseline justify-center gap-1.5 my-2 sm:my-3 w-full">
         <span 
-          className={`font-poppins text-4xl sm:text-5xl lg:text-[44px] xl:text-[54px] font-bold tracking-tighter leading-none tabular-nums transition-transform duration-500 ease-out group-hover:scale-[1.03]  ${textColorClass}`}
+          className={`font-poppins font-extrabold text-4xl sm:text-5xl lg:text-[44px] xl:text-[54px] tracking-tight leading-none tabular-nums transition-transform duration-500 ease-out group-hover:scale-[1.03] ${textColorClass}`}
         >
           {staticValue ? staticValue : `${prefix}${count}${suffix}`}
         </span>
 
+        {/* Unidad: Poppins SemiBold según manual */}
         {unit && (
-          <span className={`font-poppins text-lg sm:text-xl xl:text-2xl font-bold tracking-tight ${textColorClass}`}>
+          <span className={`font-poppins font-semibold text-lg sm:text-xl xl:text-2xl tracking-normal ${textColorClass}`}>
             {unit}
           </span>
         )}
       </div>
 
-      {/* Copy descriptivo */}
-      <p className="relative z-10 font-gilroy text-slate-500 dark:text-gray-400 text-[11px] sm:text-xs uppercase tracking-[0.16em] leading-relaxed max-w-[230px] mt-3 group-hover:text-slate-800 dark:group-hover:text-gray-200 ">
+      {/* Descripción / Caption: Gilroy Regular / Light según manual */}
+      <p className="relative z-10 font-gilroy font-normal text-slate-500 dark:text-gray-400 text-[11px] sm:text-xs uppercase tracking-[0.16em] leading-relaxed max-w-[230px] mt-3 group-hover:text-slate-800 dark:group-hover:text-gray-200">
         {text}
       </p>
     </div>
@@ -116,7 +114,7 @@ export default function MetricsGrid() {
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.05 }
     );
 
     if (headerRef.current) observer.observe(headerRef.current);
@@ -124,22 +122,22 @@ export default function MetricsGrid() {
   }, []);
 
   return (
-    <section id="metrics" className="relative py-20 sm:py-28 lg:py-36 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden ">
+    <section id="metrics" className="relative pt-6 pb-20 sm:pt-8 sm:pb-28 lg:pt-10 lg:pb-32 px-4 sm:px-6 bg-slate-50 dark:bg-[#0a0a0f] overflow-hidden">
       
-      {/* Línea divisoria superior */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-white/10 to-transparent"></div>
+      {/* Línea divisoria superior sutil */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-slate-300/40 dark:via-white/10 to-transparent"></div>
 
       <div className="max-w-6xl xl:max-w-7xl mx-auto relative z-10">
         
-        {/* Encabezado */}
+        {/* Encabezado: Subtítulo de sección con Poppins Bold según manual */}
         <div 
           ref={headerRef}
           style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
-          className={`text-center max-w-4xl mx-auto mb-14 sm:mb-20 transition-all duration-1000 transform
-            ${headerVisible ? 'translate-y-0 opacity-100 blur-0' : 'translate-y-8 opacity-0 blur-sm'}
+          className={`text-center max-w-4xl mx-auto mb-10 sm:mb-14 transition-all duration-700 transform
+            ${headerVisible ? 'translate-y-0 opacity-100 blur-0' : 'translate-y-6 opacity-0 blur-sm'}
           `}
         >
-          <h2 className="font-poppins text-2xl sm:text-3xl lg:text-[40px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.25] sm:leading-[1.2] ">
+          <h2 className="font-poppins font-bold text-2xl sm:text-3xl lg:text-[40px] text-slate-900 dark:text-white tracking-tight leading-[1.25] sm:leading-[1.2]">
             En el <span className="text-[#a100ff]">mundo digital</span>, las empresas aprendieron cómo estar siempre disponibles... en el{' '}
             <span className="text-[#437ceb]">
               mundo físico no.
@@ -149,45 +147,40 @@ export default function MetricsGrid() {
 
         {/* Retícula Bento Responsiva */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          
           <MetricCard 
             staticValue="1 de cada 2"
             text="clientes abandonan a una marca tras una mala experiencia" 
-            textColorClass="text-[#a100ff]" // Morado DOMA
+            textColorClass="text-[#a100ff]"
             glowColor="from-[#a100ff]/25"
             delay={100}
           />
-          
           <MetricCard 
             target={70} 
             suffix="%" 
             text="De las consultas en sucursal nunca reciben respuesta" 
-            textColorClass="text-[#906ef7]" // Violeta DOMA
+            textColorClass="text-[#906ef7]"
             glowColor="from-[#906ef7]/25"
             delay={220}
           />
-          
           <MetricCard 
             target={30} 
             prefix="~"
             suffix="%" 
             text="Rotación anual de personal operativo" 
-            textColorClass="text-[#437ceb]" // Azul DOMA
+            textColorClass="text-[#437ceb]"
             glowColor="from-[#437ceb]/25"
             delay={340}
           />
-          
           <MetricCard 
             target={200} 
             prefix="$"
             suffix="K"
             unit="MXN"
             text="Costo promedio por reemplazar una posición" 
-            textColorClass="text-[#a100ff]" // Morado DOMA
+            textColorClass="text-[#a100ff]"
             glowColor="from-[#a100ff]/30"
             delay={460}
           />
-
         </div>
       </div>
     </section>

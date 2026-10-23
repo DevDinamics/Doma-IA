@@ -1,20 +1,18 @@
-/* Importamos Poppins y Plus Jakarta Sans desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Poppins:wght@600;700;800&display=swap');
+/* Importamos Poppins y la alternativa Plus Jakarta Sans desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&family=Poppins:wght@600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ========================================================== */
-/* OPTIMIZACIONES DE GPU PARA SAFARI / iOS (Adiós al LAG)      */
+/* OPTIMIZACIONES DE GPU PARA SAFARI / iOS (Adiós al LAG)     */
 /* ========================================================== */
 .stroke-text-line {
   display: block;
-  /* Altura exacta compacta */
   height: 1.05em;
   aspect-ratio: var(--stroke-text-aspect, auto);
   line-height: 1;
-  /* Margen negativo sutil y seguro */
   margin-bottom: -0.14em;
   overflow: visible;
   transform: translateZ(0);
@@ -27,11 +25,9 @@
   width: auto;
   height: 100%;
   overflow: visible;
-  /* Aislar la capa vectorial del SVG */
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
 }
-
 
 /* ========================================================== */
 /* VIEW TRANSITIONS PARA TEMA CLARO / OSCURO                  */

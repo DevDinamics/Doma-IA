@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class', // 👈 ESTA ES LA LÍNEA CLAVE: Permite controlar el tema agregando o quitando la clase 'dark' en el <html>
+  darkMode: 'class',
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
@@ -13,7 +13,7 @@ export default {
       },
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
-        'gilroy': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'gilroy': ['"Plus Jakarta Sans"', 'sans-serif'], /* Engaño temporal a Tailwind */
       }
     },
   },
