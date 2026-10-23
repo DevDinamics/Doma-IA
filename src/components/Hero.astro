@@ -56,23 +56,21 @@
 
       </div>
 
-      <!-- Columna derecha: Avatar con escala reducida y contenida -->
+<!-- Columna derecha: Avatar con video WebM (Sin resplandor y una sola reproducción) -->
       <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-xs xl:max-w-sm animate-avatar-enter delay-500">
         <div class="relative w-full flex items-end justify-center h-[260px] lg:h-[310px] xl:h-[350px]">
           
-          <!-- Resplandor inferior calibrado -->
-          <div class="absolute bottom-0 w-[70%] h-16 bg-gradient-to-t from-[#a100ff]/20 via-[#437ceb]/10 to-transparent rounded-full blur-lg pointer-events-none z-0"></div>
+          <video 
+            id="hero-avatar-video"
+            src="/BANNER SITIO DOMA PANTALLA VERDE (1).webm" 
+            autoplay 
+            muted 
+            playsinline 
+            preload="auto"
+            class="relative z-10 w-auto h-full object-contain object-bottom brightness-105 contrast-110 transition-transform duration-700 hover:scale-[1.02]"
+            style="mix-blend-mode: screen;"
+          ></video>
 
-          <img 
-            src="./TOTEM DOMA SITIO 3.webp" 
-            alt="DOMA — Digital Sales Executive"
-            class="relative z-10 w-auto h-full object-contain object-bottom brightness-105 contrast-110 drop-shadow-[0_8px_25px_rgba(67,124,235,0.2)] transition-transform duration-700 hover:scale-[1.02]"
-            style="
-              mix-blend-mode: screen;
-              -webkit-mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
-              mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
-            "
-          />
         </div>
       </div>
 
