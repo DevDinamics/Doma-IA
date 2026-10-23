@@ -56,23 +56,25 @@
 
       </div>
 
-<!-- Columna derecha: Avatar con video WebM (Sin resplandor y una sola reproducción) -->
-      <div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-xs xl:max-w-sm animate-avatar-enter delay-500">
-        <div class="relative w-full flex items-end justify-center h-[260px] lg:h-[310px] xl:h-[350px]">
-          
-          <video 
-            id="hero-avatar-video"
-            src="/BANNER SITIO DOMA PANTALLA VERDE (1).webm" 
-            autoplay 
-            muted 
-            playsinline 
-            preload="auto"
-            class="relative z-10 w-auto h-full object-contain object-bottom brightness-105 contrast-110 transition-transform duration-700 hover:scale-[1.02]"
-            style="mix-blend-mode: screen;"
-          ></video>
+<!-- 1. Aumenta el max-w del contenedor (ejemplo: de max-w-xs a max-w-md / max-w-lg) -->
+<div class="hidden lg:flex flex-1 w-full relative justify-center items-end self-end max-w-md xl:max-w-lg animate-avatar-enter delay-500">
+  
+  <!-- 2. Aumenta la altura del contenedor interno (subiendo los valores de px) -->
+  <div class="relative w-full flex items-end justify-center h-[340px] lg:h-[400px] xl:h-[460px]">
+    
+    <video 
+      id="hero-avatar-video"
+      src="/BANNER SITIO DOMA PANTALLA VERDE (1).webm" 
+      autoplay 
+      muted 
+      playsinline 
+      preload="auto"
+      class="relative z-10 w-auto h-full object-contain object-bottom brightness-105 contrast-110 transition-transform duration-700 hover:scale-[1.02]"
+      style="mix-blend-mode: screen;"
+    ></video>
 
-        </div>
-      </div>
+  </div>
+</div>
 
     </div>
   </div>
